@@ -1,0 +1,50 @@
+[
+  {
+    "ParameterKey": "InfrastructureName", 
+    "ParameterValue": "InfrastructureName_Value" 
+  },
+  {
+    "ParameterKey": "RhcosAmi", 
+    "ParameterValue": "RhcosAmi_Value" 
+  },
+  {
+    "ParameterKey": "AllowedBootstrapSshCidr", 
+    "ParameterValue": "AllowedBootstrapSshCidr_Value" 
+  },
+  {
+    "ParameterKey": "PublicSubnet", 
+    "ParameterValue": "PublicSubnet_Value" 
+  },
+  {
+    "ParameterKey": "MasterSecurityGroupId", 
+    "ParameterValue": "MasterSecurityGroupId_Value" 
+  },
+  {
+    "ParameterKey": "VpcId", 
+    "ParameterValue": "VpcId_Value" 
+  },
+  {
+    "ParameterKey": "BootstrapIgnitionLocation", 
+    "ParameterValue": "BootstrapIgnitionLocation_Value" 
+  },
+  {
+    "ParameterKey": "AutoRegisterELB", 
+    "ParameterValue": "AutoRegisterELB_Value" 
+  },
+  {
+    "ParameterKey": "RegisterNlbIpTargetsLambdaArn", 
+    "ParameterValue": "RegisterNlbIpTargetsLambdaArn_Value" 
+  },
+  {
+    "ParameterKey": "ExternalApiTargetGroupArn", 
+    "ParameterValue": "ExternalApiTargetGroupArn_Value" 
+  },
+  {
+    "ParameterKey": "InternalApiTargetGroupArn", 
+    "ParameterValue": "InternalApiTargetGroupArn_Value" 
+  },
+  {
+    "ParameterKey": "InternalServiceTargetGroupArn", 
+    "ParameterValue": "InternalServiceTargetGroupArn_Value" 
+  }
+]
