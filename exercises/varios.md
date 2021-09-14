@@ -11,7 +11,10 @@ ifconfig
 docker exec test ifconfig
 
 ps aux
-docker exec ps aux
+docker exec test ps aux
+
+cat /etc/hosts
+docker exec test cat /etc/hosts
 
 docker top test
 
