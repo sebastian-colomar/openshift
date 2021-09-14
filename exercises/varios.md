@@ -10,6 +10,9 @@ docker exec test df
 ifconfig
 docker exec test ifconfig
 
+ps aux
+docker exec ps aux
+
 docker top test
 
 cat /proc/10763/cgroup 
