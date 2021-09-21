@@ -1,6 +1,7 @@
 # git clone https://github.com/academiaonline/openshift
+# cd openshift
 # git checkout master
-# cd openshift/install
+# cd install
 # source ocp-aws-install.sh
 
 pwd=${PWD}
