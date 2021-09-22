@@ -1,6 +1,4 @@
-# openshift
-
-## How to install Red Hat Openshift Container Platform in AWS:
+# How to install Red Hat Openshift Container Platform in AWS:
 
 First go through the initial setup:
 - [Initial Setup](install/initial.md)
