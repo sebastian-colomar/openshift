@@ -32,7 +32,7 @@ ln -s $HOME/bin/openshift-install-$version $HOME/bin/openshift-install
 rm $HOME/bin/kubectl && ln -s $HOME/bin/oc $HOME/bin/kubectl    
 fi
 
-export dir="$HOME/environment/openshift/install/$ClusterName.$DomainName"
+export dir="$HOME/environment/$ClusterName.$DomainName"
 test -d $dir || mkdir -p $dir 
 
 openshift-install-$version create install-config --dir $dir --log-level debug
