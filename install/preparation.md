@@ -47,7 +47,7 @@ export DomainName=sebastian-colomar.es
 ```
 Create a directory to place all the configuration files:
 ```bash
-export dir="$HOME/environment/openshift/install/$ClusterName.$DomainName"
+export dir="$HOME/environment/$ClusterName.$DomainName"
 test -d $dir || mkdir -p $dir 
 ```
 Now you create a configuration file template to be later modified:
