@@ -1,7 +1,10 @@
 First follow these instructions:
 * [Initial setup](initial.md)
 
-After the previous step is finished then you may proceed.
+Then you can proceed with the next step:
+* [Preparation](preparation.md)
+
+After the previous steps are finished then you may proceed.
 
 Set the number of compute replicas to zero:
 ```bash
