@@ -12,6 +12,9 @@ DNS hostnames  Enabled
 
 
 ```
+Now you can proceed with the next step:
+* [Preparation](preparation.md)
+
 In case you want to install your cluster in an already existing VPC then you will need to add the subnet IDs to the platform.aws.subnets field:
 ```bash
 platform:
@@ -24,7 +27,9 @@ platform:
     
 ```    
 In case of using an already existing VPC you will also need to add the CIDR blocks for the machine network which must coincide with the corresponding CIDR blocks for the private subnets:
-```bash
+```bashFirst follow these instructions:
+* [Initial setup](initial.md)
+
 networking:
   machineNetwork:
   - cidr: 10.0.1.0/24
