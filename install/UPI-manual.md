@@ -242,7 +242,7 @@ Creating the bootstrap node in AWS:
 * [ocp-bootstrap-Internal.json](ocp-bootstrap-Internal.json)
 * [ocp-bootstrap-Internal.yaml](ocp-bootstrap-Internal.yaml)
 ```BASH
-export RhcosAmi=ami-0754b15d212830477
+export RhcosAmi=ami-02b81ab6d01174430
 export AllowedBootstrapSshCidr=0.0.0.0/0
 export BootstrapIgnitionLocation=s3://$InfrastructureName/bootstrap.ign
 export AutoRegisterELB=yes
