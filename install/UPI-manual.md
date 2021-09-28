@@ -269,7 +269,7 @@ sed --in-place s/PublicSubnet_Value/"$PublicSubnet"/ $dir/$file
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
 cd $dir && git add . && git commit -am 'Creating the bootstrap node in AWS'
