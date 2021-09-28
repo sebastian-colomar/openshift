@@ -63,6 +63,13 @@ git commit -m 'Obtain the Ignition config files'
 
 
 ```
+Export a few environment variables:
+```
+export github_username=academiaonline
+export github_reponame=openshift
+export github_branch=master
+
+```
 Creating a VPC in AWS:
 * [ocp-vpc.json](ocp-vpc.json)
 * [ocp-vpc.yaml](ocp-vpc.yaml)
@@ -72,13 +79,13 @@ export AvailabilityZoneCount=3
 export SubnetBits=13
 
 export file=ocp-vpc.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/VpcCidr_Value/"$( echo $VpcCidr | sed 's/\//\\\//g' )"/ $dir/$file
 sed --in-place s/AvailabilityZoneCount_Value/"$AvailabilityZoneCount"/ $dir/$file
 sed --in-place s/SubnetBits_Value/"$SubnetBits"/ $dir/$file
 
 export file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 git add .
 git commit -am 'Creating a VPC in AWS'
@@ -164,7 +171,7 @@ Creating networking and load balancing components in AWS:
 * [ocp-route53-Internal.yaml](ocp-route53-Internal.yaml)
 ```BASH
 file=ocp-route53-$Publish.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/ClusterName_Value/"$ClusterName"/ $dir/$file
 sed --in-place s/HostedZoneId_Value/"$HostedZoneId"/ $dir/$file
 sed --in-place s/HostedZoneName_Value/"$DomainName"/ $dir/$file
@@ -176,7 +183,7 @@ sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 test $Publish = External && sed --in-place s/PublicSubnets_Value/"$PublicSubnets"/ $dir/$file
 
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
 cd $dir && git add . && git commit -am 'Creating networking and load balancing components in AWS'
@@ -206,14 +213,14 @@ Creating security group and roles in AWS:
 * [ocp-roles.yaml](ocp-roles.yaml)
 ```BASH
 file=ocp-roles.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/PrivateSubnets_Value/"$PrivateSubnets"/ $dir/$file
 sed --in-place s/VpcCidr_Value/"$( echo $VpcCidr | sed 's/\//\\\//g' )"/ $dir/$file
 sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
 cd $dir && git add . && git commit -am 'Creating security group and roles in AWS'
@@ -246,7 +253,7 @@ aws s3 cp $dir/bootstrap.ign $BootstrapIgnitionLocation
 aws s3 ls s3://$InfrastructureName/
 
 file=ocp-bootstrap-$Publish.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/AllowedBootstrapSshCidr_Value/"$( echo $AllowedBootstrapSshCidr | sed 's/\//\\\//g' )"/ $dir/$file
@@ -285,7 +292,7 @@ export CertificateAuthorities=$( jq .ignition.security.tls.certificateAuthoritie
 export MasterInstanceType=t3a.xlarge
 
 file=ocp-master-$Publish.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/AutoRegisterDNS_Value/"$AutoRegisterDNS"/ $dir/$file
@@ -307,7 +314,7 @@ sed --in-place s/InternalServiceTargetGroupArn_Value/"$( echo $InternalServiceTa
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 
 cd $dir && git add . && git commit -am 'Creating the control plane machines in AWS'
@@ -333,7 +340,7 @@ export Worker1Subnet=$( echo $PrivateSubnets | cut --delimiter , --field 2 )
 export Worker2Subnet=$( echo $PrivateSubnets | cut --delimiter , --field 3 )
 
 file=ocp-worker.json
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/WorkerSecurityGroupId_Value/"$WorkerSecurityGroupId"/ $dir/$file
@@ -346,7 +353,7 @@ sed --in-place s/Subnet1_Value/"$Worker1Subnet"/ $dir/$file
 sed --in-place s/Subnet2_Value/"$Worker2Subnet"/ $dir/$file
 
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/secobau/openshift/master/install/$file --directory-prefix $dir
+wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 
 cd $dir && git add . && git commit -am 'Creating the worker nodes in AWS'
