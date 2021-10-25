@@ -92,7 +92,7 @@ git commit -am 'Creating a VPC in AWS'
 
 
 ```
-In case you have configured your cluster not to be externally published then you need to continue the installation from inside the internal VPC.
+## In case you have configured your cluster not to be externally published then you need to continue the installation from inside the internal VPC.
 For that purpose you will create a new Cloud9 environment in a public subnet of the internal VPC if available.
 Otherwise you will need to create a bastion machine inside the private subnet and access the bastion through SSH.
 Anyway you will need to download the project files of your Cloud9 environment including the SSH keys and the AWS credentials:
@@ -151,7 +151,7 @@ git config --global user.email you@example.com
 
 
 ```
-Once the stack creation is completed you can get the following values:
+## Once the stack creation is completed you can get the following values:
 ```BASH
 export PrivateSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )"
 export PublicSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )"
