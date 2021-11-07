@@ -4,7 +4,7 @@ ssh-add ${HOME}/.ssh/id_rsa
 
 if ! test -f ${HOME}/bin/openshift-install
 then
-modes="client install"
+modes='client install'
 for mode in ${modes}
   do
     wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${version}/openshift-${mode}-linux-${version}.tar.gz
@@ -15,7 +15,7 @@ for mode in ${modes}
 
 mkdir -p ${HOME}/bin
 
-binaries="kubectl oc"
+binaries='kubectl oc'
 for binary in ${binaries}
   do
     mv ${binary} ${HOME}/bin
