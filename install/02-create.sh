@@ -1,7 +1,7 @@
-cp $dir/install-config.yaml $dir/install-config.yaml.$( date +%F_%H%M )
+cp ${dir}/install-config.yaml ${dir}/install-config.yaml.$( date +%F_%H%M )
 
-openshift-install-$version create cluster --dir $dir --log-level debug
+openshift-install-${version} create cluster --dir ${dir} --log-level debug
 
-export KUBECONFIG=$dir/auth/kubeconfig
+export KUBECONFIG=${dir}/auth/kubeconfig
 
 
