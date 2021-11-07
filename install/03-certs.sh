@@ -3,7 +3,7 @@ docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws
 
 sudo chown ${USER}. -R ${HOME}/environment/certs
 mkdir --parents ${dir}/tls/
-cp {HOME}/environment/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/
+cp ${HOME}/environment/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/
 
 oc create configmap custom-ca --from-file=ca-bundle.crt=${dir}/tls/fullchain.pem --namespace openshift-config
 
@@ -16,7 +16,7 @@ oc patch ingresscontroller.operator default --namespace openshift-ingress-operat
 export EmailAddress=sebastian.colomar@gmail.com
 docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${HOME}/environment/certs:/etc/letsencrypt certbot/dns-route53 certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}  
 
-sudo chown $USER. -R {HOME}/environment/certs
+sudo chown ${USER}. -R ${HOME}/environment/certs
 mkdir --parents ${dir}/tls/
 cp ${HOME}/environment/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/tls/
 
