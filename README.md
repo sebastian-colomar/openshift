@@ -9,7 +9,7 @@ First customize your environment variables:
 github_branch=master
 github_repository=openshift
 github_username=academiaonline-org
-github_location=${github_repository}-${RANDOM}
+github_location=${github_repository}-$( date +%s )
 ```
 Now you can clone the remote repository:
 ```
