@@ -6,15 +6,15 @@ First go through the initial setup:
 Once finished run the following commands in your Cloud9 environment. 
 First customize your environment variables:
 ```
-GITHUB_BRANCH=master
-GITHUB_REPOSITORY=openshift
-GITHUB_USERNAME=academiaonline-org
-GITHUB_LOCATION=${RANDOM}
+github_branch=master
+github_repository=openshift
+github_username=academiaonline-org
+github_location=${github_repository}-${RANDOM}
 ```
 Now you can clone the remote repository:
 ```
-git clone --branch ${GITHUB_BRANCH} --single-branch -- https://github.com/academiaonline/openshift ${GITHUB_LOCATION}
-cd ${GITHUB_LOCATION}/install/
+git clone --branch ${github_branch} --single-branch -- https://github.com/academiaonline/openshift ${github_location}
+cd ${github_location}/install/
 ```
 Edit your environment file:
 ```
