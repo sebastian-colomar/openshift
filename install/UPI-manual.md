@@ -67,7 +67,7 @@ Export a few environment variables:
 ```
 export github_username=academiaonline
 export github_reponame=openshift
-export github_branch=master
+export github_branch=v4.8.17
 
 ```
 Creating a VPC in AWS:

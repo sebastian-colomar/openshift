@@ -10,7 +10,7 @@ All the steps will be performed from an AWS Cloud9 terminal with enough privileg
 * https://ap-south-1.console.aws.amazon.com/cloud9/home
 <!--
 ```bash
-branch=master
+branch=v4.8.17
 domain=github.com
 file=policy.yaml
 path=etc/aws
