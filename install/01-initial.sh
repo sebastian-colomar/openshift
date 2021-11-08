@@ -44,7 +44,7 @@ git add .
 git commit -m Initial 
 
 cd ${dir}
-wget https://raw.githubusercontent.com/academiaonline/openshift/master/install/fix-config.sh
+wget https://raw.githubusercontent.com/academiaonline-org/openshift/master/install/fix-config.sh
 chmod +x fix-config.sh && ./fix-config.sh && rm fix-config.sh
 git commit -am 'Set EC2 instance type' 
 
