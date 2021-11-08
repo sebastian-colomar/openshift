@@ -22,7 +22,7 @@ cp ${HOME}/environment/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/
 
 oc create secret tls certificate --cert=${dir}/tls/fullchain.pem --key=${dir}/tls/privkey.pem --namespace openshift-config
 
-oc patch apiserver cluster --patch '{"spec":{"servingCerts":{"namedCertificates":[{"names":["api.'$ClusterName'.'$DomainName'"],"servingCertificate":{"name":"certificate"}}]}}}' --type=merge
+oc patch apiserver cluster --patch '{"spec":{"servingCerts":{"namedCertificates":[{"names":["api.'${ClusterName}'.'${DomainName}'"],"servingCertificate":{"name":"certificate"}}]}}}' --type=merge
 
 cp ${dir}/tls/fullchain.pem ${dir}/auth
 sed --in-place s/certificate-authority-data.*$/certificate-authority:' 'fullchain.pem/ ${dir}/auth/kubeconfig
