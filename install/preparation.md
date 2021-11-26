@@ -9,7 +9,7 @@ ssh-add $HOME/.ssh/id_rsa
 ```
 Choose a version number:
 ```bash
-export version=4.8.17
+export version=4.8.20
 ```
 Afterwards you can proceed to install the client and the installer binaries:
 ```bash
