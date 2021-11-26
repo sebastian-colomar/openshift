@@ -15,7 +15,7 @@ git commit -am 'Set the number of compute replicas to zero'
 ```
 It is a good idea to make a copy of your configuration file if you are not using git:
 ```bash
-cp $dir/install-config.yaml $dir/install-config.yaml.$( date +%F_%H%M )
+cp $dir/install-config.yaml $dir/install-config.yaml.bak
 
 
 ```
