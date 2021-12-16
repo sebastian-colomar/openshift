@@ -3,6 +3,17 @@
 while true
 do
 sleep 10
+oc status | grep "In project default on server" || continue
+sleep 10
+oc status | grep "In project default on server" || continue
+sleep 10
+oc status | grep "In project default on server" || continue
+break
+done
+
+while true
+do
+sleep 10
 oc get co | awk '{ print $5 }' | grep -v -E "DEGRADED|False" || break
 done
 
