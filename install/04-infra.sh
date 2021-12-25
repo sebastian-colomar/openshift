@@ -13,8 +13,8 @@ sed -i /generation:/d machineset.yaml
 sed -i /resourceVersion:/d machineset.yaml 
 sed -i /uid:/d machineset.yaml 
 sed -i '/status:/,+5d' machineset.yaml 
-sed -i '/name:.*\-worker\-/s/worker/infra/' machineset.yaml 
-sed -i '/cluster-api-machineset:.*\-worker\-/s/worker/infra/' machineset.yaml   
+sed -i '/name:.*\-worker/s/worker/infra/' machineset.yaml 
+sed -i '/cluster-api-machineset:.*\-worker/s/worker/infra/' machineset.yaml   
 sed -i /cluster-api-machine-.*worker/s/worker/infra/ machineset.yaml          
 sed -i '/metadata: {}/s/$/\n        taints: [ { key: node-role.kubernetes.io\/infra , effect: NoSchedule } ]/' machineset.yaml
 sed -i 's/metadata: {}/metadata: { labels: { node-role.kubernetes.io\/infra: "" } }/' machineset.yaml   
