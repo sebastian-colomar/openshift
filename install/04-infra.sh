@@ -19,7 +19,7 @@ sed -i /cluster-api-machine-.*worker/s/worker/infra/ machineset.yaml
 sed -i '/metadata: {}/s/$/\n        taints: [ { key: node-role.kubernetes.io\/infra , effect: NoSchedule } ]/' machineset.yaml
 sed -i 's/metadata: {}/metadata: { labels: { node-role.kubernetes.io\/infra: "" } }/' machineset.yaml   
 
-oc create -f machineset.yaml 
+oc apply -f machineset.yaml 
 
 while true
 do
