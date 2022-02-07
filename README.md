@@ -13,7 +13,7 @@ github_location=${github_repository}-$( date +%s )
 ```
 Now you can clone the remote repository:
 ```
-git clone --branch ${github_branch} --single-branch -- https://github.com/academiaonline/openshift ${github_location}
+git clone --branch ${github_branch} --single-branch -- https://github.com/academiaonline-org/openshift ${github_location}
 cd ${github_location}/install/
 ```
 Edit your environment file:
