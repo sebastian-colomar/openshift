@@ -17,16 +17,11 @@
 3. https://docs.openshift.com/container-platform/4.9/support/troubleshooting/diagnosing-oc-issues.html
 
 1. https://docs.openshift.com/container-platform/4.9/web_console/web-console.html
-2. https://docs.openshift.com/container-platform/4.9/web_console/using-dashboard-to-get-cluster-information.html
-3. https://docs.openshift.com/container-platform/4.9/web_console/adding-user-preferences.html
 4. https://docs.openshift.com/container-platform/4.9/web_console/odc-about-developer-perspective.html
-5. https://docs.openshift.com/container-platform/4.9/web_console/odc-about-web-terminal.html
 6. https://docs.openshift.com/container-platform/4.9/web_console/creating-quick-start-tutorials.html
 
 1. https://docs.openshift.com/container-platform/4.9/cli_reference/index.html
 2. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html
-3. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/configuring-cli.html
-4. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/managing-cli-profiles.html
 5. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/developer-cli-commands.html
 6. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/administrator-cli-commands.html
 7. https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/usage-oc-kubectl.html
@@ -45,35 +40,19 @@
 12. https://docs.openshift.com/container-platform/4.9/security/pod-vulnerability-scan.html
 
 15. https://docs.openshift.com/container-platform/4.9/authentication/understanding-authentication.html
-16. https://docs.openshift.com/container-platform/4.9/authentication/understanding-identity-provider.html
-17. https://docs.openshift.com/container-platform/4.9/authentication/identity_providers/configuring-htpasswd-identity-provider.html
-18. https://docs.openshift.com/container-platform/4.9/authentication/identity_providers/configuring-github-identity-provider.html
-
 1. https://docs.openshift.com/container-platform/4.9/authentication/using-rbac.html
-2. https://docs.openshift.com/container-platform/4.9/authentication/remove-kubeadmin.html
 3. https://docs.openshift.com/container-platform/4.9/authentication/understanding-and-creating-service-accounts.html
 4. https://docs.openshift.com/container-platform/4.9/authentication/using-service-accounts-in-applications.html
-5. https://docs.openshift.com/container-platform/4.9/authentication/tokens-scoping.html
-6. https://docs.openshift.com/container-platform/4.9/authentication/bound-service-account-tokens.html
 7. https://docs.openshift.com/container-platform/4.9/authentication/managing-security-context-constraints.html
 
 1. https://docs.openshift.com/container-platform/4.9/networking/understanding-networking.html
-2. https://docs.openshift.com/container-platform/4.9/networking/accessing-hosts.html
-3. https://docs.openshift.com/container-platform/4.9/networking/cluster-network-operator.html
 4. https://docs.openshift.com/container-platform/4.9/networking/ingress-operator.html
-5. https://docs.openshift.com/container-platform/4.9/networking/verifying-connectivity-endpoint.html
-6. https://docs.openshift.com/container-platform/4.9/networking/configuring-node-port-service-range.html
-
 1. https://docs.openshift.com/container-platform/4.9/networking/network_policy/about-network-policy.html
-2. https://docs.openshift.com/container-platform/4.9/networking/network_policy/logging-network-policy.html
 3. https://docs.openshift.com/container-platform/4.9/networking/network_policy/creating-network-policy.html
 4. https://docs.openshift.com/container-platform/4.9/networking/network_policy/viewing-network-policy.html
 5. https://docs.openshift.com/container-platform/4.9/networking/network_policy/editing-network-policy.html
 6. https://docs.openshift.com/container-platform/4.9/networking/network_policy/deleting-network-policy.html
 7. https://docs.openshift.com/container-platform/4.9/networking/network_policy/default-network-policy.html
-8. https://docs.openshift.com/container-platform/4.9/networking/network_policy/multitenant-network-policy.html
-
-1. https://docs.openshift.com/container-platform/4.9/networking/multiple_networks/understanding-multiple-networks.html
 
 3. https://docs.openshift.com/container-platform/4.9/networking/routes/route-configuration.html
 4. https://docs.openshift.com/container-platform/4.9/networking/routes/secured-routes.html
@@ -98,32 +77,16 @@
 10. https://docs.openshift.com/container-platform/4.9/storage/expanding-persistent-volumes.html
 11. https://docs.openshift.com/container-platform/4.9/storage/dynamic-provisioning.html
 
-1. https://docs.openshift.com/container-platform/4.9/registry/index.html
-2. https://docs.openshift.com/container-platform/4.9/registry/configuring-registry-operator.html
-3. https://docs.openshift.com/container-platform/4.9/registry/configuring_registry_storage/configuring-registry-storage-aws-user-infrastructure.html
-4. https://docs.openshift.com/container-platform/4.9/registry/configuring_registry_storage/configuring-registry-storage-vsphere.html
-5. https://docs.openshift.com/container-platform/4.9/registry/accessing-the-registry.html
-6. https://docs.openshift.com/container-platform/4.9/registry/securing-exposing-registry.html
-
 1. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm-what-operators-are.html
 2. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm/olm-understanding-olm.html
 3. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm/olm-arch.html
 4. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm/olm-workflow.html
 5. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm-understanding-operatorhub.html
 6. https://docs.openshift.com/container-platform/4.9/operators/understanding/olm-rh-catalogs.html
-7. https://docs.openshift.com/container-platform/4.9/operators/understanding/crds/crd-extending-api-with-crds.html
-8. https://docs.openshift.com/container-platform/4.9/operators/understanding/crds/crd-managing-resources-from-crds.html
 1. https://docs.openshift.com/container-platform/4.9/operators/user/olm-creating-apps-from-installed-operators.html
 2. https://docs.openshift.com/container-platform/4.9/operators/user/olm-installing-operators-in-namespace.html
 3. https://docs.openshift.com/container-platform/4.9/operators/operator-reference.html
 
-1. https://docs.openshift.com/container-platform/4.9/openshift_images/index.html
-2. https://docs.openshift.com/container-platform/4.9/openshift_images/create-images.html
-3. https://docs.openshift.com/container-platform/4.9/openshift_images/managing_images/managing-images-overview.html
-4. https://docs.openshift.com/container-platform/4.9/openshift_images/managing_images/tagging-images.html
-5. https://docs.openshift.com/container-platform/4.9/openshift_images/managing_images/image-pull-policy.html
-6. https://docs.openshift.com/container-platform/4.9/openshift_images/managing_images/using-image-pull-secrets.html
-7. https://docs.openshift.com/container-platform/4.9/openshift_images/image-streams-manage.html
 8. https://docs.openshift.com/container-platform/4.9/openshift_images/using-templates.html
 
 1. https://docs.openshift.com/container-platform/4.9/applications/projects/working-with-projects.html
