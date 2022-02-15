@@ -106,7 +106,6 @@
 4. https://docs.openshift.com/container-platform/4.9/applications/deployments/route-based-deployment-strategies.html
 
 1. https://docs.openshift.com/container-platform/4.9/applications/quotas/quotas-setting-per-project.html
-2. https://docs.openshift.com/container-platform/4.9/applications/quotas/quotas-setting-across-multiple-projects.html
 
 1. https://docs.openshift.com/container-platform/4.9/applications/config-maps.html
 2. https://docs.openshift.com/container-platform/4.9/applications/odc-monitoring-project-and-application-metrics-using-developer-perspective.html
@@ -128,18 +127,6 @@
 7. https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-configmaps.html
 8. https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-priority.html
 9. https://docs.openshift.com/container-platform/4.9/nodes/pods/nodes-pods-node-selectors.html
-
-1. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-about.html
-2. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-default.html
-3. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-profiles.html
-4. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-pod-affinity.html
-5. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-node-affinity.html
-6. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-overcommit.html
-7. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-taints-tolerations.html
-8. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-node-selectors.html
-9. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-scheduler-pod-topology-spread-constraints.html
-10. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-custom-scheduler.html
-11. https://docs.openshift.com/container-platform/4.9/nodes/scheduling/nodes-descheduler.html
 
 1. https://docs.openshift.com/container-platform/4.9/nodes/jobs/nodes-pods-daemonsets.html
 2. https://docs.openshift.com/container-platform/4.9/nodes/jobs/nodes-nodes-jobs.html
