@@ -15,3 +15,5 @@ https://en.wikipedia.org/wiki/Docker_(software)
 https://en.wikipedia.org/wiki/Kubernetes
 
 https://docs.docker.com/storage/storagedriver/
+
+https://access.redhat.com/labs/ocpupgradegraph/update_path
