@@ -2,5 +2,5 @@ export ClusterName=openshift
 export DomainName=sebastian-colomar.es 
 export master_type=t3a.xlarge
 export Publish=External
-export version=4.8.20
+export version=4.8.33
 export worker_type=t3a.large
