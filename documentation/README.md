@@ -19,3 +19,5 @@ https://docs.docker.com/storage/storagedriver/
 https://access.redhat.com/labs/ocpupgradegraph/update_path
 
 https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
+
+https://github.com/onuryilmaz/k8s-operator-example
