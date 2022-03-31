@@ -2,7 +2,7 @@ test -f ${HOME}/.ssh/id_rsa.pub || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
 
-if ! test -f ${HOME}/bin/openshift-install-aarch64-${version}
+if ! test -f ${HOME}/bin/openshift-install-${version}
 then
 modes='client install'
 for mode in ${modes}
