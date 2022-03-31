@@ -6,7 +6,7 @@ First go through the initial setup:
 Once finished run the following commands in your Cloud9 environment. 
 First customize your environment variables:
 ```
-github_branch=master
+github_branch=aarch64
 github_repository=openshift
 github_username=academiaonline-org
 github_location=${github_repository}-$( date +%s )
