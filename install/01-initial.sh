@@ -2,15 +2,16 @@ test -f ${HOME}/.ssh/id_rsa.pub || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
 
-if ! test -f ${HOME}/bin/openshift-install-${version}
+if ! test -f ${HOME}/bin/openshift-install-aarch64-${version}
 then
 modes='client install'
 for mode in ${modes}
   do
-    curl -O https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/${version}/openshift-${mode}-linux-amd64-${version}.tar.gz
-    gunzip openshift-${mode}-linux-${version}.tar.gz
-    tar xf openshift-${mode}-linux-${version}.tar
-    rm openshift-${mode}-linux-${version}.tar
+    file=openshift-${mode}-linux-amd64-${version}
+    curl -O https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/${version}/${file}.tar.gz
+    gunzip ${file}.tar.gz
+    tar xf ${file}.tar
+    rm ${file}.tar
   done
 
 mkdir -p ${HOME}/bin
