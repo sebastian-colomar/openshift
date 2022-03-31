@@ -7,7 +7,7 @@ then
 modes='client install'
 for mode in ${modes}
   do
-    curl -O https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/${version}/openshift-${mode}-linux-${version}.tar.gz
+    curl -O https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/${version}/openshift-${mode}-linux-amd64-${version}.tar.gz
     gunzip openshift-${mode}-linux-${version}.tar.gz
     tar xf openshift-${mode}-linux-${version}.tar
     rm openshift-${mode}-linux-${version}.tar
