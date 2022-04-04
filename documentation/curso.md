@@ -1,2 +1,2 @@
-https://docs.docker.com/get-started/
-https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
+1. https://docs.docker.com/get-started/
+1. https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
