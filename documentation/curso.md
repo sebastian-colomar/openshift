@@ -56,4 +56,12 @@ docker exec -it xxxxx sh
 ```
 1. https://en.wikipedia.org/wiki/Linux_namespaces
 2. https://en.wikipedia.org/wiki/Cgroups
-3. 
+```
+docker run --entrypoint sh -it library/alpine:latest
+apk add php
+echo '<?php phpinfo();?>' | tee script.php
+php -f script.php -S 0.0.0.0:8080
+apk add curl
+curl localhost:8080/script.php -I
+ip route
+```
