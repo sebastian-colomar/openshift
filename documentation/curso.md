@@ -43,6 +43,16 @@ docker ps
 docker exec xxxxxxxxx touch jose-luis
 
 find /var/lib/docker/ | grep jose-luis
+
+find /var/lib/docker/overlay2/yyyyy/merged/
+
+md5sum /var/lib/docker/overlay2/yyyyy/merged/bin/sleep
+
+docker exec xxxxxxxxx md5sum /bin/sleep
+
+cat /proc/$( echo $$ )/cgroup
+
+docker exec -it xxxxx sh
 ```
 1. https://en.wikipedia.org/wiki/Linux_namespaces
 2. https://en.wikipedia.org/wiki/Cgroups
