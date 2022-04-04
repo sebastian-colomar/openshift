@@ -66,3 +66,20 @@ curl localhost:8080/script.php -I
 ip route
 ```
 1. https://docs.docker.com/engine/reference/builder/
+```
+tee Dockerfile 0<<EOF
+FROM library/alpine:latest
+RUN apk add php
+RUN echo '<?php phpinfo();?>' | tee script.php
+EOF
+
+docker build -t localhost/alpine:phpinfo .
+docker inspect localhost/alpine:phpinfo
+docker history localhost/alpine:phpinfo
+```
+1. https://hub.docker.com/_/nginx
+2. https://github.com/nginxinc/docker-nginx/blob/master/mainline/debian/Dockerfile
+```
+docker images
+find /var/lib/docker | grep /script.php
+```
