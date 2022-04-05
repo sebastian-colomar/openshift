@@ -104,5 +104,6 @@ docker volume inspect registry
 sudo find /var/lib/docker/volumes/registry/_data/
 ```
 1. https://docs.docker.com/storage/volumes/
-2. https://github.com/academiaonline-org/phpinfo/blob/2022-01/kube-compose-cm.yaml
-3. https://kubernetes.io/docs/concepts/overview/components/
+2. https://github.com/academiaonline-org/phpinfo/blob/2022-01/README.md
+3. https://github.com/academiaonline-org/phpinfo/blob/2022-01/kube-compose-cm.yaml
+4. https://kubernetes.io/docs/concepts/overview/components/
