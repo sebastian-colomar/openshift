@@ -107,3 +107,15 @@ sudo find /var/lib/docker/volumes/registry/_data/
 2. https://github.com/academiaonline-org/phpinfo/blob/2022-01/README.md
 3. https://github.com/academiaonline-org/phpinfo/blob/2022-01/kube-compose-cm.yaml
 4. https://kubernetes.io/docs/concepts/overview/components/
+```
+cat /proc/1/cgroup
+cat /proc/$$/cgroup
+docker ps
+docker top 3f2b34079177
+cat /proc/2736/cgroup
+docker top 6d219de4e98c
+cat /proc/2566/cgroup
+cat /proc/2602/cgroup
+ls /var/lib/docker/containers/
+ls /var/lib/docker/overlay2/
+```
