@@ -191,4 +191,7 @@ docker exec nginx3-2 curl http://$( docker container inspect nginx3-2 | grep IPA
 
 docker exec nginx3-1 curl http://$( docker container inspect nginx3-2 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
 docker exec nginx3-2 curl http://$( docker container inspect nginx3-1 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+
+docker run --detach --rm --name nginx --network host library/nginx:alpine
+curl localhost -I
 ```
