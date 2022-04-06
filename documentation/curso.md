@@ -119,3 +119,76 @@ cat /proc/2602/cgroup
 ls /var/lib/docker/containers/
 ls /var/lib/docker/overlay2/
 ```
+1. https://docs.openshift.com/container-platform/4.10/architecture/architecture.html
+```
+docker network ls
+ip link
+
+docker run --detach --name nginx1-docker0 --network bridge library/nginx:alpine
+docker run --detach --name nginx2-docker0 --network bridge library/nginx:alpine
+docker exec nginx1-docker0 sh -c 'echo nginx1-docker0 | tee /usr/share/nginx/html/index.html'
+docker exec nginx2-docker0 sh -c 'echo nginx2-docker0 | tee /usr/share/nginx/html/index.html'
+
+docker exec nginx1-docker0 nslookup nginx1-docker0 127.0.0.11
+docker exec nginx2-docker0 nslookup nginx2-docker0 127.0.0.11
+
+docker exec nginx1-docker0 curl http://nginx1-docker0 --connect-timeout 3
+docker exec nginx2-docker0 curl http://nginx2-docker0 --connect-timeout 3
+
+docker exec nginx1-docker0 curl http://$( docker container inspect nginx1-docker0 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+docker exec nginx2-docker0 curl http://$( docker container inspect nginx2-docker0 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+
+docker exec nginx1-docker0 curl http://$( docker container inspect nginx2-docker0 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+docker exec nginx2-docker0 curl http://$( docker container inspect nginx1-docker0 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+
+iptables -S -t filter | grep docker0.*DROP
+
+docker network create net1
+docker network create net2
+
+docker run --detach --name nginx1 --network net1 library/nginx:alpine
+docker run --detach --name nginx2 --network net2 library/nginx:alpine
+
+docker exec nginx1 sh -c 'echo nginx1 | tee /usr/share/nginx/html/index.html'
+docker exec nginx2 sh -c 'echo nginx2 | tee /usr/share/nginx/html/index.html'
+
+docker exec nginx1 nslookup nginx1 127.0.0.11
+docker exec nginx2 nslookup nginx2 127.0.0.11
+
+docker exec nginx1 curl http://nginx1 -s
+docker exec nginx2 curl http://nginx2 -s
+
+docker exec nginx1 curl http://$( docker container inspect nginx1 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+docker exec nginx2 curl http://$( docker container inspect nginx2 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+
+docker exec nginx1 curl http://$( docker container inspect nginx2 | grep IPAddress | tail -1 | cut -d\" -f4 ) --connect-timeout 3
+docker exec nginx2 curl http://$( docker container inspect nginx1 | grep IPAddress | tail -1 | cut -d\" -f4 ) --connect-timeout 3
+
+iptables -S -t filter | grep br.*DROP
+
+docker network create net3
+
+docker run --detach --name nginx3-1 --network net3 library/nginx:alpine
+docker run --detach --name nginx3-2 --network net3 library/nginx:alpine
+
+docker exec nginx3-1 sh -c 'echo nginx3-1 | tee /usr/share/nginx/html/index.html'
+docker exec nginx3-2 sh -c 'echo nginx3-2 | tee /usr/share/nginx/html/index.html'
+
+docker exec nginx3-1 nslookup nginx3-1 127.0.0.11
+docker exec nginx3-2 nslookup nginx3-2 127.0.0.11
+
+docker exec nginx3-1 nslookup nginx3-2 127.0.0.11
+docker exec nginx3-2 nslookup nginx3-1 127.0.0.11
+
+docker exec nginx3-1 curl http://nginx3-1 -s
+docker exec nginx3-2 curl http://nginx3-2 -s
+
+docker exec nginx3-1 curl http://nginx3-2 -s
+docker exec nginx3-2 curl http://nginx3-1 -s
+
+docker exec nginx3-1 curl http://$( docker container inspect nginx3-1 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+docker exec nginx3-2 curl http://$( docker container inspect nginx3-2 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+
+docker exec nginx3-1 curl http://$( docker container inspect nginx3-2 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+docker exec nginx3-2 curl http://$( docker container inspect nginx3-1 | grep IPAddress | tail -1 | cut -d\" -f4 ) -s
+```
