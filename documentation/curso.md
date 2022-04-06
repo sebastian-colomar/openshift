@@ -196,3 +196,4 @@ docker run --detach --rm --name nginx --network host library/nginx:alpine
 curl localhost -I
 ```
 1. https://iximiuz.com/en/
+1. https://docs.openshift.com/container-platform/4.10/applications/application-health.html
