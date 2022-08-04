@@ -10,7 +10,7 @@ for mode in ${modes}
     curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${version}/openshift-${mode}-linux-${version}.tar.gz
     gunzip openshift-${mode}-linux-${version}.tar.gz
     tar xf openshift-${mode}-linux-${version}.tar
-    rm openshift-${mode}-linux-${version}.tar
+    rm -f openshift-${mode}-linux-${version}.tar
   done
 
 mkdir -p ${HOME}/bin
