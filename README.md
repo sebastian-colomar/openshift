@@ -11,6 +11,11 @@ github_repository=openshift
 github_username=academiaonline-org
 github_location=${github_repository}-$( date +%s )
 ```
+Install git and docker if not yet available:
+```
+sudo yum install -y docker git
+sudo systemctl enable --now docker
+```
 Now you can clone the remote repository:
 ```
 git clone --branch ${github_branch} --single-branch -- https://github.com/${github_username}/${github_repository} ${github_location}
