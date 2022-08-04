@@ -29,7 +29,7 @@ file=${HOME}/bin/openshift-install
 test -f ${file} && rm -f ${file}
 
 ln -s ${HOME}/bin/openshift-install-${version} ${HOME}/bin/openshift-install
-rm ${HOME}/bin/kubectl && ln -s ${HOME}/bin/oc ${HOME}/bin/kubectl    
+rm -f ${HOME}/bin/kubectl && ln -s ${HOME}/bin/oc ${HOME}/bin/kubectl    
 fi
 
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
