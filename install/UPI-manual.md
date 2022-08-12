@@ -15,7 +15,7 @@ git commit -am 'Set the number of compute replicas to zero'
 ```
 It is a good idea to make a copy of your configuration file if you are not using git:
 ```bash
-cp $dir/install-config.yaml $dir/install-config.yaml.bak
+cp -f $dir/install-config.yaml $dir/install-config.yaml.bak
 
 
 ```
@@ -97,8 +97,8 @@ For that purpose you will create a new Cloud9 environment in a public subnet of 
 Otherwise you will need to create a bastion machine inside the private subnet and access the bastion through SSH.
 Anyway you will need to download the project files of your Cloud9 environment including the SSH keys and the AWS credentials:
 ```bash
-cp -r $HOME/.ssh $dir
-cp -r $HOME/.aws $dir
+cp -fr $HOME/.ssh $dir
+cp -fr $HOME/.aws $dir
 export | grep -E " version=| ClusterName=| DomainName=| dir=| Publish=| VpcCidr=| AvailabilityZoneCount=| SubnetBits=| file=" 1> $HOME/environment/variables.sh
 
 
@@ -117,11 +117,11 @@ You will again need to download and install the client installer binaries:
 export dir=xxx
 export version=xxx
 
-mv openshift.tar.gz  ..
+mv -f openshift.tar.gz  ..
 cd ..
 gunzip openshift.tar.gz
 tar xf openshift.tar
-rm openshift.tar
+rm -f openshift.tar
 source $HOME/environment/variables.sh
 rm -rf $HOME/.ssh && mv $dir/.ssh $HOME
 rm -rf $HOME/.aws && mv $dir/.aws $HOME
@@ -131,12 +131,12 @@ do
   wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$version/openshift-$mode-linux-$version.tar.gz
   gunzip openshift-$mode-linux-$version.tar.gz
   tar xf openshift-$mode-linux-$version.tar
-  rm openshift-$mode-linux-$version.tar
+  rm -f openshift-$mode-linux-$version.tar
 done
 mkdir --parents $HOME/bin
 for binary in kubectl oc
 do
-  mv $binary $HOME/bin
+  mv -f $binary $HOME/bin
 done
 mv openshift-install $HOME/bin/openshift-install-$version
 file=README.md 
