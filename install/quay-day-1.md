@@ -18,7 +18,7 @@
    EmailAddress=sebastian.colomar@gmail.com
    docker run -it --rm -v ~/.aws/credentials:/root/.aws/credentials -v $certs:/etc/letsencrypt certbot/dns-route53 certonly -n --dns-route53 --agree-tos --email $EmailAddress -d registry.apps.$ClusterName.$DomainName
    sudo chown $USER. -R $certs
-   cp $certs/live/registry.apps.$ClusterName.$DomainName/*.pem $dir
+   cp -f $certs/live/registry.apps.$ClusterName.$DomainName/*.pem $dir
    
    
    ```
