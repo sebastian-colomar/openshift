@@ -1,6 +1,6 @@
 In case you have not created a git repository then it is a good idea to make a copy of your configuration file:
 ```bash
-cp $dir/install-config.yaml $dir/install-config.yaml.bak
+cp -f $dir/install-config.yaml $dir/install-config.yaml.bak
 ```
 Now you can create the cluster in AWS:
 ```BASH
