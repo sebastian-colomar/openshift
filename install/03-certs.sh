@@ -26,7 +26,7 @@ oc create secret tls certificate --cert=${dir}/tls/api/fullchain.pem --key=${dir
 
 oc patch apiserver cluster --patch '{"spec":{"servingCerts":{"namedCertificates":[{"names":["api.'${ClusterName}'.'${DomainName}'"],"servingCertificate":{"name":"certificate"}}]}}}' --type=merge
 
-cp ${dir}/tls/api/fullchain.pem ${dir}/auth
+cp -f ${dir}/tls/api/fullchain.pem ${dir}/auth
 sed --in-place s/certificate-authority-data.*$/certificate-authority:' 'fullchain.pem/ ${dir}/auth/kubeconfig
 
 
