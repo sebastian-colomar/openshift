@@ -5,7 +5,7 @@ docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/apps/
-cp ${dir}/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/apps/
+cp -f ${dir}/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/apps/
 
 oc create configmap custom-ca --from-file=ca-bundle.crt=${dir}/tls/apps/fullchain.pem --namespace openshift-config
 
@@ -20,7 +20,7 @@ docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/api/
-cp ${dir}/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/tls/api/
+cp -f ${dir}/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/tls/api/
 
 oc create secret tls certificate --cert=${dir}/tls/api/fullchain.pem --key=${dir}/tls/api/privkey.pem --namespace openshift-config
 
