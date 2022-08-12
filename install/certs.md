@@ -38,7 +38,7 @@ In order to substitute the self-signed certificate by a valid one:
   ```bash
   sudo chown $USER. -R ~/environment/certs
   test -d $dir/tls/ || mkdir $dir/tls/
-  cp ~/environment/certs/live/api.$ClusterName.$DomainName/*.pem $dir/tls/
+  cp -f ~/environment/certs/live/api.$ClusterName.$DomainName/*.pem $dir/tls/
   ```
   2. Create a secret that contains the certificate and key in the openshift-config namespace.
   ```bash
@@ -54,6 +54,6 @@ In order to substitute the self-signed certificate by a valid one:
   ```
   5. To solve the previous issue with the new API certificate:
   ```bash
-  cp $dir/tls/fullchain.pem $dir/auth
+  cp -f $dir/tls/fullchain.pem $dir/auth
   sed -i s/certificate-authority-data.*$/certificate-authority:' 'fullchain.pem/ $dir/auth/kubeconfig
   ```
