@@ -9,7 +9,6 @@ file=install-config.yaml						;
 # MINIMUM worker_type: t3a.large
 # ClusterNetworkCIDR=10.128.0.0/16
 # MachineNetworkCIDR=10.0.0.0/16
-# Region=ap-south-1
 # ServiceNetworkCIDR=172.30.0.0/16
 #########################################################################
 sed --in-place 								\
