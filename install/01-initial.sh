@@ -1,6 +1,15 @@
-test -f ${HOME}/.ssh/id_rsa.pub || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
+test -f ${HOME}/.ssh/id_rsa || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
+
+export dir="${HOME}/environment/${ClusterName}.${DomainName}"
+test -d ${dir} || mkdir -p ${dir} 
+
+cd ${dir} && git init
+git config --global user.name 'Your Name'
+git config --global user.email you@example.com
+git add .
+git commit -m Initial 
 
 if ! test -f ${HOME}/bin/openshift-install-${version}
 then
@@ -32,18 +41,8 @@ ln -s ${HOME}/bin/openshift-install-${version} ${HOME}/bin/openshift-install
 rm -f ${HOME}/bin/kubectl && ln -s ${HOME}/bin/oc ${HOME}/bin/kubectl    
 fi
 
-export dir="${HOME}/environment/${ClusterName}.${DomainName}"
-test -d ${dir} || mkdir -p ${dir} 
-
 openshift-install-${version} create install-config --dir ${dir} --log-level debug
 
-cd ${dir} && git init
-git config --global user.name 'Your Name'
-git config --global user.email you@example.com
-git add .
-git commit -m Initial 
-
-cd ${dir}
 wget https://raw.githubusercontent.com/academiaonline-org/openshift/master/install/fix-config.sh
 chmod +x fix-config.sh && ./fix-config.sh && rm -f fix-config.sh
 git commit -am 'Set EC2 instance type' 
