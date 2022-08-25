@@ -31,9 +31,6 @@ for binary in ${binaries}
   done
 mv openshift-install ${HOME}/bin/openshift-install-${version}
 
-file=README.md 
-test -f ${file} && rm -f ${file}
-
 file=${HOME}/bin/openshift-install
 test -f ${file} && rm -f ${file}
 
