@@ -30,8 +30,8 @@ for binary in ${binaries}
     rm ${binary}
     rm kubectl
   done
-ln -s /usr/local/bin/oc /usr/local/bin/kubectl
-ln -s /usr/local/bin/openshift-install /usr/local/bin/openshift-install-${version}
+sudo ln -s /usr/local/bin/oc /usr/local/bin/kubectl
+sudo ln -s /usr/local/bin/openshift-install /usr/local/bin/openshift-install-${version}
 
 fi
 
