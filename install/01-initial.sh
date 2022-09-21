@@ -13,6 +13,7 @@ git commit -m Initial
 
 if ! test -f ${HOME}/bin/openshift-install-${version}
 then
+
 modes='client install'
 for mode in ${modes}
   do
@@ -22,20 +23,16 @@ for mode in ${modes}
     rm -f openshift-${mode}-linux-${version}.tar
   done
 
-mkdir -p ${HOME}/bin
-
-binaries='kubectl oc'
+binaries='oc openshift-install'
 for binary in ${binaries}
   do
-    mv ${binary} ${HOME}/bin
+    sudo install ${binary} /usr/local/bin/
+    rm ${binary}
+    rm kubectl
   done
-mv openshift-install ${HOME}/bin/openshift-install-${version}
+ln -s /usr/local/bin/oc /usr/local/bin/kubectl
+ln -s /usr/local/bin/openshift-install /usr/local/bin/openshift-install-${version}
 
-file=${HOME}/bin/openshift-install
-test -f ${file} && rm -f ${file}
-
-ln -s ${HOME}/bin/openshift-install-${version} ${HOME}/bin/openshift-install
-rm -f ${HOME}/bin/kubectl && ln -s ${HOME}/bin/oc ${HOME}/bin/kubectl    
 fi
 
 openshift-install-${version} create install-config --dir ${dir} --log-level debug
