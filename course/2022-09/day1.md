@@ -67,7 +67,7 @@ docker run --help
 ```
 Let us create the container:
 ```
-docker run --cpus 100m --detach --entrypoint php --env AUTHOR=Sebastian --expose 8080 --memory 100M --memory-reservation 100M --name phpinfo --network phpinfo-network --read-only --restart always --user nobody:nogroup --volume ${HOME}/phpinfo/:/var/data/:ro --workdir /var/data/ index.docker.io/library/php:alpine@sha256:ab23b416d86aec450ee7b75727f6bbec272edc2764a1b6fad13bc2823c59bb6b -f index.php -S 0.0.0.0:8080
+docker run --cpus 0.001 --detach --entrypoint php --env AUTHOR=Sebastian --expose 8080 --memory 100M --memory-reservation 100M --name phpinfo --network phpinfo-network --read-only --restart always --user nobody:nogroup --volume ${HOME}/phpinfo/:/var/data/:ro --workdir /var/data/ index.docker.io/library/php:alpine@sha256:ab23b416d86aec450ee7b75727f6bbec272edc2764a1b6fad13bc2823c59bb6b -f index.php -S 0.0.0.0:8080
 ```
 # Troubleshooting the Docker container:
 
