@@ -30,7 +30,7 @@
 1. Locate the PHP package in the corresponding Docker image layer:
 
     ```
-    sudo find /var/lib/docker/overlay2/ | grep bin/php$
+    sudo find /var/lib/docker/overlay2/ | grep bin/php81$
     ```
 1. Get detailed information about the Docker image:
 
