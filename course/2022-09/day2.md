@@ -83,6 +83,14 @@
     INSIDE THE CONTAINER        OUTSIDE THE CONTAINER
              /              =   /var/lib/docker/overlay2/dcb3a3d7898a333d4234c1de0b10d8c55353aaf8237507aaa937965a7a2461b6/merged/
     ```
+# How to automate the test of my applications with Github Actions:
+1. Let us suppose that we want test the following Dockerfile:
+
+    * https://github.com/academiaonline-org/phpinfo/blob/main/docker/Dockerfile
+
+1. For this purpose we have to create a pipeline in Github Actions:
+
+    * https://github.com/academiaonline-org/phpinfo/blob/main/.github/workflows/ci.yaml
 # How to deploy a Docker stack using a Docker compose file
 
 * https://docs.docker.com/compose/compose-file/compose-file-v3/
