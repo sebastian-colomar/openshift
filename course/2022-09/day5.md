@@ -16,11 +16,11 @@ spec:
           protocol: TCP
       resources:
         limits:
-          cpu: 1m
-          memory: 20M
+          cpu: 100m
+          memory: 100M
         requests:
-          cpu: 1m
-          memory: 20M
+          cpu: 100m
+          memory: 100M
       command:
         - "/usr/local/bin/php"
       env:
