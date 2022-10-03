@@ -1,6 +1,6 @@
 # How to deploy our sample application using a Pod
 ```
-# docker run --cpus 100m --detach --env AUTHOR=Sebastian --expose 8080 --memory 100M --memory-reservation 100M --name phpinfo --network phpinfo-network --read-only --restart always --user nobody:nogroup --volume ${HOME}/phpinfo/:/var/data/:ro --workdir /var/data/ index.docker.io/library/php:alpine@sha256:ab23b416d86aec450ee7b75727f6bbec272edc2764a1b6fad13bc2823c59bb6b php -f index.php -S 0.0.0.0:8080
+# docker run --cpus 100m --detach --env AUTHOR=Sebastian --expose 8080 --memory 100M --memory-reservation 100M --name phpinfo --read-only --restart always --user nobody:nogroup --volume ${HOME}/phpinfo/:/data/:ro --workdir /data/ index.docker.io/library/php:alpine@sha256:ab23b416d86aec450ee7b75727f6bbec272edc2764a1b6fad13bc2823c59bb6b php -f index.php -S 0.0.0.0:8080
 apiVersion: v1
 kind: Pod
 metadata:
@@ -29,11 +29,11 @@ spec:
           runAsUser: 65534
           runAsGroup: 65534
       volumeMounts:
-        - mountPath: /var/data/index.php
+        - mountPath: /data/index.php
           subPath: index.php
           name: phpinfo-volume
           readOnly: true
-      workingDir: /var/data/
+      workingDir: /data/
       args:
         - php
         - -f
