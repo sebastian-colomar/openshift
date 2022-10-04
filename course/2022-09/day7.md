@@ -19,6 +19,8 @@
               image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
               ports:
                 - containerPort: 8080
+              securityContext:
+                readOnlyRootFilesystem: true
               volumeMounts:
                 - mountPath: /var/www/html/
                   name: httpd-volume
