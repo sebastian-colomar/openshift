@@ -1,7 +1,7 @@
 # Storage
 1. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html-single/storage/index
 2. https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,c_fill,w_2932,h_1617/https://assets.ubuntu.com/v1/09b510e0-UAS_storage_options.png
-3. 
+
 # Pods, Services, IPtables and Network Policies:
 1. Create a basic Pod:
 
