@@ -50,6 +50,20 @@
               name: httpd-conf
               readOnly: false
           workingDir: /conf/
+        - name: httpd-confd
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
+          args:
+            - cp /etc/httpd/conf.d/ssl.conf .
+          command:
+            - sh
+            - -c
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /confd/
+              name: httpd-confd
+              readOnly: false
+          workingDir: /confd/
         - name: httpd-init
           args:
             - cp -v /etc/hostname index.html
