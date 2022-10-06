@@ -31,6 +31,9 @@
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
               readOnly: false
+            - mountPath: /etc/httpd/conf.d/
+              name: httpd-confd
+              readOnly: false
           workingDir: /var/www/html/
       initContainers:
         - name: httpd-conf
@@ -64,6 +67,7 @@
       volumes:
         - name: httpd-volume
         - name: httpd-conf
+        - name: httpd-confd
     ```
 1. Create a Service to connect to this Pod:
 
