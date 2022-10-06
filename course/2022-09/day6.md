@@ -37,6 +37,9 @@
             - mountPath: /opt/
               name: opt
               readOnly: false
+            - mountPath: /tmp/
+              name: tmp
+              readOnly: false
           workingDir: /var/www/html/
       initContainers:
         - name: httpd-conf
@@ -67,7 +70,7 @@
               name: httpd-confd
               readOnly: false
           workingDir: /confd/
-         - name: opt
+        - name: opt
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
             - cp -r -v /opt/* .
@@ -100,6 +103,7 @@
         - name: httpd-conf
         - name: httpd-confd
         - name: opt
+        - name: tmp
     ```
 1. Create a Service to connect to this Pod:
 
