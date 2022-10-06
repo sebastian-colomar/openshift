@@ -30,10 +30,10 @@
               readOnly: true
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
-              readOnly: true
+              #readOnly: true
             - mountPath: /etc/httpd/conf/httpd.conf
               name: httpd-conf2
-              readOnly: true
+              #readOnly: true
               subPath: httpd.conf
           workingDir: /var/www/html/
       initContainers:
