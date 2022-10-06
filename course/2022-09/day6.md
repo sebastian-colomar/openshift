@@ -46,6 +46,7 @@
             - mountPath: /tmp/
               name: tmp
               readOnly: false
+            # df / /tmp/ /opt/ /etc/httpd/conf/ /etc/httpd/conf.d/ /etc/httpd/tls/ /etc/httpd/run/ /var/www/html/  
           workingDir: /var/www/html/
       initContainers:
         - name: httpd-conf
