@@ -31,7 +31,7 @@
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
               readOnly: false
-            - mountPath: /etc/httpd/conf/httpd.conf
+            - mountPath: /etc/httpd/httpd.conf
               name: httpd-conf2
               readOnly: true
               subPath: httpd.conf
