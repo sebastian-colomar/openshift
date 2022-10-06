@@ -42,7 +42,7 @@
         - name: httpd-conf
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
-            - cp /etc/httpd/conf/httpd.conf .
+            - cp -v /etc/httpd/conf/httpd.conf .
           command:
             - sh
             - -c
@@ -56,7 +56,7 @@
         - name: httpd-confd
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
-            - cp /etc/httpd/conf.d/ssl.conf .
+            - cp -v /etc/httpd/conf.d/ssl.conf .
           command:
             - sh
             - -c
@@ -67,6 +67,20 @@
               name: httpd-confd
               readOnly: false
           workingDir: /confd/
+         - name: opt
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
+          args:
+            - cp -r -v /opt/* .
+          command:
+            - sh
+            - -c
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /opt2/
+              name: opt
+              readOnly: false
+          workingDir: /opt2/
         - name: httpd-init
           args:
             - cp -v /etc/hostname index.html
