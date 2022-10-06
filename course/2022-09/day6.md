@@ -34,6 +34,9 @@
             - mountPath: /etc/httpd/conf.d/
               name: httpd-confd
               readOnly: false
+            - mountPath: /etc/httpd/run/
+              name: httpd-run
+              readOnly: false
             - mountPath: /etc/httpd/tls/
               name: httpd-tls
               readOnly: false
@@ -105,6 +108,7 @@
         - name: httpd-volume
         - name: httpd-conf
         - name: httpd-confd
+        - name: httpd-run
         - name: httpd-tls
         - name: opt
         - name: tmp
