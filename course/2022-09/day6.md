@@ -30,14 +30,10 @@
               readOnly: true
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
-              #readOnly: true
-            - mountPath: /etc/httpd/conf/httpd.conf
-              name: httpd-conf2
-              #readOnly: true
-              subPath: httpd.conf
+              readOnly: false
           workingDir: /var/www/html/
       initContainers:
-        - name: httpd-conf2
+        - name: httpd-conf
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
             - cp /etc/httpd/conf/httpd.conf .
@@ -48,7 +44,7 @@
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /conf/
-              name: httpd-conf2
+              name: httpd-conf
               readOnly: false
           workingDir: /conf/
         - name: httpd-init
@@ -68,7 +64,6 @@
       volumes:
         - name: httpd-volume
         - name: httpd-conf
-        - name: httpd-conf2
     ```
 1. Create a Service to connect to this Pod:
 
