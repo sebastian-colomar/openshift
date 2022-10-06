@@ -119,6 +119,7 @@
         - name: httpd-volume
         - name: httpd-conf
         - name: httpd-confd
+        - name: httpd-tls
         - name: opt
         - name: tmp
     ```
