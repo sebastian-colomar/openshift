@@ -22,9 +22,12 @@
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           ports:
             - containerPort: 8080
+          securityContext:
+            readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /var/www/html/
               name: httpd-volume
+              readOnly: true
       initContainers:
         - name: httpd-init
           args:
@@ -33,9 +36,12 @@
             - sh
             - -c
           image: busybox
+          securityContext:
+            readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /data/
               name: httpd-volume
+              readOnly: false
       volumes:
         - name: httpd-volume
     ```
