@@ -28,10 +28,11 @@
             - mountPath: /var/www/html/
               name: httpd-volume
               readOnly: true
+          workingDir: /var/www/html/
       initContainers:
         - name: httpd-init
           args:
-            - cp -v /etc/hostname /data/index.html
+            - cp -v /etc/hostname index.html
           command:
             - sh
             - -c
@@ -42,6 +43,7 @@
             - mountPath: /data/
               name: httpd-volume
               readOnly: false
+          workingDir: /data/
       volumes:
         - name: httpd-volume
     ```
