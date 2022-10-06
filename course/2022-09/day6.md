@@ -34,6 +34,9 @@
             - mountPath: /etc/httpd/conf.d/
               name: httpd-confd
               readOnly: false
+            - mountPath: /etc/httpd/tls/
+              name: httpd-tls
+              readOnly: false
             - mountPath: /opt/
               name: opt
               readOnly: false
@@ -70,6 +73,20 @@
               name: httpd-confd
               readOnly: false
           workingDir: /confd/
+        - name: httpd-tls
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
+          args:
+            - cp -v /etc/httpd/tls/* .
+          command:
+            - sh
+            - -c
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tls/
+              name: httpd-tls
+              readOnly: false
+          workingDir: /tls/
         - name: opt
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
