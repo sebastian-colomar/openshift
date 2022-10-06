@@ -106,12 +106,26 @@
           workingDir: /data/
       volumes:
         - name: httpd-volume
+          emptyDir:
+            medium: Memory
         - name: httpd-conf
+          emptyDir:
+            medium: Memory
         - name: httpd-confd
+          emptyDir:
+            medium: Memory
         - name: httpd-run
+          emptyDir:
+            medium: Memory
         - name: httpd-tls
+          emptyDir:
+            medium: Memory
         - name: opt
+          emptyDir:
+            medium: Memory
         - name: tmp
+          emptyDir:
+            medium: Memory
     ```
 1. Create a Service to connect to this Pod:
 
