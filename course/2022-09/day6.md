@@ -28,31 +28,24 @@
             - mountPath: /var/www/html/
               name: httpd-volume
               readOnly: true
-              sizeLimit: 100K
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
               readOnly: false
-              sizeLimit: 100K
             - mountPath: /etc/httpd/conf.d/
               name: httpd-confd
               readOnly: false
-              sizeLimit: 100K
             - mountPath: /etc/httpd/run/
               name: httpd-run
               readOnly: false
-              sizeLimit: 100K
             - mountPath: /etc/httpd/tls/
               name: httpd-tls
               readOnly: false
-              sizeLimit: 100K
             - mountPath: /opt/
               name: opt
               readOnly: false
-              sizeLimit: 100K
             - mountPath: /tmp/
               name: tmp
               readOnly: false
-              sizeLimit: 100K
             # df / /tmp/ /opt/ /etc/httpd/conf/ /etc/httpd/conf.d/ /etc/httpd/tls/ /etc/httpd/run/ /var/www/html/  
           workingDir: /var/www/html/
       initContainers:
@@ -116,24 +109,31 @@
         - name: httpd-volume
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: httpd-conf
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: httpd-confd
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: httpd-run
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: httpd-tls
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: opt
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
         - name: tmp
           emptyDir:
             medium: Memory
+            sizeLimit: 100K
     ```
 1. Create a Service to connect to this Pod:
 
