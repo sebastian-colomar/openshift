@@ -26,7 +26,7 @@
             readOnlyRootFilesystem: true
           volumeMounts:
             - mountPath: /var/www/html/
-              name: httpd-volume
+              name: httpd-html
               readOnly: true
             - mountPath: /etc/httpd/conf/
               name: httpd-conf
@@ -41,10 +41,10 @@
               name: httpd-tls
               readOnly: false
             - mountPath: /opt/
-              name: opt
+              name: httpd-opt
               readOnly: false
             - mountPath: /tmp/
-              name: tmp
+              name: httpd-tmp
               readOnly: false
             # df / /tmp/ /opt/ /etc/httpd/conf/ /etc/httpd/conf.d/ /etc/httpd/tls/ /etc/httpd/run/ /var/www/html/  
           workingDir: /var/www/html/
@@ -59,10 +59,10 @@
           securityContext:
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /conf/
+            - mountPath: /httpd-conf/
               name: httpd-conf
               readOnly: false
-          workingDir: /conf/
+          workingDir: /httpd-conf/
         - name: httpd-confd
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
@@ -73,11 +73,11 @@
           securityContext:
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /confd/
+            - mountPath: /httpd-confd/
               name: httpd-confd
               readOnly: false
-          workingDir: /confd/
-        - name: opt
+          workingDir: /httpd-confd/
+        - name: httpd-opt
           image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
           args:
             - cp -r -v /opt/* .
@@ -87,11 +87,11 @@
           securityContext:
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /opt2/
-              name: opt
+            - mountPath: /httpd-opt/
+              name: httpd-opt
               readOnly: false
-          workingDir: /opt2/
-        - name: httpd-init
+          workingDir: /httpd-opt/
+        - name: httpd-html
           args:
             - cp -v /etc/hostname index.html
           command:
@@ -101,12 +101,12 @@
           securityContext:
             readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: /data/
-              name: httpd-volume
+            - mountPath: /httpd-html/
+              name: httpd-html
               readOnly: false
-          workingDir: /data/
+          workingDir: /httpd-html/
       volumes:
-        - name: httpd-volume
+        - name: httpd-html
           emptyDir:
             medium: Memory
             sizeLimit: 100K
@@ -126,11 +126,11 @@
           emptyDir:
             medium: Memory
             sizeLimit: 100K
-        - name: opt
+        - name: httpd-opt
           emptyDir:
             medium: Memory
             sizeLimit: 100K
-        - name: tmp
+        - name: httpd-tmp
           emptyDir:
             medium: Memory
             sizeLimit: 100K
