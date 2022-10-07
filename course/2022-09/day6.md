@@ -109,31 +109,31 @@
         - name: httpd-html
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-conf
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-confd
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-run
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-tls
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-opt
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
         - name: httpd-tmp
           emptyDir:
             medium: Memory
-            sizeLimit: 100K
+            sizeLimit: 100k
     ```
 1. Create a Service to connect to this Pod:
 
