@@ -8,12 +8,19 @@
 * https://console-openshift-console.apps.ocp.sebastian-colomar.es/command-line-tools
 ```
 wget https://downloads-openshift-console.apps.ocp.sebastian-colomar.es/amd64/linux/oc.tar
+
 tar xf oc.tar
+
 sudo install oc /usr/local/bin/
+
 which oc
+
 oc version
+
 sudo ln -s /usr/local/bin/oc /usr/local/bin/kubectl
+
 which kubectl
+
 kubectl version
 ```
 # Docker vs CRI-O
