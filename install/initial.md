@@ -6,27 +6,9 @@ You will need the Pull Secret generated in this page:
 You will need to obtain a valid public domain name before installing the cluster:
 * https://console.aws.amazon.com/route53/home
 
-All the steps will be performed from an AWS Cloud9 terminal with enough privileges (AdministratorAccess will work):
-* https://ap-south-1.console.aws.amazon.com/cloud9/home
-<!--
-```bash
-branch=master
-domain=github.com
-file=policy.yaml
-path=etc/aws
-project=openshift
-username=secobau
+All the steps will be performed from a Linux terminal (I am using an EC2 instance) with enough AWS privileges (AdministratorAccess will work):
 
-location=$project/$path/$file
-
-git clone --single-branch -b $branch https://$domain/$username/$project
-aws cloudformation create-stack --stack-name ocp-${file%.yaml} --template-body file://$location --capabilities CAPABILITY_NAMED_IAM
-rm -rf $project 
-```
--->
-Disable AWS managed temporary credentials in AWS Cloud9 settings. 
-
-Now you need to create a new Access Key in your AWS IAM Security Credentials and then configure your AWS Cloud9 terminal:
+For this purpose you need to create a new Access Key in your AWS IAM Security Credentials and then configure the AWS credentials in your Linux terminal:
 * https://console.aws.amazon.com/iam/home
 ```bash
 aws configure
