@@ -9,7 +9,7 @@ First customize your environment variables:
 github_branch=master
 github_repository=openshift
 github_username=academiaonline-org
-github_location=${github_repository}-$( date +%s )
+github_location=${HOME}/${github_repository}-$( date +%s )
 ```
 Install git and docker if not yet available:
 ```
