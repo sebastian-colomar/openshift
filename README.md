@@ -3,8 +3,19 @@
 First go through the initial setup:
 - [Initial Setup](install/initial.md)
 
-Once finished run the following commands in your Cloud9 environment. 
-First customize your environment variables:
+Once finished run the following commands in your Linux terminal.
+
+You need to run a BASH shell. You can do it as root or as a normal user:
+```
+sudo su --login root
+
+```
+Check that you have the necessary AWS credentials available:
+```
+aws configure
+
+```
+Now you can customize your environment variables:
 ```
 github_branch=master
 github_repository=openshift
