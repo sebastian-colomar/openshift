@@ -12,4 +12,5 @@ For this purpose you need to create a new Access Key in your AWS IAM Security Cr
 * https://console.aws.amazon.com/iam/home
 ```bash
 aws configure
+
 ```
