@@ -72,7 +72,7 @@ EOF
 while true
 do
 sleep 10
-oc get crd -A | grep xxx && break
+oc get crd -A | grep open-cluster-management && break
 done
 
 while true
