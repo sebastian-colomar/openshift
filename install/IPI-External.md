@@ -1,6 +1,0 @@
-1. [Initial setup](initial.md)
-2. [Preparation](preparation.md)
-3. [Create cluster](create.md)
-4. [Customize certificates](certs.md)
-5. [Security Context Constraints](scc.md)
-6. [Destroy cluster](destroy.md)
