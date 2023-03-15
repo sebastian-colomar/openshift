@@ -1,0 +1,6 @@
+oc new-app -f https://raw.githubusercontent.com/sclorg/nginx-ex/master/openshift/templates/nginx.json
+oc set resources dc/nginx-example --limits=memory=80Mi
+oc status --suggest
+oc describe dc/nginx-example
+oc describe svc/nginx-example
+oc describe route/nginx-example

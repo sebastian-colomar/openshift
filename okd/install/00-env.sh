@@ -1,0 +1,9 @@
+export ClusterName=okd
+export ClusterNetworkCIDR=10.128.0.0/16
+export DomainName=sebastian-colomar.es 
+export MachineNetworkCIDR=10.0.0.0/16
+export master_type=t3a.xlarge
+export Publish=External
+export ServiceNetworkCIDR=172.30.0.0/16
+export version=4.12.0-0.okd-2023-01-21-055900
+export worker_type=t3a.large
