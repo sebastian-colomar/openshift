@@ -1,0 +1,5 @@
+oc new-app openshift/postgresql-92-centos7 --name postgresql -e POSTGRESQL_USER=user -e POSTGRESQL_DATABASE=db -e POSTGRESQL_PASSWORD=password
+oc set resources dc/postgresql --limits=memory=80Mi
+oc set probe dc/postgresql --liveness -- echo ok
+oc describe svc/postgresql
+oc set probe dc/postgresql --readiness --open-tcp=5432

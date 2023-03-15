@@ -1,0 +1,50 @@
+################################################################################
+#      Copyright (C) 2020        Sebastian Francisco Colomar Bauza             #
+#      SPDX-License-Identifier:  GPL-2.0-only                                  #
+################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: php
+  template:
+    metadata:
+      labels:
+        service: php
+    spec:
+      containers:
+      -
+        image: secobau/php:rc-apache-1.1
+        name: php
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php
+spec:
+  ports:
+  -
+    port: 80
+  selector:
+    service: php
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: php
+spec:
+  to:
+    kind: Service
+    name: php
+    weight: 100
+  port:
+    targetPort: 80
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+################################################################################

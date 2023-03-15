@@ -1,0 +1,39 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: QuayEcosystem
+metadata:
+  name: registry
+  namespace: quay-enterprise
+spec:
+  clair:
+    database:
+      credentialsSecretName: registry-clair
+      imagePullSecretName: registry-pull-secret
+      volumeSize: 20Gi
+    enabled: true
+    imagePullSecretName: registry-pull-secret
+    sslCertificatesSecretName: registry-ssl
+  quay:
+    configSecretName: registry-config
+    database:
+      credentialsSecretName: registry-quay
+      imagePullSecretName: registry-pull-secret
+      volumeSize: 20Gi
+    enableRepoMirroring: true
+    externalAccess:
+      hostname: registry.apps.openshift.sebastian-colomar.es
+      tls:
+        secretName: registry-ssl
+        termination: passthrough
+      type: Route
+    imagePullSecretName: registry-pull-secret
+    registryBackends:
+    - credentialsSecretName: registry-s3
+      name: s3
+      s3:
+        bucketName: secobau-registry
+    superuserCredentialsSecretName: registry-admin
+    superusers:
+    - registry-admin
+  redis:
+    credentialsSecretName: registry-redis
+    imagePullSecretName: registry-pull-secret
