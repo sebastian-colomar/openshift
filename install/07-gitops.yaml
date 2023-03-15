@@ -37,22 +37,12 @@ EOF
 while true
 do
 sleep 10
-oc get gitopsservices | grep cluster && break
+oc get crd -A | grep gitopsservices && break
 done
+
 oc patch gitopsservice/cluster --patch '{"spec":{"runOnInfra":true,"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","operator":"Exists"}]}}' --type=merge
 
-while true
-do
-sleep 10
-oc get secrets | grep openshift-gitops-tls && break
-done
 oc --namespace openshift-gitops delete secret openshift-gitops-tls && oc --namespace openshift-gitops create secret tls openshift-gitops-tls --cert=${dir}/tls/apps/fullchain.pem --key=${dir}/tls/apps/privkey.pem
-
-while true
-do
-sleep 10
-oc get deploy | grep openshift-gitops-server && break
-done
 oc --namespace openshift-gitops delete deploy openshift-gitops-server
 
 while true
