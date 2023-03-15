@@ -1,0 +1,15 @@
+
+[
+  {
+    "ParameterKey": "VpcCidr", 
+    "ParameterValue": "VpcCidr_Value" 
+  },
+  {
+    "ParameterKey": "AvailabilityZoneCount", 
+    "ParameterValue": "AvailabilityZoneCount_Value" 
+  },
+  {
+    "ParameterKey": "SubnetBits", 
+    "ParameterValue": "SubnetBits_Value" 
+  }
+]

@@ -1,0 +1,30 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-ssh
+  selfLink: /apis/machineconfiguration.openshift.io/v1/machineconfigs/99-master-ssh
+spec:
+  config:
+    ignition:
+      config: {}
+      security:
+        tls: {}
+      timeouts: {}
+      version: 2.2.0
+    networkd: {}
+    passwd:
+      users:
+        - name: core
+          sshAuthorizedKeys:
+            - >-
+              ssh-rsa
+              AAAAB3NzaC1yc2EAAAADAQABAAABgQDC6OHjxRJgDiUb48WmwAHgzcPfznbvWt8ER8d7TSJccotmxIc8RuRdc1icvodZm/ud1bg6+Ms2fAuLU5LVnFGA175wmOV0aKeaKrZWPAHCS3RqzbmyDIyc78Bdbdn1IiQrSKS1ZO3GG+n3yAzfilmSHK3RE03EqN10kE6wDVGRe1pb3yoYkccroYl09BtDEFVLQoocV7r4XJGq6FDXbzs+y8hA637lu3pdq5aO1ieCMN4D4MazRhXr9/RFCQgpBkeL8F4pr0pvYvuKoCBtefS8FURq98TCJvL1jZt3129fcRG63t2ayaWIMTLQTl97CoGc4LAz3PizdAoLksWvLyxdfH3pe4/bZ8hTHRxdF0D2BrMtpOXoWm9sUxZ2dBqY4IzzQsKv2md42uug6e/QuWp2UaJmuf/CYdVCtXIxAqA/2yqyfwldWCuSiiUSB7NOWebMagk0sLbvFxQyPQK6jkMB0nx8dQmdwCOPoCPlK3KRhXrKHFCYvRWgp42hU8qdu70=
+              core
+    storage: {}
+    systemd: {}
+  fips: false
+  kernelArguments: null
+  kernelType: ''
+  osImageURL: ''

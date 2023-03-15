@@ -1,0 +1,13 @@
+oc new-app https://github.com/secobau/phpinfo
+oc set resources dc/phpinfo --limits=memory=80Mi
+oc expose svc/phpinfo
+oc logs bc/phpinfo --follow
+oc status
+oc status --suggest
+oc get all
+oc get pods
+oc set probe dc/phpinfo --liveness -- echo ok
+oc set probe dc/phpinfo --readiness --get-url=http://:8080/
+oc describe dc/phpinfo
+oc describe svc/phpinfo
+oc describe route/phpinfo
