@@ -1,0 +1,6 @@
+oc new-project secobau-php
+oc project secobau-oc
+oc new-app https://github.com/secobau/phpinfo --name php -o yaml 1>php.yaml
+vi php.yaml
+oc create -f php.yaml -n secobau-php
+http://php-secobau-php2.e4ff.pro-eu-west-1.openshiftapps.com/

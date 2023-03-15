@@ -1,0 +1,241 @@
+################################################################################
+#      Copyright (C) 2020        Sebastian Francisco Colomar Bauza             #
+#      SPDX-License-Identifier:  GPL-2.0-only                                  #
+################################################################################
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rng
+  namespace: dockercoins-x
+spec:
+  selector:
+    matchLabels:
+      service: rng
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        service: rng
+    spec:
+      containers:
+      -
+        image: secobau/dockercoins:rng-1.4
+        name: rng
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hasher
+  namespace: dockercoins-x
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: hasher
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        service: hasher
+    spec:
+      containers:
+      -
+        image: secobau/dockercoins:hasher-1.4
+        name: hasher
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: dockercoins-x
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: redis
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        service: redis
+    spec:
+      containers:
+      -
+        image: redis
+        name: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui
+  namespace: dockercoins-x
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: webui
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        service: webui
+    spec:
+      containers:
+      -
+        image: secobau/dockercoins:webui-1.4
+        name: webui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: dockercoins-x
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: worker
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        service: worker
+    spec:
+      containers:
+      -
+        image: secobau/dockercoins:worker-1.5
+        name: worker
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: hasher
+  namespace: dockercoins-x
+spec:
+  host: hasher
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: redis
+  namespace: dockercoins-x
+spec:
+  host: redis
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: rng
+  namespace: dockercoins-x
+spec:
+  host: rng
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: webui
+  namespace: dockercoins-x
+spec:
+  host: webui
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: dockercoins
+  namespace: dockercoins-x
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dockercoins
+  namespace: dockercoins-x
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - dockercoins
+  http:
+  - match:
+    - uri:
+        exact: /index.html
+    route:
+    - destination:
+        host: webui
+        port:
+          number: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hasher
+  namespace: dockercoins-x
+spec:
+  ports:
+  -
+    port: 8080
+  selector:
+    service: hasher
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: dockercoins-x
+spec:
+  ports:
+  -
+    port: 6379
+  selector:
+    service: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rng
+  namespace: dockercoins-x
+spec:
+  ports:
+  -
+    port: 8080
+  selector:
+    service: rng
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webui
+  namespace: dockercoins-x
+spec:
+  ports:
+  -
+    port: 8080
+  selector:
+    service: webui
+################################################################################
