@@ -32,7 +32,7 @@ sudo systemctl enable --now docker
 Now you can clone the remote repository:
 ```
 git clone --branch ${github_branch} --single-branch -- https://github.com/${github_username}/${github_repository} ${github_location}
-cd ${github_location}/install/
+cd ${github_location}/${github_branch}/install/
 
 ```
 Edit your environment file:
