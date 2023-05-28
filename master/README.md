@@ -10,6 +10,11 @@ You need to run a BASH shell. You can do it as root or as a normal user:
 sudo su --login root
 
 ```
+Remove unwanted aliases if necessary:
+```
+unalias rm cp mv
+
+```
 Check that you have the necessary AWS credentials available:
 ```
 aws configure
