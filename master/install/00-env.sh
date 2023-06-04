@@ -7,4 +7,4 @@ export Publish=External
 export ServiceNetworkCIDR=172.30.0.0/16
 export version=4.13.0
 export worker_type=t3a.large
-#export worker_type=r6a.2xlarge # FOR HEAVY DUTIES: 8CPU, 64GB, $0.2860 (in Mumbai)
+#export worker_type=c6a.4xlarge # FOR HEAVY DUTIES: 16vCPU, 32GB, $0.3740 (in Mumbai)
