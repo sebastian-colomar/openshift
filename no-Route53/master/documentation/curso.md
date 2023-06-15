@@ -85,15 +85,15 @@ find /var/lib/docker | grep /script.php
 docker run --entrypoint php -p 8080 localhost/alpine:phpinfo -f script.php -S 0.0.0.0:8080
 ```
 1. https://docs.docker.com/storage/storagedriver/
-2. https://github.com/academiaonline-org/phpinfo
+2. https://github.com/sebastian-colomar/phpinfo
 ```
-git clone https://github.com/academiaonline-org/phpinfo
+git clone https://github.com/sebastian-colomar/phpinfo
 cd phpinfo
 git checkout main
 php -f src/index.php -S localhost:8080
 curl localhost:8080/src/index.php
 ```
-1. https://github.com/academiaonline-org/dca/blob/main/registry.md
+1. https://github.com/sebastian-colomar/dca/blob/main/registry.md
 ```
 docker run --detach --name registry --publish 5000:5000 --restart always --volume registry:/var/lib/registry:rw docker.io/library/registry:2
 docker pull docker.io/library/busybox:latest
@@ -104,8 +104,8 @@ docker volume inspect registry
 sudo find /var/lib/docker/volumes/registry/_data/
 ```
 1. https://docs.docker.com/storage/volumes/
-2. https://github.com/academiaonline-org/phpinfo/blob/2022-01/README.md
-3. https://github.com/academiaonline-org/phpinfo/blob/2022-01/kube-compose-cm.yaml
+2. https://github.com/sebastian-colomar/phpinfo/blob/2022-01/README.md
+3. https://github.com/sebastian-colomar/phpinfo/blob/2022-01/kube-compose-cm.yaml
 4. https://kubernetes.io/docs/concepts/overview/components/
 ```
 cat /proc/1/cgroup

@@ -70,7 +70,7 @@ export worker_type=t3a.large
 The following script will modify the EC2 instance type so as to choose the cheapest possible type but big enough to correctly set up the cluster:
 ```
 cd $dir
-wget https://raw.githubusercontent.com/academiaonline-org/openshift/master/install/fix-config.sh
+wget https://raw.githubusercontent.com/sebastian-colomar/openshift/master/install/fix-config.sh
 chmod +x fix-config.sh && ./fix-config.sh && rm fix-config.sh
 git commit -am 'Set EC2 instance type' 
 ```

@@ -8,7 +8,7 @@ First customize your environment variables:
 ```
 github_branch=okd
 github_repository=openshift
-github_username=academiaonline-org
+github_username=sebastian-colomar
 github_location=${github_repository}-$( date +%s )
 
 ```

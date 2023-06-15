@@ -24,7 +24,7 @@ Now you can customize your environment variables:
 ```
 github_branch=master
 github_repository=openshift
-github_username=academiaonline-org
+github_username=sebastian-colomar
 github_location=${HOME}/${github_repository}-$( date +%s )
 
 ```

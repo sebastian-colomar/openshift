@@ -37,7 +37,7 @@ fi
 
 openshift-install-${version} create install-config --dir ${dir} --log-level debug
 
-wget https://raw.githubusercontent.com/academiaonline-org/openshift/master/install/fix-config.sh
+wget https://raw.githubusercontent.com/sebastian-colomar/openshift/master/install/fix-config.sh
 chmod +x fix-config.sh && ./fix-config.sh && rm -f fix-config.sh
 git commit -am 'Set EC2 instance type' 
 

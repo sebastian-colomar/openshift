@@ -26,4 +26,4 @@ kubectl version
 # Docker vs CRI-O
 * https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/support/troubleshooting#troubleshooting-crio-issues
 # Template vs Manifest
-* https://github.com/academiaonline-org/openshift/blob/master/etc/docker/kubernetes/php-template.yaml
+* https://github.com/sebastian-colomar/openshift/blob/master/etc/docker/kubernetes/php-template.yaml

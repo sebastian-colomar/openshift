@@ -86,11 +86,11 @@
 # How to automate the test of my applications with Github Actions:
 1. Let us suppose that we want test the following Dockerfile:
 
-    * https://github.com/academiaonline-org/phpinfo/blob/main/docker/Dockerfile
+    * https://github.com/sebastian-colomar/phpinfo/blob/main/docker/Dockerfile
 
 1. For this purpose we have to create a pipeline in Github Actions:
 
-    * https://github.com/academiaonline-org/phpinfo/blob/main/.github/workflows/ci.yaml
+    * https://github.com/sebastian-colomar/phpinfo/blob/main/.github/workflows/ci.yaml
 # How to deploy a Docker stack using a Docker compose file
 
 * https://docs.docker.com/compose/compose-file/compose-file-v3/
@@ -187,4 +187,4 @@ docker ps
 docker exec PHPINFO_php-svc.4.z51xlgdlmt1ifpjmjvemh8z1r df
 ```
 # How to install OpenShift Container Platform in AWS
-* https://github.com/academiaonline-org/openshift/blob/master/README.md
+* https://github.com/sebastian-colomar/openshift/blob/master/README.md
