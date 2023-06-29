@@ -5,6 +5,6 @@ export MachineNetworkCIDR=10.0.0.0/16
 export master_type=t3a.xlarge # 4CPU, 16GB, $0.0986 (in Mumbai)
 export Publish=External
 export ServiceNetworkCIDR=172.30.0.0/16
-export version=4.13.0
+export version=4.13.4
 export worker_type=t3a.large
 #export worker_type=c6a.4xlarge # FOR HEAVY DUTIES: 16vCPU, 32GB, $0.3740 (in Mumbai)
