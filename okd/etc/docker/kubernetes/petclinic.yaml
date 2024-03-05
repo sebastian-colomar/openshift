@@ -6,9 +6,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: petclinic
-  namespace: demo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       service: petclinic
@@ -26,21 +25,19 @@ apiVersion: v1
 kind: Service
 metadata:
   name: petclinic
-  namespace: demo
 spec:
   ports:
   -
-    port: 8080
+    port: 80
+    targetPort: 8080
   selector:
     service: petclinic
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: petclinic
-  namespace: demo
+  name: app
 spec:
-  host: petclinic.apps.openshift.sebastian-colomar.com
   to:
     kind: Service
     name: petclinic
