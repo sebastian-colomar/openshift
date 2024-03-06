@@ -26,4 +26,12 @@ oc -n openshift-machine-config-operator get po machine-config-daemon-8bhh7
 oc -n openshift-machine-config-operator logs machine-config-daemon-8bhh7
 
 oc -n openshift-machine-config-operator logs machine-config-operator-79b69d9fcc-w92xb
+
+oc projects|grep machine
+
+oc -n openshift-machine-api get machine -oname|grep worker
+
+oc -n openshift-machine-api get machineset
+
+for machine in $(oc -n openshift-machine-api get machine -oname|grep worker);do oc -n openshift-machine-api delete $machine;done
 ```
