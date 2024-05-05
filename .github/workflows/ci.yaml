@@ -1,0 +1,133 @@
+################################################################################
+#      Copyright (C) 2020        Sebastian Francisco Colomar Bauza             #
+#      SPDX-License-Identifier:  GPL-2.0-only                                  #
+################################################################################
+name: CI                                                                       #
+on:                                                                            #
+  push:                                                                        #
+    branches:                                                                  #
+    - main                                                                     #
+jobs:                                                                          #
+  host:                                                                        #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: run                                                                #
+      run: php -f phpinfo/index.php -S 0.0.0.0:9000                            &
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            wget -q -O - localhost:9000/src/index.php | grep "PHP.*phpinfo()" && break ;
+          done                                                                 ;
+  docker:                                                                      #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: docker-build                                                       #
+      run:                                                                     |
+        mkdir --parents build-context/
+        docker build --file phpinfo/Dockerfile --tag localhost/library/my_image:test build-context/
+    - name: docker-run
+      run: docker run --cpus 0.01 --detach --memory 20M --memory-reservation 10M --name phpinfo --publish 60000:9000 --read-only --restart always --user nobody:nogroup --volume ${PWD}/phpinfo/index.php:/src/index.php:ro --workdir /src/ localhost/library/my_image:test php -f index.php -S 0.0.0.0:9000
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            docker logs phpinfo 2>& 1 | grep "PHP.*started" && break           ;
+          done                                                                 ;
+  docker-compose:                                                              #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: docker-compose
+      run: docker-compose up --detach
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            docker-compose logs 2>& 1 | grep "PHP.*started" && break ;
+          done           
+  swarm-config:                                                                          #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: docker-swarm                                                                #
+      run: docker swarm init
+    - name: docker-stack
+      run: docker stack deploy --compose-file docker-stack-config.yaml phpinfo
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            docker service logs phpinfo_phpinfo 2>& 1 | grep "PHP.*started" && break ;
+          done           
+  swarm-secret:                                                                          #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: docker-swarm                                                                #
+      run: docker swarm init
+    - name: docker-stack
+      run: docker stack deploy --compose-file docker-stack-secret.yaml phpinfo
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            docker service logs phpinfo_phpinfo 2>& 1 | grep "PHP.*started" && break ;
+          done           
+  swarm-volume:                                                                          #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: docker-swarm                                                                #
+      run: docker swarm init
+    - name: docker-stack
+      run: docker stack deploy --compose-file docker-stack-volume.yaml phpinfo
+    - name: test                                                               #
+      run:                                                                     |
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            docker service logs phpinfo_phpinfo 2>& 1 | grep "PHP.*started" && break ;
+          done           
+  kubernetes:                                                                  #
+    runs-on: ubuntu-18.04                                                      #
+    steps:                                                                     #
+    - name: checkout                                                           #
+      uses: actions/checkout@v2                                                #
+    - name: init                                                               #
+      run:                                                                     |
+        uuid=$( md5sum /etc/hosts | cut -d\  -f1 )                      ;
+        git clone --single-branch -b v1.2                                      \
+          https://github.com/academiaonline/kubernetes $uuid                   ;
+        path=$uuid/bin/cluster/ubuntu18/install-docker-kubelet.sh              ;
+        source $path                                                           ;
+        path=$uuid/bin/cluster/ubuntu18/install-leader.sh                      ;
+        source $path                                                           ;
+        master=$( kubectl get node | grep master | awk '{ print $1 }' )        ;
+        kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-  ;
+        rm -rf $uuid                                                           ;
+    - name: apply                                                              #
+      run: kubectl apply -f kubernetes/manifests/                                  ;
+    - name: test                                                               #
+      run:                                                                     |
+        set -x                                                                 ;
+        while true                                                             ;
+          do                                                                   \
+            sleep 10                                                           ;
+            kubectl exec phpinfo-po -- wget -q -O - localhost:8080 | grep "PHP.*phpinfo()" && break
+          done                                                                 ;
+        kubectl get all
+################################################################################
