@@ -1,7 +1,5 @@
-# Introduction to the Course
+# Introduction to Docker
 
-1. https://docs.openshift.com/
-4. https://docs.openshift.com/container-platform/4.15/welcome/oke_about.html
 6. https://en.wikipedia.org/wiki/Linux_namespaces
 7. https://en.wikipedia.org/wiki/Cgroups
 
@@ -326,5 +324,3 @@ docker exec PHPINFO_phpinfo.1.${ps} ps aux
 ```
 docker top PHPINFO_phpinfo.1.${ps}
 ```
-# How to install OpenShift Container Platform in AWS
-* [https://github.com/sebastian-colomar/openshift/](https://github.com/sebastian-colomar/openshift/blob/master/master/README.md)
