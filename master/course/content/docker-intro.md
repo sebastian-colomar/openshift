@@ -1,7 +1,7 @@
 # Introduction to Docker
 
-6. https://en.wikipedia.org/wiki/Linux_namespaces
-7. https://en.wikipedia.org/wiki/Cgroups
+1. https://en.wikipedia.org/wiki/Linux_namespaces
+1. https://en.wikipedia.org/wiki/Cgroups
 
 # Shell environment
 - https://shell.cloud.google.com/
