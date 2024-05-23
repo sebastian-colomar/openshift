@@ -117,6 +117,7 @@ spec:
         - -c
         - set -x;git clone -b main --single-branch https://github.com/sebastian-colomar/dockercoins;cp -rv cchillida/webui/files/* /var/data/files/
         image: docker.io/bitnami/git:latest
+        name: init
         volumeMounts:
         -
           mountPath: /var/data/files/
