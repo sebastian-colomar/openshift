@@ -43,6 +43,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: redis
+spec:
+  ports:
+  - 
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+  type: ClusterIP
+```
+```
+apiVersion: v1
+kind: Service
+metadata:
   name: hasher
 spec:
   ports:
