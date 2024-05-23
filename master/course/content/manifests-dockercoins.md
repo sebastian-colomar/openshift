@@ -406,7 +406,7 @@ spec:
         volumeMounts:
         -
           mountPath: /var/data/rng.py
-          name: rng-volume
+          name: rng
           readOnly: true
           subPath: rng.py
         workingDir: /var/data/
