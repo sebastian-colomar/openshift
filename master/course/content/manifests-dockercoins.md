@@ -110,6 +110,8 @@ spec:
           name: files
           readOnly: true
         workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
       initContainers:
       -
         command:
@@ -194,6 +196,8 @@ spec:
           name: redis
           readOnly: false
         workingDir: /data/
+      imagePullSecrets:
+      - name: docker
   volumeClaimTemplates:
   - 
     metadata:
