@@ -123,7 +123,7 @@ spec:
           mountPath: /var/data/files/
           name: files
           readOnly: false
-        workingDir: /var/data/
+        workingDir: /downloads/
       topologySpreadConstraints:
       -
         labelSelector:
