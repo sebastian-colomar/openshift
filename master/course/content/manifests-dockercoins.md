@@ -115,7 +115,7 @@ spec:
         command:
         - sh
         - -c
-        - set -x;git clone -b main --single-branch https://github.com/sebastian-colomar/dockercoins;cp -rv cchillida/webui/files/* /var/data/files/
+        - set -x;rm -rf dockercoins/;git clone -b main --single-branch https://github.com/sebastian-colomar/dockercoins;cp -rv cchillida/webui/files/* /var/data/files/
         image: docker.io/bitnami/git:latest
         name: init
         volumeMounts:
