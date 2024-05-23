@@ -27,6 +27,20 @@ spec:
 ```
 ```
 apiVersion: v1
+kind: Service
+metadata:
+  name: hasher
+spec:
+  ports:
+  - 
+    port: 80
+    targetPort: 9000
+  selector:
+    app: hasher
+  type: ClusterIP
+```
+```
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: webui
@@ -63,6 +77,31 @@ data:
     var server = app.listen(9000, function () {
         console.log('WEBUI running on port 9000');
     });
+```
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasher
+data:
+  hasher.rb: |
+    require 'digest'
+    require 'sinatra'
+    require 'socket'
+    
+    set :bind, '0.0.0.0'
+    set :port, 9000
+    
+    post '/' do
+        # Simulate a bit of delay
+        sleep 0.1
+        content_type 'text/plain'
+        "#{Digest::SHA2.new().update(request.body.read)}"
+    end
+    
+    get '/' do
+        "HASHER running on #{Socket.gethostname}\n"
+    end
 ```
 ```
 apiVersion: apps/v1
@@ -208,29 +247,4 @@ spec:
       resources:
         requests:
           storage: 1Gi
-```
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: hasher
-data:
-  hasher.rb: |
-    require 'digest'
-    require 'sinatra'
-    require 'socket'
-    
-    set :bind, '0.0.0.0'
-    set :port, 9000
-    
-    post '/' do
-        # Simulate a bit of delay
-        sleep 0.1
-        content_type 'text/plain'
-        "#{Digest::SHA2.new().update(request.body.read)}"
-    end
-    
-    get '/' do
-        "HASHER running on #{Socket.gethostname}\n"
-    end
 ```
