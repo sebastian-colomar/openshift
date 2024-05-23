@@ -424,3 +424,50 @@ spec:
           name: rng
         name: rng
 ```
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hasher
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hasher
+  template:
+    metadata:
+      labels:
+        app: hasher
+    spec:
+      containers:
+      - 
+        command:
+        - ruby
+        - hasher.rb
+        image: docker.io/academiaonline/dockercoins-hasher:0.1
+        name: hasher
+        ports:
+        - 
+          containerPort: 9000
+          protocol: TCP
+        volumeMounts:
+        -
+          mountPath: /var/data/hasher.rb
+          name: hasher
+          readOnly: true
+          subPath: hasher.rb
+        workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
+      volumes:
+      -
+        configMap:
+          defaultMode: 0400
+          items:
+          -
+            key: hasher.rb
+            mode: 0400
+            path: hasher.rb
+          name: hasher
+        name: hasher
+```
