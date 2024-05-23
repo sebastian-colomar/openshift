@@ -120,10 +120,14 @@ spec:
         name: init
         volumeMounts:
         -
+          mountPath: /var/data/clone/
+          name: clone
+          readOnly: false
+        -
           mountPath: /var/data/files/
           name: files
           readOnly: false
-        workingDir: /downloads/
+        workingDir: /var/data/clone/
       topologySpreadConstraints:
       -
         labelSelector:
@@ -155,4 +159,9 @@ spec:
           medium: Memory
           sizeLimit: 1Mi
         name: files
+      -
+        emptyDir:
+          medium: Memory
+          sizeLimit: 2Mi
+        name: clone
 ```
