@@ -378,3 +378,49 @@ spec:
         requests:
           storage: 1Gi
 ```
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rng
+spec:
+  selector:
+    matchLabels:
+      app: rng
+  template:
+    metadata:
+      labels:
+        app: rng
+    spec:
+      containers:
+      - 
+        command:
+        - python
+        - rng.py
+        image: docker.io/academiaonline/dockercoins-rng:0.1
+        name: rng
+        ports:
+        - 
+          containerPort: 9000
+          protocol: TCP
+        volumeMounts:
+        -
+          mountPath: /var/data/rng.py
+          name: rng-volume
+          readOnly: true
+          subPath: rng.py
+        workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
+      volumes:
+      -
+        configMap:
+          defaultMode: 0400
+          items:
+          -
+            key: rng.py
+            mode: 0400
+            path: rng.py
+          name: rng
+        name: rng
+```
