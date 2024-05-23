@@ -165,3 +165,43 @@ spec:
           sizeLimit: 2Mi
         name: clone
 ```
+```
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - 
+        image: docker.io/library/redis:latest
+        name: redis
+        ports:
+        - 
+          containerPort: 6379
+          protocol: TCP
+        volumeMounts:
+        -
+          mountPath: /data/
+          name: redis
+          readOnly: false
+        workingDir: /data/
+  volumeClaimTemplates:
+  - 
+    metadata:
+      name: redis
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+```
