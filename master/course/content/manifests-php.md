@@ -18,7 +18,7 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: phpinfo2
+  name: phpinfo
 data:
   index.php: PD9waHAgcGhwaW5mbygpOz8+
 ```
