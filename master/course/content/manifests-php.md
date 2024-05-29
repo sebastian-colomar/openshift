@@ -123,18 +123,22 @@ spec:
       labels:
         app: phpinfo
         kind: rc
-        ha: 'true'
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: ha
-                operator: In
-                values:
-                - 'true'
-            topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: rc
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: rc
       containers:
       - 
         command:
@@ -201,18 +205,22 @@ spec:
       labels:
         app: phpinfo
         kind: dc
-        ha: 'true'
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: ha
-                operator: In
-                values:
-                - 'true'
-            topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: dc
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: dc
       containers:
       - 
         command:
@@ -280,18 +288,22 @@ spec:
       labels:
         app: phpinfo
         kind: rs
-        ha: 'true'
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: ha
-                operator: In
-                values:
-                - 'true'
-            topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: rs
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: rs
       containers:
       - 
         command:
@@ -359,18 +371,22 @@ spec:
       labels:
         app: phpinfo
         kind: deploy
-        ha: 'true'
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: ha
-                operator: In
-                values:
-                - 'true'
-            topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: deploy
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: deploy
       containers:
       - 
         command:
@@ -439,18 +455,22 @@ spec:
       labels:
         app: phpinfo
         kind: sts
-        ha: 'true'
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: ha
-                operator: In
-                values:
-                - 'true'
-            topologyKey: topology.kubernetes.io/zone
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: sts
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: phpinfo
+              kind: sts
       containers:
       - 
         command:
