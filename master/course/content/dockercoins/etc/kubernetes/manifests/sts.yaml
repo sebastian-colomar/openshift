@@ -20,6 +20,15 @@ spec:
         - 
           containerPort: 6379
           protocol: TCP
+        resources:
+          limits:
+            cpu: 40m
+            memory: 40M
+          requests:
+            cpu: 20m
+            memory: 20M
+        securityContext:
+          readOnlyRootFilesystem: true
         volumeMounts:
         -
           mountPath: /data/
