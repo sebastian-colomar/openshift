@@ -19,6 +19,15 @@ spec:
         - worker.py
         image: docker.io/academiaonline/dockercoins-worker:0.2
         name: worker
+        resources:
+          limits:
+            cpu: 40m
+            memory: 40M
+          requests:
+            cpu: 20m
+            memory: 20M
+        securityContext:
+          readOnlyRootFilesystem: true
         volumeMounts:
         -
           mountPath: /var/data/worker.py
