@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - 
+        command:
+        - python
+        - worker.py
+        image: docker.io/academiaonline/dockercoins-worker:0.2
+        name: worker
+        volumeMounts:
+        -
+          mountPath: /var/data/worker.py
+          name: worker
+          readOnly: true
+          subPath: worker.py
+        workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
+      volumes:
+      -
+        configMap:
+          defaultMode: 0400
+          items:
+            -
+              key: worker.py
+              mode: 0400
+              path: worker.py
+          name: worker
+        name: worker
