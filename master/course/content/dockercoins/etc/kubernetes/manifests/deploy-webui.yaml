@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+      - 
+        command:
+        - node
+        - webui.js
+        image: docker.io/academiaonline/dockercoins-webui:2.0
+        name: webui
+        ports:
+        -
+          containerPort: 9000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 40m
+            memory: 40M
+          requests:
+            cpu: 20m
+            memory: 20M
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - 
+          mountPath: /var/data/webui.js
+          name: webui
+          readOnly: true
+          subPath: webui.js
+        - 
+          mountPath: /var/data/files/
+          name: files
+          readOnly: true
+        workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
+      initContainers:
+      -
+        command:
+        - sh
+        - -c
+        - set -x;rm -rf dockercoins/;git clone -b main --single-branch https://github.com/sebastian-colomar/dockercoins;cp -rv dockercoins/cchillida/webui/files/* /var/data/files/
+        image: docker.io/bitnami/git:latest
+        name: init
+        volumeMounts:
+        -
+          mountPath: /var/data/clone/
+          name: clone
+          readOnly: false
+        -
+          mountPath: /var/data/files/
+          name: files
+          readOnly: false
+        workingDir: /var/data/clone/
+      topologySpreadConstraints:
+      -
+        labelSelector:
+          matchLabels:
+            app: webui
+        maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: DoNotSchedule
+      -
+        labelSelector:
+          matchLabels:
+            app: webui
+        maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+      volumes:
+      - 
+        configMap:
+          defaultMode: 0400
+          items: 
+          -
+            key: webui.js
+            mode: 0400
+            path: webui.js
+          name: webui
+        name: webui
+      -
+        emptyDir:
+          medium: Memory
+          sizeLimit: 1Mi
+        name: files
+      -
+        emptyDir:
+          medium: Memory
+          sizeLimit: 2Mi
+        name: clone
