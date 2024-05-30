@@ -16,3 +16,9 @@ spec:
         target:
           averageUtilization: 50
           type: Utilization
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          averageUtilization: 50
+          type: Utilization
