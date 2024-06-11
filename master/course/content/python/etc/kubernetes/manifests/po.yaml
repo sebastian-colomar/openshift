@@ -33,12 +33,27 @@ spec:
       name: python
       readOnly: true
       subPath: index.html
+    - 
+      mountPath: /var/data/index2.html
+      name: python2
+      readOnly: true
+      subPath: index2.html
     -
       mountPath: /var/data/tmp/
       name: tmp
       readOnly: false
     workingDir: /var/data/
   volumes:
+  - 
+    secret:
+      defaultMode: 0400
+      items: 
+      -
+        key: index.html
+        mode: 0400
+        path: index2.html
+      secretName: python
+    name: python2
   - 
     configMap:
       defaultMode: 0400
