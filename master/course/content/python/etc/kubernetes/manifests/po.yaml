@@ -63,7 +63,7 @@ spec:
         key: index.html
         mode: 0400
         path: index.html
-      name: python
+      name: po
     name: python
   -
     emptyDir:
