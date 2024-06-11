@@ -55,10 +55,10 @@ spec:
             key: index.html
             mode: 0400
             path: index.html
-          name: python
+          name: ds
         name: python
       -
         emptyDir:
           medium: Memory
-          sizeLimit: 10Mi
+          sizeLimit: 10M
         name: tmp
