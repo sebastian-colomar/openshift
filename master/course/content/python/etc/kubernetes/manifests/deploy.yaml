@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python
+  name: deploy
 spec:
   replicas: 2
   selector:
@@ -71,10 +71,10 @@ spec:
             key: index.html
             mode: 0400
             path: index.html
-          name: python
+          name: deploy
         name: python
       -
         emptyDir:
           medium: Memory
-          sizeLimit: 10Mi
+          sizeLimit: 10M
         name: tmp
