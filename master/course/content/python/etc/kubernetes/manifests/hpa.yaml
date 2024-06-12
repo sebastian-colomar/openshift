@@ -1,15 +1,21 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: python
+  name: hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: python
+    name: deploy
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 30
   metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
     - type: Resource
       resource:
         name: memory
