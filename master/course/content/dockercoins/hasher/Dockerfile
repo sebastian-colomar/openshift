@@ -1,3 +1,2 @@
 FROM ruby
-RUN gem install sinatra
-RUN gem install thin
+RUN gem install sinatra && gem install thin
