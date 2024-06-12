@@ -1,10 +1,10 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: python
+  name: pdb
 spec:
   minAvailable: 1
   selector:
     matchLabels:
       app: python
-      kind: sts
+      kind: deploy
