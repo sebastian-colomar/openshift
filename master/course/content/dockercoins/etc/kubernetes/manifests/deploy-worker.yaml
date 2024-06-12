@@ -46,5 +46,5 @@ spec:
               key: worker.py
               mode: 0400
               path: worker.py
-          name: worker
+          name: cm
         name: worker
