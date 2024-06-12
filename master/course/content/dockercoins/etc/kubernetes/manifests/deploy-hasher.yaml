@@ -50,5 +50,5 @@ spec:
             key: hasher.rb
             mode: 0400
             path: hasher.rb
-          name: hasher
+          name: cm
         name: hasher
