@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: python
+  name: sts
 spec:
   replicas: 2
   selector:
@@ -81,7 +81,7 @@ spec:
       -
         emptyDir:
           medium: Memory
-          sizeLimit: 10Mi
+          sizeLimit: 10M
         name: tmp
   volumeClaimTemplates:
     -
@@ -92,5 +92,5 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            storage: 1G
         volumeMode: Filesystem
