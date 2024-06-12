@@ -87,15 +87,15 @@ spec:
             key: webui.js
             mode: 0400
             path: webui.js
-          name: webui
+          name: cm
         name: webui
       -
         emptyDir:
           medium: Memory
-          sizeLimit: 1Mi
+          sizeLimit: 1M
         name: files
       -
         emptyDir:
           medium: Memory
-          sizeLimit: 2Mi
+          sizeLimit: 2M
         name: clone
