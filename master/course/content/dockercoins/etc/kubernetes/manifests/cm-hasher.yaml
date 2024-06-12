@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hasher
+  name: cm
 data:
   hasher.rb: |
     require 'digest'
@@ -21,3 +21,137 @@ data:
     get '/' do
         "HASHER running on #{Socket.gethostname}\n"
     end
+  rng.py: |
+    from flask import Flask, Response
+    import os
+    import socket
+    import time
+    
+    app = Flask(__name__)
+    
+    # Enable debugging if the DEBUG environment variable is set and starts with Y
+    app.debug = os.environ.get("DEBUG", "").lower().startswith('y')
+    
+    hostname = socket.gethostname()
+    
+    urandom = os.open("/dev/urandom", os.O_RDONLY)
+    
+    
+    @app.route("/")
+    def index():
+        return "RNG running on {}\n".format(hostname)
+    
+    
+    @app.route("/<int:how_many_bytes>")
+    def rng(how_many_bytes):
+        # Simulate a little bit of delay
+        time.sleep(0.1)
+        return Response(
+            os.read(urandom, how_many_bytes),
+            content_type="application/octet-stream")
+    
+    
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", port=9000)
+  webui.js: |
+    var express = require('express');
+    var app = express();
+    var redis = require('redis');
+    
+    var client = redis.createClient(6379, 'redis');
+    client.on("error", function (err) {
+        console.error("Redis error", err);
+    });
+    
+    app.get('/', function (req, res) {
+        res.redirect('/index.html');
+    });
+    
+    app.get('/json', function (req, res) {
+        client.hlen('wallet', function (err, coins) {
+            client.get('hashes', function (err, hashes) {
+                var now = Date.now() / 1000;
+                res.json( {
+                    coins: coins,
+                    hashes: hashes,
+                    now: now
+                });
+            });
+        });
+    });
+    
+    app.use(express.static('files'));
+    
+    var server = app.listen(9000, function () {
+        console.log('WEBUI running on port 9000');
+    });
+  worker.py: |
+    import logging
+    import os
+    from redis import Redis
+    import requests
+    import time
+    
+    DEBUG = os.environ.get("DEBUG", "").lower().startswith("y")
+    
+    log = logging.getLogger(__name__)
+    if DEBUG:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+        logging.getLogger("requests").setLevel(logging.WARNING)
+    
+    
+    redis = Redis("redis")
+    
+    
+    def get_random_bytes():
+        # Se mantiene puerto 80 para el service
+        r = requests.get("http://rng/32")
+        return r.content
+    
+    
+    def hash_bytes(data):
+        r = requests.post("http://hasher/",
+                          data=data,
+                          headers={"Content-Type": "application/octet-stream"})
+        hex_hash = r.text
+        return hex_hash
+    
+    
+    def work_loop(interval=1):
+        deadline = 0
+        loops_done = 0
+        while True:
+            if time.time() > deadline:
+                log.info("{} units of work done, updating hash counter"
+                         .format(loops_done))
+                redis.incrby("hashes", loops_done)
+                loops_done = 0
+                deadline = time.time() + interval
+            work_once()
+            loops_done += 1
+    
+    
+    def work_once():
+        log.debug("Doing one unit of work")
+        time.sleep(0.1)
+        random_bytes = get_random_bytes()
+        hex_hash = hash_bytes(random_bytes)
+        if not hex_hash.startswith('0'):
+            log.debug("No coin found")
+            return
+        log.info("Coin found: {}...".format(hex_hash[:8]))
+        created = redis.hset("wallet", hex_hash, random_bytes)
+        if not created:
+            log.info("We already had that coin")
+    
+    
+    if __name__ == "__main__":
+        while True:
+            try:
+                work_loop()
+            except:
+                log.exception("In work loop:")
+                log.error("Waiting 10s and restarting.")
+                time.sleep(10)
