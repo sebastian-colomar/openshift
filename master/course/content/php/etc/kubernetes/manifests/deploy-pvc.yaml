@@ -14,21 +14,6 @@ spec:
         app: phpinfo
         kind: deploy
     spec:
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: "topology.kubernetes.io/zone"
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: phpinfo
-              kind: deploy
-        - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: phpinfo
-              kind: deploy
       containers:
       - 
         command:
