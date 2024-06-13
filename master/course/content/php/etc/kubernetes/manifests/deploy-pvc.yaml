@@ -84,6 +84,7 @@ spec:
           sizeLimit: 10M
         name: tmp
       -
+        name: claim
         persistentVolumeClaim:
           claimName: phpinfo
           readonly: false
