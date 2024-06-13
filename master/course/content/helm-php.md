@@ -8,18 +8,10 @@
     ```
     ls -lR phpinfo
     ```
-1. Initialize a git repository:
+1. Change directory to the repository:
 
     ```
     cd phpinfo
-
-    git init
-    
-    git add .
-    
-    git commit -m Initial
-
-    git checkout -b 0.1.0
     ```
 3. Modify the Chart.yaml file:
 
@@ -28,16 +20,12 @@
 
     apiVersion: v2
     name: phpinfo
-    description: A Helm chart for Kubernetes
+    description: Helm chart for PHP webserver
     type: application
     version: 0.1.0
     appVersion: "alpine"
 
     EOF
-
-    git add Chart.yaml
-
-    git commit -m Chart.yaml
     ```
 1. Modify the values.yaml file:
 
@@ -71,6 +59,8 @@
     image:
       repository: docker.io/library/php
       pullPolicy: IfNotPresent
+    imagePullSecret:
+      name: docker
     service:
       port: 80
       protocol: TCP
@@ -90,10 +80,6 @@
       path: index.php
   
     EOF
-
-    git add values.yaml
-
-    git commit -m values.yaml
     ```
 1. Modify the service.yaml template:
 
@@ -116,10 +102,6 @@
         {{- include "phpinfo.selectorLabels" . | nindent 4 }}
 
     EOF
-
-    git add templates/service.yaml
-
-    git commit -m templates/service.yaml
     ```    
 1. Modify the deployment.yaml template:
 
@@ -199,6 +181,8 @@
                   mountPath: /src/
                   readOnly: false
               workingDir: /src/
+          imagePullSecrets:
+          - name: {{ .Values.imagePullSecret.name }}
           volumes:
             - name: phpinfo-volume
               emptyDir:
@@ -218,10 +202,6 @@
           {{- end }}
 
     EOF
-
-    git add templates/deployment.yaml
-
-    git commit -m templates/deployment.yaml
     ```            
 1. Create a new route.yaml template:
 
@@ -240,10 +220,6 @@
         name: {{ include "phpinfo.fullname" . }}
 
     EOF
-
-    git add templates/route.yaml
-
-    git commit -m templates/route.yaml
     ```
 1. Modify the hpa.yaml template:
 
@@ -284,28 +260,18 @@
     {{- end }}
 
     EOF
-
-    git add templates/hpa.yaml
-
-    git commit -m templates/hpa.yaml
     ```
 1. Remove the ingress template:
     ```
-    git rm templates/ingress.yaml
-
-    git commit -m templates/ingress.yaml
+    rm templates/ingress.yaml
     ```
 1. Remove the service account template:
     ```
-    git rm templates/serviceaccount.yaml
-
-    git commit -m templates/serviceaccount.yaml
+    rm templates/serviceaccount.yaml
     ```
 1. Remove the notes text file:
     ```
-    git rm templates/NOTES.txt
-
-    git commit -m templates/NOTES.txt
+    rm templates/NOTES.txt
     ```    
 3. Deploy the application:
 
