@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: phpinfo
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 30
   metrics:
     - type: Resource
       resource:
