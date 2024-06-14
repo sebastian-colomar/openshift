@@ -7,18 +7,18 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: webui
-  minReplicas: 1
-  maxReplicas: 3
+  minReplicas: 2
+  maxReplicas: 30
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
-        averageUtilization: 50
+        averageUtilization: 80
         type: Utilization
   - type: Resource
     resource:
       name: memory
       target:
-        averageUtilization: 50
+        averageUtilization: 80
         type: Utilization
