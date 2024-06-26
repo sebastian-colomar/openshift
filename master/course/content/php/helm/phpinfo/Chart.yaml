@@ -1,0 +1,8 @@
+
+apiVersion: v2
+name: phpinfo
+description: Helm chart for PHP webserver
+type: application
+version: 0.1.0
+appVersion: "alpine"
+

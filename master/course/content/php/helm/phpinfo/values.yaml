@@ -1,0 +1,48 @@
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    -
+      labelSelector:
+        matchExpressions:
+        -
+          key: ha
+          operator: In
+          values:
+          - 'true'
+      topologyKey: topology.kubernetes.io/zone
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 50
+  targetMemoryUtilizationPercentage: 50
+command:
+  - php  
+  - -f
+  - index.php
+  - -S
+  - 0.0.0.0:9000  
+image:
+  repository: docker.io/library/php
+  pullPolicy: IfNotPresent
+imagePullSecret:
+  name: docker
+service:
+  port: 80
+  protocol: TCP
+  targetPort: 9000
+  type: ClusterIP
+replicaCount: 2
+resources:
+  limits:
+    cpu: 40m
+    memory: 40M
+  requests:
+    cpu: 20m
+    memory: 20M
+livenessProbe:
+  path: index.php  
+readinessProbe:
+  path: index.php
+
