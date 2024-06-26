@@ -27,3 +27,6 @@ kubectl get nodes
 chroot /host
 cat /etc/redhat-release 
 ```
+```
+for ns in $(oc get hpa -A|grep phpinfo|awk '{print $1}');do oc patch -n $ns hpa phpinfo --type merge -p '{"spec":{"maxReplicas":3}}';don
+```
