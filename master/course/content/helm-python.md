@@ -297,7 +297,7 @@
     ```
     oc new-project python-helm
     
-    helm install python-helm python
+    helm install python-helm .
     ```
 1. Check the deployment:
 
