@@ -292,8 +292,19 @@
     git commit -m templates/hpa.yaml
     ```
 
+1. Remove the ingress template:
+    ```
+    rm templates/ingress.yaml
+    ```
+1. Remove the service account template:
+    ```
+    rm templates/serviceaccount.yaml
+    ```
+1. Remove the notes text file:
+    ```
+    rm templates/NOTES.txt
+    ```    
 3. Deploy the application:
-
     ```
     oc new-project python-helm
     
