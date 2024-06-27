@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: phpinfo
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: phpinfo
+      kind: sts
+  serviceName: phpinfo
+  template:
+    metadata:
+      labels:
+        app: phpinfo
+        kind: sts
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "topology.kubernetes.io/zone"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: phpinfo
+            kind: sts
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: phpinfo
+            kind: sts
+      containers:
+      - 
+        command:
+        - php
+        - -f
+        - index.php
+        - -S
+        - 0.0.0.0:9000
+        image: docker.io/library/php:latest
+        name: phpinfo
+        ports:
+        -
+          containerPort: 9000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 40m
+            memory: 40M
+          requests:
+            cpu: 20m
+            memory: 20M
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        -
+          mountPath: /var/data/claim/
+          name: claim
+          readOnly: false
+        - 
+          mountPath: /var/data/index.php
+          name: phpinfo
+          readOnly: true
+          subPath: index.php
+        - 
+          mountPath: /var/data/tmp/
+          name: tmp
+          readOnly: false
+        workingDir: /var/data/
+      imagePullSecrets:
+      - name: docker
+      volumes:
+      - 
+        configMap:
+          defaultMode: 0400
+          items: 
+          -
+            key: index.php
+            mode: 0400
+            path: index.php
+          name: phpinfo
+        name: phpinfo
+      -
+        emptyDir:
+          medium: Memory
+          sizeLimit: 10M
+        name: tmp
+  volumeClaimTemplates:
+  -
+    metadata:
+      name: claim
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1G
+      volumeMode: Filesystem
