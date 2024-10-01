@@ -1,4 +1,4 @@
-source ~/credentials.txt
+source ~/credentials.txt;
 
 type=master;
 x=0;
