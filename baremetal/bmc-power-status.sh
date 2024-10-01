@@ -1,6 +1,6 @@
-source ~/credentials.txt
+source ~/credentials.txt;
 
-command='chassis power status'
+command='chassis power status';
 
 for type in master worker;do 
   for x in 0 1 2;do 
@@ -9,4 +9,4 @@ for type in master worker;do
     echo $host:;
     ipmitool -H $host -I lanplus -P $bmc_password -U $bmc_username $command;
   done;
-done
+done;
