@@ -1,31 +1,14 @@
-source ./bmc-secureboot-enable.sh
+source ./bmc-secureboot-enable.sh;
 
-sleep 10
+sleep 10;
 while true;do
-type=master;
-x=0;
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
-x=1
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
-x=2
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
+  for type in master worker;do
+    for x in {0..2};do
+      host=${type}-${x}.bmc;
+      source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue;
+    done;
+  break;
+done;
 
-type=worker;
-x=0;
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
-x=1
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
-x=2
-host=${type}-${x}.bmc;
-source ./bmc-secureboot-status.sh|grep -E ".SecureBootCurrentBoot.:.Enabled.|.SecureBootEnable.:true" -B1|grep $host||continue
-
-break
-done
-
-sleep 10
-source ./rolling-reboot.sh
+sleep 10;
+source ./rolling-reboot.sh;
