@@ -9,4 +9,4 @@ for type in master worker;do
     echo $host:;
     curl -d '{"SecureBootEnable": false}' -H "Authorization: Basic $bmc_token" -H "Content-type: application/json" -k -s -X PATCH https://$host/redfish/v1/Systems/$path;
   done;
-done
+done;
