@@ -1,4 +1,4 @@
-source ./conf.d/install-config_ipmi.conf
+source ./conf.d/install-config_ipmi.conf;
 
 tee ~/install-config.yaml 0<<EOF
 apiVersion: v1
@@ -106,6 +106,6 @@ pullSecret: '${pullSecret}'
 sshKey: '${sshKey}'
 EOF
 
-rm -rf ~/clusterconfigs
-mkdir ~/clusterconfigs
-cp ~/install-config.yaml ~/clusterconfigs
+rm -rf ~/clusterconfigs;
+mkdir ~/clusterconfigs;
+cp ~/install-config.yaml ~/clusterconfigs;
