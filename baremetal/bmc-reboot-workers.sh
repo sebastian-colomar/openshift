@@ -9,4 +9,4 @@ for type in worker;do
     echo $host:;
     ipmitool -H $host -I lanplus -P $bmc_password -U $bmc_username $command;
   done;
-done
+done;
