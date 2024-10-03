@@ -1,3 +1,8 @@
+echo ${ClusterName}
+echo ${dir}
+echo ${DomainName}
+echo ${EmailAddress}
+
 mkdir --parents ${dir}/certs/
 
 export EmailAddress=sebastian.colomar@gmail.com
