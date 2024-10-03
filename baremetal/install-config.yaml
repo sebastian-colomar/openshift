@@ -1,0 +1,103 @@
+apiVersion: v1
+baseDomain: 'sebastian-colomar.es'
+compute:
+- name: worker
+  architecture: 'amd64'
+  platform:
+    baremetal: {}
+  replicas: 3
+controlPlane:
+  name: master
+  architecture: 'amd64'
+  platform:
+    baremetal: {}
+  replicas: 3
+metadata:
+  name: 'test'
+networking:
+  machineNetwork:
+  - cidr: '10.10.11.0/24'
+  networkType: 'OVNKubernetes'
+platform:
+  baremetal:
+    apiVIPs:
+      - '10.10.11.31'
+    ingressVIPs:
+      - '10.10.11.32'
+    bootstrapExternalStaticDNS: '10.10.11.1'
+    bootstrapExternalStaticGateway: '10.10.11.1'
+    bootstrapExternalStaticIP: '10.10.11.30'
+    bootstrapOSImage: 'http://10.10.11.33:8080/rhcos-416.94.202406251923-0-qemu.x86_64.qcow2.gz?sha256=3e52af11f6eb9d2a0636b1375928d3c73b033f3aeea3b1ac9ff2f3b816b84c20'
+    externalBridge: 'baremetal'
+    provisioningBridge: 'provisioning'
+    provisioningNetwork: 'Managed'
+    provisioningNetworkCIDR: '10.10.12.0/24'
+    hosts:
+      - name: master-0
+        bmc:
+          address: 'ipmi://10.10.10.10/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:10'
+        bootMode: 'UEFI'
+        role: master
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+      - name: master-1
+        bmc:
+          address: 'ipmi://10.10.10.11/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:11'
+        bootMode: 'UEFI'
+        role: master
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+      - name: master-2
+        bmc:
+          address: 'ipmi://10.10.10.12/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:12'
+        bootMode: 'UEFI'
+        role: master
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+      - name: worker-0
+        bmc:
+          address: 'ipmi://10.10.10.20/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:20'
+        bootMode: 'UEFI'
+        role: worker
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+      - name: worker-1
+        bmc:
+          address: 'ipmi://10.10.10.21/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:21'
+        bootMode: 'UEFI'
+        role: worker
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+      - name: worker-2
+        bmc:
+          address: 'ipmi://10.10.10.22/'
+          disableCertificateVerification: True
+          password: ''
+          username: ''
+        bootMACAddress: 'aa:aa:aa:aa:aa:22'
+        bootMode: 'UEFI'
+        role: worker
+        rootDeviceHints:
+         deviceName: '/dev/sda'
+pullSecret: ''
+sshKey: ''
