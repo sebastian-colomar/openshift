@@ -146,6 +146,7 @@ objects:
             -
               namespaceSelector:
                 matchLabels:
+                  xxx: yyy
             -
               podSelector:
                 matchLabels:
