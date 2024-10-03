@@ -1,5 +1,5 @@
 source ~/credentials.txt;
-source ./conf.d/install-config.redfish.conf;
+source ./conf.d/install-config_redfish.conf;
 
 tee ~/install-config.yaml 0<<EOF
 apiVersion: v1
