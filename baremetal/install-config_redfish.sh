@@ -1,3 +1,4 @@
+source ~/credentials.txt;
 source ./conf.d/install-config.redfish.conf;
 
 tee ~/install-config.yaml 0<<EOF
