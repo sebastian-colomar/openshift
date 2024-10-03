@@ -18,5 +18,4 @@ export BAREMETAL_IP=$(ip addr show dev baremetal | awk '/inet /{print $2}' | cut
 export BOOTSTRAP_OS_IMAGE="http://${BAREMETAL_IP}:8080/${RHCOS_QEMU_NAME}?sha256=${RHCOS_QEMU_UNCOMPRESSED_SHA256}";
 echo "    bootstrapOSImage=${BOOTSTRAP_OS_IMAGE}";
 curl -I $BOOTSTRAP_OS_IMAGE;
-sed -i 's/^bootstrapOSImage=.*$/bootstrapOSImage='"'$(echo $BOOTSTRAP_OS_IMAGE|sed 's/\//\\\//g')'"/ ./conf.d/install-config_ipmi.conf;
-sed -i 's/^bootstrapOSImage=.*$/bootstrapOSImage='"'$(echo $BOOTSTRAP_OS_IMAGE|sed 's/\//\\\//g')'"/ ./conf.d/install-config_redfish.conf;
+sed -i 's/^bootstrapOSImage=.*$/bootstrapOSImage='"'$(echo $BOOTSTRAP_OS_IMAGE|sed 's/\//\\\//g')'"/ ~/credentials.txt;
