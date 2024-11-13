@@ -6,8 +6,13 @@ metadata:
 rules:
   - apiGroups:
       - ''
-    resources:
-      - deployments
-      - services
     verbs:
       - create
+    resources:
+      - services
+  - apiGroups:
+      - apps
+    verbs:
+      - create
+    resources:
+      - deployments
