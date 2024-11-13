@@ -42,7 +42,6 @@ spec:
             - index.php
             - -S
             - 0.0.0.0:8080
-      restartPolicy: Always
       volumes:
         - name: volume
           configMap:
