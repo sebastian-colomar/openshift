@@ -8,5 +8,5 @@ spec:
   ports:
     {{- toYaml $v.ports | nindent 4 }}
   selector:
-    {{ toYaml $v.selector | indent 4 }}
+{{ toYaml $v.selector | indent 4 }}
 {{- end }}
