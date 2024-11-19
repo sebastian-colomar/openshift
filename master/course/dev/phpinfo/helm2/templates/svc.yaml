@@ -6,7 +6,7 @@ metadata:
   name: {{ $v.name }}
 spec:
   ports:
-    {{- toYaml $v.ports | nindent 4 }}
+{{- toYaml $v.ports | indent 4 }}
   selector:
 {{ toYaml $v.selector | indent 4 }}
 {{- end }}
