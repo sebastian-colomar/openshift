@@ -17,3 +17,9 @@ rules:
       - patch
     resources:
       - deployments
+  - apiGroups:
+      - route.openshift.io
+    verbs:
+      - create
+    resources:
+      - routes
