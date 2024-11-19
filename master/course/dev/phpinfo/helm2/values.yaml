@@ -1,3 +1,4 @@
+namespace: phpinfo-helm-sebastian-2
 svc:
   - name: svc
     ports:
