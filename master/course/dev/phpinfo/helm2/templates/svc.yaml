@@ -1,0 +1,12 @@
+{{- if .Values.svc }}
+{{- range $v := .Values.svc -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $v.name }}
+spec:
+  ports:
+    {{- toYaml $v.ports | nindent 4 }}
+  selector:
+  {{ toYaml $v.selector | indent 4 }}
+{{- end }}
