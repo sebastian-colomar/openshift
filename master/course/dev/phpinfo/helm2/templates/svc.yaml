@@ -10,3 +10,4 @@ spec:
   selector:
 {{ toYaml $v.selector | indent 4 }}
 {{- end }}
+{{- end }}
