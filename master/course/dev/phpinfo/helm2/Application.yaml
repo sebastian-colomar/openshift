@@ -8,6 +8,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    helm:
+      valueFiles:
+        - values.yaml
     path: master/course/dev/phpinfo/helm2
     repoURL: https://github.com/sebastian-colomar/openshift.git
     targetRevision: HEAD
