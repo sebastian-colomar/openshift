@@ -9,5 +9,6 @@ spec:
     {{- toYaml $v.ports | nindent 4 }}
   selector:
     {{- toYaml $v.selector | nindent 4 }}
+---
 {{- end }}
 {{- end }}
