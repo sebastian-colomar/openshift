@@ -1,0 +1,6 @@
+svc:
+  - name: svc
+    ports:
+      - port: 5050
+    selector:
+      app: deploy
