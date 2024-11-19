@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: phpinfo-helm-sebastian-2
+spec:
+  destination:
+    namespace: phpinfo-helm-sebastian-2
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: master/course/dev/phpinfo/helm2
+    repoURL: https://github.com/sebastian-colomar/openshift.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
