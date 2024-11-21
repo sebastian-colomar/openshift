@@ -18,8 +18,10 @@ spec:
         {{- range $c := $v.containers }}
         - name: {{ $c.name }}
           image: {{ $c.image }}
+          {{ if .Values.deploy }}
           ports:
             {{- toYaml $c.ports | nindent 12 }}
+          {{ end }}
           resources:
             {{- toYaml $c.resources | nindent 12 }}
           env:
