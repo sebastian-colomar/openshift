@@ -18,7 +18,7 @@ spec:
         {{- range $c := $v.containers }}
         - name: {{ $c.name }}
           image: {{ $c.image }}
-          {{ if .Values.deploy }}
+          {{ if $c.ports }}
           ports:
             {{- toYaml $c.ports | nindent 12 }}
           {{ end }}
