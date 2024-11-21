@@ -5,3 +5,11 @@ svc:
       - port: 5050
     selector:
       app: deploy
+routes:
+  - name: route
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: svc
