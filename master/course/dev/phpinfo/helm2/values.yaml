@@ -5,8 +5,3 @@ svc:
       - port: 5050
     selector:
       app: deploy
-  - name: svc2
-    ports:
-      - port: 6060
-    selector:
-      app: deploy2
