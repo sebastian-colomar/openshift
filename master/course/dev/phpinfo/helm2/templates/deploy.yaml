@@ -43,9 +43,7 @@ spec:
           {{ end }}
           {{ if $c.args }}
           args:
-            {{- if $c.args }}
             {{- toYaml $c.args | nindent 12 }}
-            {{- end }}
           {{ end }}
         {{- end }}
       {{ if $v.volumes }}
