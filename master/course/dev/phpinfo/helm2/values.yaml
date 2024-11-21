@@ -17,3 +17,48 @@ svc:
       - port: 5050
     selector:
       app: deploy
+deploy:
+  - name: deploy
+    replicas: 3
+    selector:
+      app: deploy
+    containers:
+      - name: phpinfo
+        image: 'index.docker.io/library/php:alpine'
+        ports:
+          - containerPort: 5050
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 10m
+            memory: 20M
+          requests:
+            cpu: 10m
+            memory: 20M
+        env:
+          - name: AUTHOR
+            value: Sebastian
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+          - mountPath: /data/index.php
+            subPath: index.php
+            name: volume
+            readOnly: true
+        workingDir: /data/
+        args:
+          - php
+          - -f
+          - index.php
+          - -S
+          - 0.0.0.0:5050
+    volumes:
+      - name: volume
+        configMap:
+          defaultMode: 0400
+          items:
+            - key: index.php
+              path: index.php
+              mode: 0400
+          name: cm
+  
