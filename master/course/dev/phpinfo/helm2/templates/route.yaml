@@ -1,1 +1,14 @@
-
+{{- if .Values.routes }}
+{{- range $v := .Values.routes }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ $v.name }}
+spec:
+  tls:
+    {{- toYaml $v.tls | nindent 4 }}
+  to:
+    {{- toYaml $v.to | nindent 4 }}
+---
+{{- end }}
+{{- end }}
