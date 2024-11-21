@@ -8,6 +8,7 @@ rules:
       - ''
     verbs:
       - create
+      - delete
       - patch
     resources:
       - services
