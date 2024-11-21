@@ -45,9 +45,9 @@ spec:
       volumes:
         - name: volume
           configMap:
-              defaultMode: 0400
-              items:
-                - key: index.php
-                  path: index.php
-                  mode: 0400
-              name: cm
+            defaultMode: 0400
+            items:
+              - key: index.php
+                path: index.php
+                mode: 0400
+            name: cm
