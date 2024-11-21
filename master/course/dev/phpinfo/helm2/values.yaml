@@ -1,10 +1,8 @@
+cm:
+  - name: cm
+    data:
+      index.php: <?php phpinfo();?>
 namespace: phpinfo-helm-sebastian-2
-svc:
-  - name: svc
-    ports:
-      - port: 5050
-    selector:
-      app: deploy
 routes:
   - name: route
     tls:
@@ -13,3 +11,9 @@ routes:
     to:
       kind: Service
       name: svc
+svc:
+  - name: svc
+    ports:
+      - port: 5050
+    selector:
+      app: deploy
