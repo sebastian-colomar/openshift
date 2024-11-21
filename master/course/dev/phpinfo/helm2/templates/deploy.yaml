@@ -1,0 +1,41 @@
+{{- if .Values.deploy }}
+{{- range $v := .Values.deploy }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $v.name }}
+spec:
+  replicas: {{ $v.replicas }}
+  selector:
+    matchLabels:
+      {{- toYaml $v.selector | nindent 4 }}
+  template:
+    metadata:
+      labels:
+        {{- toYaml $v.selector | nindent 4 }}
+    spec:
+      containers:
+        {{- if $v.containers }}
+        {{- range $c := $v.containers }}
+        - name: {{ $c.name }}
+          image: {{ $c.image }}
+          ports:
+            {{- toYaml $c.ports | nindent 4 }}
+          resources:
+            {{- toYaml $c.resources | nindent 4 }}
+          env:
+            {{- toYaml $c.env | nindent 4 }}
+          securityContext:
+            {{- toYaml $c.securityContext | nindent 4 }}
+          volumeMounts:
+            {{- toYaml $c.volumeMounts | nindent 4 }}
+          workingDir: {{ $c.workingDir }}
+          args:
+            {{- toYaml $c.args | nindent 4 }}
+        {{- end }}
+        {{- end }}
+      volumes:
+        {{- toYaml $v.volumes | nindent 4 }}
+---
+{{- end }}
+{{- end }}
