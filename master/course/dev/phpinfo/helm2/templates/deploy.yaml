@@ -8,32 +8,34 @@ spec:
   replicas: {{ $v.replicas }}
   selector:
     matchLabels:
-      {{- toYaml $v.selector | nindent 4 }}
+      {{- toYaml $v.selector | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- toYaml $v.selector | nindent 4 }}
+        {{- toYaml $v.selector | nindent 8 }}
     spec:
       containers:
         {{- range $c := $v.containers }}
         - name: {{ $c.name }}
           image: {{ $c.image }}
           ports:
-            {{- toYaml $c.ports | nindent 4 }}
+            {{- toYaml $c.ports | nindent 12 }}
           resources:
-            {{- toYaml $c.resources | nindent 4 }}
+            {{- toYaml $c.resources | nindent 12 }}
           env:
-            {{- toYaml $c.env | nindent 4 }}
+            {{- toYaml $c.env | nindent 12 }}
           securityContext:
-            {{- toYaml $c.securityContext | nindent 4 }}
+            {{- toYaml $c.securityContext | nindent 12 }}
           volumeMounts:
-            {{- toYaml $c.volumeMounts | nindent 4 }}
+            {{- toYaml $c.volumeMounts | nindent 12 }}
           workingDir: {{ $c.workingDir }}
           args:
-            {{- toYaml $c.args | nindent 4 }}
+            {{- if $c.args }}
+            {{- toYaml $c.args | nindent 12 }}
+            {{- end }}
         {{- end }}
       volumes:
-        {{- toYaml $v.volumes | nindent 4 }}
+        {{- toYaml $v.volumes | nindent 8 }}
 ---
 {{- end }}
 {{- end }}
