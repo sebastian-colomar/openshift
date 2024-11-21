@@ -15,7 +15,6 @@ spec:
         {{- toYaml $v.selector | nindent 4 }}
     spec:
       containers:
-        {{- if $v.containers }}
         {{- range $c := $v.containers }}
         - name: {{ $c.name }}
           image: {{ $c.image }}
@@ -32,7 +31,6 @@ spec:
           workingDir: {{ $c.workingDir }}
           args:
             {{- toYaml $c.args | nindent 4 }}
-        {{- end }}
         {{- end }}
       volumes:
         {{- toYaml $v.volumes | nindent 4 }}
