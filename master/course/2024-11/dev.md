@@ -3,3 +3,4 @@
 3. OADP backup and recovery
 4. Advanced Helm deployment
 5. Advanced Helm deployment (II)
+6. ? OpenShift templates, project monitoring, multi-services applications 
