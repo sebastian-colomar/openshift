@@ -7,4 +7,5 @@
 7. ? OpenShift templates, project monitoring, multi-services applications
 8. ? oc command line
 9. ? Github Actions
+10. ? SCC
 
