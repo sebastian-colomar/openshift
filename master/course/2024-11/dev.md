@@ -4,7 +4,7 @@
 4. Advanced Helm deployment
 5. Advanced Helm deployment (II)
 6. Deploy from Git, deploy from image
-7. ? OpenShift templates, project monitoring, multi-services applications
+7. OpenShift templates, project monitoring, multi-services applications (dockercoins)
 8. ? oc command line
 9. ? Github Actions
 10. ? SCC
