@@ -6,5 +6,5 @@
 6. Advanced developer deployment tools using templates, Helm charts and operators
 7. Dockercoins: hasher, redis and rng deployments
 8. Dockercoins: webui and worker deployents
-9. ? oc command line
+9. oc command line
 10. ? OADP backup and recovery
