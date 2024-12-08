@@ -6,5 +6,5 @@
 6. Deploy from Git, deploy from image
 7. OpenShift templates, project monitoring, multi-services applications (dockercoins)
 8. Github Actions
-9. ? SCC / oc command line
-10. ? Github Actions (II)
+9. SCC / oc command line
+10. Github Actions (II)
