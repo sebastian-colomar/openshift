@@ -1,7 +1,8 @@
 1. https://console-openshift-console.apps.openshift.sebastian-colomar.es
    * https://oauth-openshift.apps.openshift.sebastian-colomar.es/oauth/token/request
 
-   In order to access the Openshift cluster from AWS Cloud9 terminal:
+   In order to access the Openshift cluster from Google Cloud Shell:
+   * https://shell.cloud.google.com/
    ```bash
    wget https://downloads-openshift-console.apps.openshift.sebastian-colomar.es/amd64/linux/oc.tar
    tar xf oc.tar
