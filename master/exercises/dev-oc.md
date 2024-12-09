@@ -7,7 +7,7 @@
    tar xf oc.tar
    sudo cp oc /usr/local/bin
    oc version 
-   oc login --token=xxx-yyy --server=https://api.openshift.sebastian-colomar.es:6443
+   oc login --token=$token --server=https://api.openshift.sebastian-colomar.es:6443
    
    
    ```   
@@ -178,12 +178,16 @@
 1. https://github.com/kubernetes/kubernetes/issues/77086
    
    ```
+   user=dev-x
+
+   project=delete
+
    tee ns.yaml 0<<EOF
    
    apiVersion: project.openshift.io/v1
    kind: Project
    metadata:
-     name: delete-$user
+     name: $project-$user
    spec:
      finalizers:
      - foregroundDeletion
@@ -195,12 +199,12 @@
 
    ```
    ```
-   oc delete project delete-dev-x
+   oc delete project $project-$user
    
    
    ```
    ```
-   oc get ns delete-dev-x --output json | sed '/ "foregroundDeletion"/d' | curl -k  -H "Authorization: Bearer xxx" -H "Content-Type: application/json" -X PUT --data-binary @- https://api.openshift.sebastian-colomar.es:6443/api/v1/namespaces/delete-dev-x/finalize
+   oc get ns $project-$user --output json | sed '/ "foregroundDeletion"/d' | curl -k  -H "Authorization: Bearer $token" -H "Content-Type: application/json" -X PUT --data-binary @- https://api.openshift.sebastian-colomar.es:6443/api/v1/namespaces/$project-$user/finalize
    
    
    ```
