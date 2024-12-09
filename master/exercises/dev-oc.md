@@ -44,7 +44,7 @@
    Troubleshoot and fix the deployment.
    
    Once it is fixed, you can check here the resulting application:
-   * https://spring-petclinic-route-spring-petclinic-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://dockercoins-dockercoins-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
