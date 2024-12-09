@@ -1,10 +1,11 @@
 1. Native kubernetes deployments
-2. Basic Helm deployment using OpenShift Gitops (ArgoCD)
-3. OADP backup and recovery
-4. Advanced Helm deployment
-5. Advanced Helm deployment (II)
-6. Deploy from Git, deploy from image
-7. OpenShift templates, project monitoring, multi-services applications (dockercoins)
-8. Github Actions
-9. SCC / oc command line
-10. Github Actions (II)
+   * https://github.com/sebastian-colomar/openshift/blob/master/master/exercises/dev-oc.md
+3. Basic Helm deployment using OpenShift Gitops (ArgoCD)
+4. OADP backup and recovery
+5. Advanced Helm deployment
+6. Advanced Helm deployment (II)
+7. Deploy from Git, deploy from image
+8. OpenShift templates, project monitoring, multi-services applications (dockercoins)
+9. Github Actions
+10. SCC / oc command line
+11. Github Actions (II)
