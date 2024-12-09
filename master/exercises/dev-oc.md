@@ -66,7 +66,7 @@
    oc get deployment -n $project-$user
    
    ```
-   Troubleshoot and fix the deployment.
+   TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
    * https://xwiki-route-docker-xwiki-dev-x.apps.openshift.sebastian-colomar.es/
@@ -88,7 +88,7 @@
    oc get deployment -n $project-$user
 
    ```
-   Troubleshoot and fix the deployment.
+   TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
    * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
@@ -111,7 +111,7 @@
    oc get deployment -n $project-$user
 
    ```
-   Troubleshoot and fix the deployment.
+   TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
    * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
