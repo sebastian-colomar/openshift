@@ -41,7 +41,7 @@
    oc get deployment -n $project-$user
    
    ```
-   Troubleshoot and fix the deployment.
+   ###Troubleshoot and fix the deployment.
    
    Once it is fixed, you can check here the resulting application:
    * https://dockercoins-dockercoins-dev-sebastian.apps.openshift.sebastian-colomar.es/
