@@ -11,7 +11,7 @@
    
    
    ```   
-   In order to deploy petclinic and dockercoins in Red Hat Openshift:
+   In order to deploy petclinic in Red Hat Openshift:
    ```bash
    user=dev-x
    
@@ -23,11 +23,17 @@
    oc get deployment -n $project-$user
 
    ```
+   Check here the resulting application:
    * https://spring-petclinic-route-spring-petclinic-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
    ```
    oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-   
+
+   ```
+   In order to deploy petclinic and dockercoins in Red Hat Openshift:
+   ```
    project=dockercoins
    release=v2.0
    
@@ -35,12 +41,19 @@
    oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc get deployment -n $project-$user
    
+   ```
+   Troubleshoot and fix the deployment.
+   
+   Once it is fixed, you can check here the resulting application:
+   * https://spring-petclinic-route-spring-petclinic-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
    oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
 
 
    ```
-1. Troubleshooting Dockercoins   
 1. https://github.com/xwiki-contrib/docker-xwiki
    * https://github.com/secobau/docker-xwiki
 
@@ -55,84 +68,118 @@
    oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc get deployment -n $project-$user
    
+   ```
+   Troubleshoot and fix the deployment.
+   
+   Once it is fixed, you can check here the resulting application:
+   * https://xwiki-route-docker-xwiki-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
    oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
 
 
    ```
-1. https://github.com/secobau/proxy2aws/tree/openshift
-   * https://github.com/secobau/nginx
-   * https://hub.docker.com/r/secobau/nginx
+1. In order to deploy proxy2aws in Red Hat Openshift:
+   ```bash
+   user=dev-x
 
-   1. In order to deploy proxy2aws in Red Hat Openshift:
-      ```bash
-      user=dev-x
+   project=proxy2aws
+   release=v10.0
 
-      project=proxy2aws
-      release=v10.0
+   oc new-project $project-$user
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc get deployment -n $project-$user
 
-      oc new-project $project-$user
-      oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-      oc get deployment -n $project-$user
-
-      oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-      oc delete project $project-$user
-
-
-      ```
-   1. In order to deploy proxy2aws in Red Hat Openshift through templates:
-      ```bash
-      user=dev-x
-
-      project=proxy2aws
-      release=v10.0
-
-      oc new-project $project-$user
-      oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
-      oc get deployment -n $project-$user
-
-      oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
-      oc delete project $project-$user
+   ```
+   Troubleshoot and fix the deployment.
+   
+   Once it is fixed, you can check here the resulting application:
+   * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://aws2prem-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete project $project-$user
 
 
-      ```
-1. https://github.com/secobau/phpinfo
+   ```
+1. In order to deploy proxy2aws in Red Hat Openshift through templates:
+   ```bash
+   user=dev-x
 
-   1. In order to deploy phpinfo in Red Hat Openshift:
-      ```bash
-      user=dev-x
+   project=proxy2aws
+   release=v10.0
 
-      project=phpinfo
-      release=v1.4
+   oc new-project $project-$user
+   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
+   oc get deployment -n $project-$user
 
-      oc new-project $project-$user
-      oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-      oc get deployment -n $project-$user
-
-      oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-      oc delete project $project-$user
-
-
-      ```
-   1. In order to deploy phpinfo in Red Hat Openshift through templates:
-      ```bash
-      user=dev-x
-
-      project=phpinfo
-      release=v1.4
-
-      oc new-project $project-$user
-      oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
-      oc get deployment -n $project-$user
-
-      oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
-      oc delete project $project-$user
+   ```
+   Troubleshoot and fix the deployment.
+   
+   Once it is fixed, you can check here the resulting application:
+   * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://aws2prem-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
+   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
+   oc delete project $project-$user
 
 
-      ```
+   ```
+1. In order to deploy phpinfo in Red Hat Openshift:
+   ```bash
+   user=dev-x
+
+   project=phpinfo
+   release=v1.4
+
+   oc new-project $project-$user
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc get deployment -n $project-$user
+
+   ```
+   You can check here the resulting application:
+   * https://phpinfo-route-phpinfo-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete project $project-$user
+
+
+   ```
+1. In order to deploy phpinfo in Red Hat Openshift through templates:
+   ```bash
+   user=dev-x
+
+   project=phpinfo
+   release=v1.4
+
+   oc new-project $project-$user
+   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
+   oc get deployment -n $project-$user
+
+   ```
+   You can check here the resulting application:
+   * https://phpinfo-route-phpinfo-dev-x.apps.openshift.sebastian-colomar.es/
+  
+   Afterwards, you may delete the resources:
+   ```
+   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
+   oc delete project $project-$user
+
+
+   ```
 1. https://github.com/kubernetes/kubernetes/issues/77086
    
    ```
+   tee ns.yaml 0<<EOF
+   
    apiVersion: project.openshift.io/v1
    kind: Project
    metadata:
@@ -141,6 +188,10 @@
      finalizers:
      - foregroundDeletion
 
+   EOF
+
+   oc apply -f ns.yaml
+   
 
    ```
    ```
@@ -153,8 +204,3 @@
    
    
    ```
- 1. https://manage.openshift.com
- 1. https://learn.openshift.com/playgrounds/openshift45/
- 1. https://github.com/secobau/docker/blob/master/Cloud9/README.md
- 1. https://github.com/spring-projects/spring-petclinic
- 1. https://github.com/secobau/nginx
