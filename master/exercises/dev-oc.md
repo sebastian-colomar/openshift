@@ -31,7 +31,7 @@
    oc delete project $project-$user
 
    ```
-   In order to deploy petclinic and dockercoins in Red Hat Openshift:
+   In order to deploy dockercoins in Red Hat Openshift:
    ```
    project=dockercoins
    release=v2.0
