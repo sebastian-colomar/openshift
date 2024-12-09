@@ -5,8 +5,7 @@
    ```bash
    wget https://downloads-openshift-console.apps.openshift.sebastian-colomar.es/amd64/linux/oc.tar
    tar xf oc.tar
-   mkdir $HOME/bin
-   mv oc $HOME/bin
+   sudo cp oc /usr/local/bin
    oc version 
    oc login --token=xxx-yyy --server=https://api.openshift.sebastian-colomar.es:6443
    
