@@ -12,7 +12,7 @@
    ```   
    In order to deploy petclinic in Red Hat Openshift:
    ```bash
-   user=dev-x
+   user=dev-$name
    
    project=spring-petclinic
    release=v0.7
@@ -57,9 +57,7 @@
    * https://github.com/secobau/docker-xwiki
 
    In order to deploy xwiki in Red Hat Openshift:
-   ```bash
-   user=dev-x
-   
+   ```bash 
    project=docker-xwiki
    release=v2.4
    
@@ -82,8 +80,6 @@
    ```
 1. In order to deploy proxy2aws in Red Hat Openshift:
    ```bash
-   user=dev-x
-
    project=proxy2aws
    release=v10.0
 
@@ -107,8 +103,6 @@
    ```
 1. In order to deploy proxy2aws in Red Hat Openshift through templates:
    ```bash
-   user=dev-x
-
    project=proxy2aws
    release=v10.0
 
@@ -132,8 +126,6 @@
    ```
 1. In order to deploy phpinfo in Red Hat Openshift:
    ```bash
-   user=dev-x
-
    project=phpinfo
    release=v1.4
 
@@ -154,8 +146,6 @@
    ```
 1. In order to deploy phpinfo in Red Hat Openshift through templates:
    ```bash
-   user=dev-x
-
    project=phpinfo
    release=v1.4
 
@@ -177,8 +167,6 @@
 1. https://github.com/kubernetes/kubernetes/issues/77086
    
    ```
-   user=dev-x
-
    project=delete
 
    tee ns.yaml 0<<EOF
