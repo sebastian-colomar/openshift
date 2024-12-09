@@ -183,7 +183,7 @@
    apiVersion: project.openshift.io/v1
    kind: Project
    metadata:
-     name: delete-dev-x
+     name: delete-$user
    spec:
      finalizers:
      - foregroundDeletion
