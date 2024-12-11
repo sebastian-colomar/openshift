@@ -6,16 +6,13 @@ apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
   annotations:
-    description: >-
-      Docker Coins
-    openshift.io/display-name: 'Docker Coins'
-    openshift.io/provider-display-name: 'Sebastian Colomar'
-    tags: 'docker,dockercoins'
-    version: '1.6'
+    description: Docker Coins
+    openshift.io/display-name: Docker Coins
+    openshift.io/provider-display-name: Sebastian Colomar
+    tags: docker,dockercoins
+    version: 1.6
   name: dockercoins-template
-  labels:
-    app: dockercoins
-message: 'Docker Coins is now deployed.'
+message: Docker Coins is now deployed.
 objects:
   -
     apiVersion: apps/v1
