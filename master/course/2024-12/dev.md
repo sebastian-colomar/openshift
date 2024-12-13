@@ -7,6 +7,7 @@
 4. OADP backup and recovery
 3. Basic Helm deployment using OpenShift Gitops (ArgoCD)
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm
+   * https://openshift-gitops-server-openshift-gitops.apps.openshift.sebastian-colomar.es/applications
 5. Advanced Helm deployment
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm2
 7. Deploy from Git, deploy from image
