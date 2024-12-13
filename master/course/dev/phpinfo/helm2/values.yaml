@@ -2,7 +2,7 @@ cm:
   - name: cm
     data:
       index.php: <?php phpinfo();?>
-namespace: phpinfo-helm-sebastian-5
+#namespace: phpinfo-helm-sebastian-5
 routes:
   - name: route
     tls:
