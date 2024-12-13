@@ -5,7 +5,7 @@ sudo cp oc /usr/local/bin/
 oc version
 ```
 ```
-wget https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-amd64.tar.gz
+wget https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/helm/3.14.4/helm-linux-amd64.tar.gz
 tar xzf helm-linux-amd64.tar.gz
 sudo cp helm-linux-amd64 /usr/local/bin/helm
 helm version
