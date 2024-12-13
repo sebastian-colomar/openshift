@@ -14,7 +14,7 @@ routes:
 svc:
   - name: svc
     ports:
-      - port: 5050
+      - port: 5051
     selector:
       app: deploy
 deploy:
@@ -51,7 +51,7 @@ deploy:
           - -f
           - index.php
           - -S
-          - 0.0.0.0:5050
+          - 0.0.0.0:5051
     volumes:
       - name: volume
         configMap:
