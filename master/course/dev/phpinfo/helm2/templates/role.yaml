@@ -16,6 +16,7 @@ rules:
       - apps
     verbs:
       - create
+      - delete
       - patch
     resources:
       - deployments
