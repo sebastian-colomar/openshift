@@ -10,7 +10,6 @@
    * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/helm-php.md
    * https://openshift-gitops-server-openshift-gitops.apps.openshift.sebastian-colomar.es/applications
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm
-5. Advanced Helm deployment
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm2
 7. Deploy from Git, deploy from image
 10. Github Actions
