@@ -5,6 +5,8 @@
 8. OpenShift templates (dockercoins)
    * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/dockercoins/etc/kubernetes/manifests/template.yaml
 4. OADP backup and recovery
+5. Manual Helm deployment using Helm CLI
+   * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/helm-php.md
 3. Basic Helm deployment using OpenShift Gitops (ArgoCD)
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm
    * https://openshift-gitops-server-openshift-gitops.apps.openshift.sebastian-colomar.es/applications
