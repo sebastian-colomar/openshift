@@ -11,7 +11,9 @@
    * https://openshift-gitops-server-openshift-gitops.apps.openshift.sebastian-colomar.es/applications
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm
    * https://github.com/sebastian-colomar/openshift/tree/master/master/course/dev/phpinfo/helm2
-7. Deploy from Git, deploy from image
 10. Github Actions
+    * https://github.com/sebastian-colomar/phpinfo/blob/main/.github/workflows/ci.yaml
+    * https://github.com/sebastian-colomar/dockercoins/blob/main/.github/workflows/ci.yaml
 12. Github Actions (II)
 11. SCC / oc command line
+7. Deploy from Git, deploy from image
