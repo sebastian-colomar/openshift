@@ -22,5 +22,5 @@
     * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/php/helm/phpinfo/templates/hpa.yaml
     * Developer console
 11. SCC / oc command line
-7. Deploy from Git, deploy from image
+7. xxxx
 12. Github Actions (II)
