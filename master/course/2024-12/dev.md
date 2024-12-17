@@ -16,6 +16,10 @@
     * https://docs.github.com/actions
     * https://github.com/sebastian-colomar/phpinfo/blob/main/.github/workflows/ci.yaml
     * https://github.com/sebastian-colomar/dockercoins/blob/main/.github/workflows/ci.yaml
-12. Github Actions (II)
+12. Highly Available deployments
+    * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/python/etc/kubernetes/manifests/deploy.yaml
+    * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/php/etc/kubernetes/manifests/pdb.yaml
+    * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/php/helm/phpinfo/templates/hpa.yaml
 11. SCC / oc command line
 7. Deploy from Git, deploy from image
+12. Github Actions (II)
