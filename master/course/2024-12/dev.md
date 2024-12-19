@@ -21,6 +21,11 @@
     * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/php/etc/kubernetes/manifests/pdb.yaml
     * https://github.com/sebastian-colomar/openshift/blob/master/master/course/content/php/helm/phpinfo/templates/hpa.yaml
     * Developer console
-11. SCC / oc command line
-7. xxxx
+11. oc command line
+77. Security
+    * Network security
+    * Image security
+    * Container security
+    * RBAC
+    * SCC
 12. Github Actions (II)
