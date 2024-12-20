@@ -29,3 +29,5 @@
     * RBAC
     * SCC
 12. Github Actions (II)
+    * https://github.com/sebastian-colomar/dockercoins/settings/secrets/actions
+    * https://github.com/sebastian-colomar/dockercoins/blob/main/.github/workflows/ci.yaml
