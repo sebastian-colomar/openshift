@@ -3,6 +3,7 @@ kind: Route
 metadata:
   name: route
 spec:
+  host: app-demo.apps.openshift.sebastian-colomar.es
   tls:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
