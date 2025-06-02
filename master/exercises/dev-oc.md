@@ -22,6 +22,19 @@
    oc get deployment -n $project-$user
 
    ```
+   Using Windows CMD:
+   ```bash
+   set name=sebas
+   set user=dev-%name%
+   
+   set project=spring-petclinic
+   set release=v0.7
+   
+   oc new-project %project%-%user%
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc get deployment -n %project%-%user%
+
+   ```   
    Check here the resulting application:
    * https://spring-petclinic-route-spring-petclinic-dev-x.apps.openshift.sebastian-colomar.es/
   
