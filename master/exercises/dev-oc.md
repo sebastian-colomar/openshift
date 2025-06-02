@@ -45,6 +45,11 @@
    oc delete project $project-$user
 
    ```
+   Using Windows CMD:
+   ```bash
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete project %project%-%user%
+   ```
    In order to deploy dockercoins in Red Hat Openshift:
    ```
    project=dockercoins
