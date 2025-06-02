@@ -13,7 +13,8 @@
    In order to deploy petclinic in Red Hat Openshift:
    ```bash
    user=dev-$name
-   
+   ```   
+   ```bash
    project=spring-petclinic
    release=v0.7
    
