@@ -51,7 +51,7 @@
    oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc delete project %project%-%user%
    ```
-   In order to deploy dockercoins in Red Hat Openshift:
+1. In order to deploy dockercoins in Red Hat Openshift:
    ```
    project=dockercoins
    release=v2.0
