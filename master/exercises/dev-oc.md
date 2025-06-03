@@ -219,8 +219,16 @@
    oc new-project $project-$user
    oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
    oc get deployment -n $project-$user
-
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=phpinfo
+   set release=v1.4
+   
+   oc new-project %project%-%user%
+   oc process -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/templates/%project%.yaml | oc apply -n %project%-%user% -f -
+   oc get deployment -n %project%-%user%
+   ```   
    You can check here the resulting application:
    * https://phpinfo-route-phpinfo-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
@@ -228,8 +236,6 @@
    ```
    oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
    oc delete project $project-$user
-
-
    ```
 1. https://github.com/kubernetes/kubernetes/issues/77086
    
