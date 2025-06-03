@@ -13,6 +13,7 @@
    ```   
    In order to deploy petclinic in Red Hat Openshift:
    ```bash
+   name=sebastian
    user=dev-$name
    repository=secobau
 
