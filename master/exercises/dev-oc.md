@@ -272,16 +272,10 @@
    EOF
 
    oc apply -f ns.yaml
-   
-
    ```
    ```
-   oc delete project $project-$user
-   
-   
+   oc delete project $project-$user   
    ```
    ```
-   oc get ns $project-$user --output json | sed '/ "foregroundDeletion"/d' | curl -k  -H "Authorization: Bearer $token" -H "Content-Type: application/json" -X PUT --data-binary @- https://api.openshift.sebastian-colomar.es:6443/api/v1/namespaces/$project-$user/finalize
-   
-   
+   oc get ns $project-$user --output json | sed '/ "foregroundDeletion"/d' | curl -k  -H "Authorization: Bearer $token" -H "Content-Type: application/json" -X PUT --data-binary @- https://api.openshift.sebastian-colomar.es:6443/api/v1/namespaces/$project-$user/finalize   
    ```
