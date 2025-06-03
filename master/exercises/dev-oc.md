@@ -86,8 +86,7 @@
    ```
    
 
-1. In order to deploy xwiki in Red Hat Openshift:
-   
+1. In order to deploy xwiki in Red Hat Openshift:   
    * https://github.com/xwiki-contrib/docker-xwiki
    * https://github.com/secobau/docker-xwiki
    ```bash 
