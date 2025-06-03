@@ -165,10 +165,18 @@
    release=v10.0
 
    oc new-project $project-$user
-   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
+   oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
    oc get deployment -n $project-$user
-
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=proxy2aws
+   set release=v10.0
+   
+   oc new-project %project%-%user%
+   oc process -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/templates/%project%.yaml | oc apply -n %project%-%user% -f -
+   oc get deployment -n %project%-%user%
+   ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
@@ -179,6 +187,11 @@
    ```
    oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
    oc delete project $project-$user
+   ```
+   Using Windows CMD:
+   ```bash
+   oc process -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/templates/%project%.yaml | oc delete -n %project%-%user% -f -
+   oc delete project %project%-%user%
    ```
 1. In order to deploy phpinfo in Red Hat Openshift:
    ```bash
@@ -236,6 +249,11 @@
    ```
    oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
    oc delete project $project-$user
+   ```
+   Using Windows CMD:
+   ```bash
+   oc process -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/templates/%project%.yaml | oc delete -n %project%-%user% -f -
+   oc delete project %project%-%user%
    ```
 1. https://github.com/kubernetes/kubernetes/issues/77086
    
