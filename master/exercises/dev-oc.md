@@ -1,53 +1,54 @@
-1. In order to access the Openshift cluster from Google Cloud Shell:
-   * https://shell.cloud.google.com/
-   * https://oauth-openshift.apps.openshift.sebastian-colomar.es/oauth/token/request
+1. In order to install OpenShift CLI on a remote shell:
+   * https://shell.cloud.google.com
    ```bash
    wget https://downloads-openshift-console.apps.openshift.sebastian-colomar.es/amd64/linux/oc.tar
    tar xf oc.tar
    sudo cp oc /usr/local/bin
-   oc version 
-   oc login --token=$token --server=https://api.openshift.sebastian-colomar.es:6443
-   
-   
+   oc version   
+   ```   
+1. In order to access the Openshift cluster from a remote shell:
+   * https://oauth-openshift.apps.openshift.sebastian-colomar.es/oauth/token/request
+   ```bash
+   oc login --token=$token --server=https://api.$cluster.$domain:6443   
    ```   
    In order to deploy petclinic in Red Hat Openshift:
    ```bash
    user=dev-$name
+   repository=secobau
+
    project=spring-petclinic
    release=v0.7
    
    oc new-project $project-$user
-   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc get deployment -n $project-$user
-
    ```
    Using Windows CMD:
    ```bash
-   set name=sebas
+   set name=sebastian
    ```   
    ```bash
    set user=dev-%name%
+   set repository=secobau
    
    set project=spring-petclinic
    set release=v0.7
    
    oc new-project %project%-%user%
-   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc get deployment -n %project%-%user%
-
    ```   
    Check here the resulting application:
    * https://spring-petclinic-route-spring-petclinic-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
-   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-
    ```
    Using Windows CMD:
    ```bash
-   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc delete project %project%-%user%
    ```
    In order to deploy dockercoins in Red Hat Openshift:
@@ -56,9 +57,8 @@
    release=v2.0
    
    oc new-project $project-$user
-   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-   oc get deployment -n $project-$user
-   
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc get deployment -n $project-$user   
    ```
    Using Windows CMD:
    ```bash 
@@ -66,9 +66,8 @@
    set release=v2.0
    
    oc new-project %project%-%user%
-   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc get deployment -n %project%-%user%
-
    ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
@@ -77,14 +76,12 @@
   
    Afterwards, you may delete the resources:
    ```
-   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-
-
    ```
    Using Windows CMD:
    ```bash
-   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc delete project %project%-%user%
    ```
    
@@ -97,9 +94,8 @@
    release=v2.4
    
    oc new-project $project-$user
-   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
-   oc get deployment -n $project-$user
-   
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc get deployment -n $project-$user   
    ```
    Using Windows CMD:
    ```bash 
@@ -107,9 +103,8 @@
    set release=v2.4
    
    oc new-project %project%-%user%
-   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc get deployment -n %project%-%user%
-
    ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
@@ -118,14 +113,12 @@
   
    Afterwards, you may delete the resources:
    ```
-   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-
-
    ```
    Using Windows CMD:
    ```bash
-   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc delete project %project%-%user%
    ```
    
@@ -135,7 +128,7 @@
    release=v10.0
 
    oc new-project $project-$user
-   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc get deployment -n $project-$user
 
    ```
@@ -147,14 +140,12 @@
   
    Afterwards, you may delete the resources:
    ```
-   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-
-
    ```
    Using Windows CMD:
    ```bash
-   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
    oc delete project %project%-%user%
    ```
    
@@ -171,15 +162,13 @@
    TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
-   * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
-   * https://aws2prem-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://aws2cloud-route-proxy2aws-dev-sebastian.apps.openshift.sebastian-colomar.es/
+   * https://aws2prem-route-proxy2aws-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
-   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
+   oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
    oc delete project $project-$user
-
-
    ```
 1. In order to deploy phpinfo in Red Hat Openshift:
    ```bash
@@ -187,19 +176,30 @@
    release=v1.4
 
    oc new-project $project-$user
-   oc apply -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc apply -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc get deployment -n $project-$user
-
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=phpinfo
+   set release=v1.4
+   
+   oc new-project %project%-%user%
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc get deployment -n %project%-%user%
+   ```   
    You can check here the resulting application:
-   * https://phpinfo-route-phpinfo-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://phpinfo-route-phpinfo-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
-   oc delete -n $project-$user -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
+   oc delete -n $project-$user -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/$project.yaml
    oc delete project $project-$user
-
-
+   ```
+   Using Windows CMD:
+   ```bash
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete project %project%-%user%
    ```
 1. In order to deploy phpinfo in Red Hat Openshift through templates:
    ```bash
