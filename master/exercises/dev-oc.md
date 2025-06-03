@@ -37,7 +37,7 @@
 
    ```   
    Check here the resulting application:
-   * https://spring-petclinic-route-spring-petclinic-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://spring-petclinic-route-spring-petclinic-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
@@ -60,6 +60,16 @@
    oc get deployment -n $project-$user
    
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=dockercoins
+   set release=v2.0
+   
+   oc new-project %project%-%user%
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc get deployment -n %project%-%user%
+
+   ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
@@ -72,6 +82,12 @@
 
 
    ```
+   Using Windows CMD:
+   ```bash
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete project %project%-%user%
+   ```
+   
 1. https://github.com/xwiki-contrib/docker-xwiki
    * https://github.com/secobau/docker-xwiki
 
@@ -85,10 +101,20 @@
    oc get deployment -n $project-$user
    
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=docker-xwiki
+   set release=v2.4
+   
+   oc new-project %project%-%user%
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc get deployment -n %project%-%user%
+
+   ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
-   * https://xwiki-route-docker-xwiki-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://xwiki-route-docker-xwiki-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
@@ -97,6 +123,12 @@
 
 
    ```
+   Using Windows CMD:
+   ```bash
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete project %project%-%user%
+   ```
+   
 1. In order to deploy proxy2aws in Red Hat Openshift:
    ```bash
    project=proxy2aws
@@ -120,6 +152,12 @@
 
 
    ```
+   Using Windows CMD:
+   ```bash
+   oc delete -n %project%-%user% -f https://raw.githubusercontent.com/secobau/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc delete project %project%-%user%
+   ```
+   
 1. In order to deploy proxy2aws in Red Hat Openshift through templates:
    ```bash
    project=proxy2aws
