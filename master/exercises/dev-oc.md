@@ -133,11 +133,20 @@
    oc get deployment -n $project-$user
 
    ```
+   Using Windows CMD:
+   ```bash 
+   set project=proxy2aws
+   set release=v10.0
+   
+   oc new-project %project%-%user%
+   oc apply -n %project%-%user% -f https://raw.githubusercontent.com/%repository%/%project%/%release%/etc/docker/kubernetes/openshift/%project%.yaml
+   oc get deployment -n %project%-%user%
+   ```   
    TROUBLESHOOT AND FIX THE PROBLEM.
    
    Once it is fixed, you can check here the resulting application:
-   * https://aws2cloud-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
-   * https://aws2prem-route-proxy2aws-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://aws2cloud-route-proxy2aws-dev-sebastian.apps.openshift.sebastian-colomar.es/
+   * https://aws2prem-route-proxy2aws-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
@@ -208,16 +217,16 @@
    release=v1.4
 
    oc new-project $project-$user
-   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
+   oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc apply -n $project-$user -f -
    oc get deployment -n $project-$user
 
    ```
    You can check here the resulting application:
-   * https://phpinfo-route-phpinfo-dev-x.apps.openshift.sebastian-colomar.es/
+   * https://phpinfo-route-phpinfo-dev-sebastian.apps.openshift.sebastian-colomar.es/
   
    Afterwards, you may delete the resources:
    ```
-   oc process -f https://raw.githubusercontent.com/secobau/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
+   oc process -f https://raw.githubusercontent.com/$repository/$project/$release/etc/docker/kubernetes/openshift/templates/$project.yaml | oc delete -n $project-$user -f -
    oc delete project $project-$user
 
 
