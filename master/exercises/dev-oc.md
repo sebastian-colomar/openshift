@@ -10,13 +10,20 @@
    * https://oauth-openshift.apps.openshift.sebastian-colomar.es/oauth/token/request
    ```bash
    oc login --token=$token --server=https://api.$cluster.$domain:6443   
-   ```   
-   In order to deploy petclinic in Red Hat Openshift:
-   ```bash
+   ```
+    ```bash
    name=sebastian
    user=dev-$name
    repository=secobau
-
+   ```
+   Using Windows CMD:
+   ```bash
+   set name=sebastian
+   set user=dev-%name%
+   set repository=secobau
+   ```
+1. In order to deploy petclinic in Red Hat Openshift:
+   ```bash
    project=spring-petclinic
    release=v0.7
    
@@ -26,12 +33,6 @@
    ```
    Using Windows CMD:
    ```bash
-   set name=sebastian
-   ```   
-   ```bash
-   set user=dev-%name%
-   set repository=secobau
-   
    set project=spring-petclinic
    set release=v0.7
    
