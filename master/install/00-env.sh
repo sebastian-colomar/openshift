@@ -1,13 +1,14 @@
 export ClusterName=openshift
 export ClusterNetworkCIDR=10.128.0.0/16
 export DomainName=sebastian-colomar.es
-export MachineNetworkCIDR=10.0.0.0/16
+export hostPrefix=20
+export MachineNetworkCIDR=10.0.0.0/24
 export master_type=m6a.xlarge # 4CPU, 16GB, $0.1111 (in Mumbai)
 #export master_type=t3a.xlarge # 4CPU, 16GB, $0.0986 (in Mumbai)
 #export master_type=c6a.xlarge # 4CPU, 8GB, $0.0935 (in Mumbai)
 export Publish=External
 export ServiceNetworkCIDR=172.30.0.0/16
-export version=4.18.13
+export version=4.14.51
 export worker_type=m6a.xlarge # 2CPU, 8GB, $0.05555 (in Mumbai)
 #export worker_type=t3a.large # 2CPU, 8GB, $0.04930 (in Mumbai)
 #export worker_type=c6a.large # 2CPU, 4GB, $0.04675 (in Mumbai)
