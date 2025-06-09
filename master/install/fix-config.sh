@@ -8,8 +8,9 @@ file=install-config.yaml						;
 # MINIMUM master_type: t3a.xlarge
 # MINIMUM worker_type: t3a.large
 # ClusterNetworkCIDR=10.128.0.0/16
-# MachineNetworkCIDR=10.0.0.0/16
+# MachineNetworkCIDR=10.0.0.0/24
 # ServiceNetworkCIDR=172.30.0.0/16
+# hostPrefix=20
 #########################################################################
 sed --in-place 								\
 	/' 'platform/d 							\
@@ -19,6 +20,9 @@ sed --in-place 								\
 	${file}								;
 sed --in-place 								\
 	/'cidr: 10.128.0.0'/s/10.128.0.0/$( echo ${ClusterNetworkCIDR} | cut -d/ -f1 )/			\
+	${file}								;
+sed --in-place 								\
+	/'hostPrefix: 23'/s/23/$( echo ${hostPrefix} )/							\
 	${file}								;
 sed --in-place 								\
 	/'cidr: 10.0.0.0.16'/s/16/$( echo ${MachineNetworkCIDR} | cut -d/ -f2 )/			\
