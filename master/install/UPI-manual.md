@@ -9,74 +9,48 @@ After the previous steps are finished then you may proceed.
 Set the number of compute replicas to zero:
 ```bash
 sed --in-place /compute/,/controlPlane/s/\ 3/\ 0/ $dir/install-config.yaml
-git commit -am 'Set the number of compute replicas to zero'
-
-
 ```
 It is a good idea to make a copy of your configuration file if you are not using git:
 ```bash
 cp -f $dir/install-config.yaml $dir/install-config.yaml.bak
-
-
 ```
 Now you generate the Kubernetes manifests for the cluster:
 ```BASH
 openshift-install-$version create manifests --dir $dir --log-level debug
-git add .
-git commit -am 'Generate the Kubernetes manifests for the cluster'
-
-
 ```
 Remove the Kubernetes manifest files that define the control plane machines:
 ```BASH
 rm --force $dir/openshift/99_openshift-cluster-api_master-machines-*.yaml
-git commit -am 'Remove the Kubernetes manifest files that define the control plane machines'
-
-
 ```
 Remove the Kubernetes manifest files that define the worker machines:
 ```BASH
 rm --force $dir/openshift/99_openshift-cluster-api_worker-machineset-*.yaml
-git commit -am 'Remove the Kubernetes manifest files that define the worker machines'
-
-
 ```
 Prevent Pods from being scheduled on the control plane machines:
 ```bash
 sed --in-place /mastersSchedulable/s/true/false/ $dir/manifests/cluster-scheduler-02-config.yml
-git commit -am 'Prevent Pods from being scheduled on the control plane machines'
-
-
 ```
 If you do not want the Ingress Operator to create DNS records on your behalf, remove the privateZone and publicZone sections from the DNS configuration file:
 ```bash
 sed --in-place /privateZone:/,/id:/d $dir/manifests/cluster-dns-02-config.yml
-git commit -am 'Remove the privateZone and publicZone sections from the DNS configuration file'
-
-
 ```
 Obtain the Ignition config files:
 ```BASH
 openshift-install-$version create ignition-configs --dir $dir --log-level debug
-git add .
-git commit -m 'Obtain the Ignition config files'
-
-
 ```
 Export a few environment variables:
 ```
 export github_username=academiaonline
 export github_reponame=openshift
 export github_branch=master
-
 ```
 Creating a VPC in AWS:
 * [ocp-vpc.json](ocp-vpc.json)
 * [ocp-vpc.yaml](ocp-vpc.yaml)
 ```BASH
-export VpcCidr=10.0.0.0/16
 export AvailabilityZoneCount=3
 export SubnetBits=13
+export VpcCidr=10.0.0.0/16
 
 export file=ocp-vpc.json
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
@@ -87,10 +61,6 @@ sed --in-place s/SubnetBits_Value/"$SubnetBits"/ $dir/$file
 export file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
-git add .
-git commit -am 'Creating a VPC in AWS'
-
-
 ```
 ## In case you have configured your cluster not to be externally published then you need to continue the installation from inside the internal VPC.
 For that purpose you will create a new Cloud9 environment in a public subnet of the internal VPC if available.
@@ -100,8 +70,6 @@ Anyway you will need to download the project files of your Cloud9 environment in
 cp -fr $HOME/.ssh $dir
 cp -fr $HOME/.aws $dir
 export | grep -E " version=| ClusterName=| DomainName=| dir=| Publish=| VpcCidr=| AvailabilityZoneCount=| SubnetBits=| file=" 1> $HOME/environment/variables.sh
-
-
 ```
 Once you have created the new Cloud9 environment you need to disable the AWS managed temporary credentials in AWS Cloud9 settings and upload the previously downloaded project.
 
@@ -109,8 +77,6 @@ You need to export the values for these variables from the old Cloud9 environmen
 ```bash
 echo export dir=$dir
 echo export version=$version
-
-
 ```
 You will again need to download and install the client installer binaries:
 ```bash
@@ -146,10 +112,6 @@ test -f $file && rm -f $file
 ln -s $HOME/bin/openshift-install-$version $HOME/bin/openshift-install
 
 cd $dir
-git config --global user.name "Your Name"
-git config --global user.email you@example.com
-
-
 ```
 ## Once the stack creation is completed you can get the following values:
 ```BASH
@@ -159,10 +121,8 @@ export VpcId="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} -
 
 sudo yum install --assumeyes jq
 
-export InfrastructureName="$( jq --raw-output .infraID $dir/metadata.json )"
 export HostedZoneId="$( aws route53 list-hosted-zones-by-name | jq --arg name "$DomainName." --raw-output '.HostedZones | .[] | select(.Name=="\($name)") | .Id' | cut --delimiter / --field 3 )"
-
-
+export InfrastructureName="$( jq --raw-output .infraID $dir/metadata.json )"
 ```
 Creating networking and load balancing components in AWS:
 * [ocp-route53-External.json](ocp-route53-External.json)
@@ -186,9 +146,7 @@ file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
-cd $dir && git add . && git commit -am 'Creating networking and load balancing components in AWS'
-
-
+cd $dir
 ```
 Once the stack creation is completed you can get the following values:
 ```BASH
@@ -205,8 +163,6 @@ export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name ${
 export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[4].OutputValue --output text )
 export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[5].OutputValue --output text )
 fi
-
-
 ```
 Creating security group and roles in AWS:
 * [ocp-roles.json](ocp-roles.json)
@@ -223,18 +179,14 @@ file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
-cd $dir && git add . && git commit -am 'Creating security group and roles in AWS'
-
-
+cd $dir
 ```
 Once the stack creation is completed you can get the following values:
 ```BASH
-export MasterSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
 export MasterInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )
-export WorkerSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )
+export MasterSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
 export WorkerInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[3].OutputValue --output text )
-
-
+export WorkerSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )
 ```
 Creating the bootstrap node in AWS:
 * [ocp-bootstrap-External.json](ocp-bootstrap-External.json)
@@ -242,11 +194,11 @@ Creating the bootstrap node in AWS:
 * [ocp-bootstrap-Internal.json](ocp-bootstrap-Internal.json)
 * [ocp-bootstrap-Internal.yaml](ocp-bootstrap-Internal.yaml)
 ```BASH
-export RhcosAmi=ami-02b81ab6d01174430
 export AllowedBootstrapSshCidr=0.0.0.0/0
-export BootstrapIgnitionLocation=s3://$InfrastructureName/bootstrap.ign
 export AutoRegisterELB=yes
+export BootstrapIgnitionLocation=s3://$InfrastructureName/bootstrap.ign
 export PublicSubnet=$( echo $PublicSubnets | cut --delimiter , --field 1 )
+export RhcosAmi=ami-02b81ab6d01174430
 
 aws s3 mb s3://$InfrastructureName
 aws s3 cp $dir/bootstrap.ign $BootstrapIgnitionLocation
@@ -272,9 +224,7 @@ file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 
-cd $dir && git add . && git commit -am 'Creating the bootstrap node in AWS'
-
-
+cd $dir
 ```
 Creating the control plane machines in AWS:
 * [ocp-master-External.json](ocp-master-External.json)
@@ -317,16 +267,12 @@ file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 
-cd $dir && git add . && git commit -am 'Creating the control plane machines in AWS'
-
-
+cd $dir
 ```
 Once both stack creations are completed you can initialize the bootstrap node on AWS with user-provisioned infrastructure:
 ```BASH
 openshift-install-$version wait-for bootstrap-complete --dir $dir --log-level debug
-cd $dir && git commit -am 'Initialize the bootstrap node on AWS with user-provisioned infrastructure'
-
-
+cd $dir
 ```
 Creating the worker nodes in AWS:
 * [ocp-worker.json](ocp-worker.json)
@@ -356,33 +302,23 @@ file=${file%.json}.yaml
 wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 
-cd $dir && git add . && git commit -am 'Creating the worker nodes in AWS'
-
-
+cd $dir
 ```
 Logging in to the cluster:
 ```BASH
 export KUBECONFIG=$dir/auth/kubeconfig
-
-
 ```
 Approving the CSRs for your machines:
 ```bash
 oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
-
-
 ```
 Watch the cluster components come online:
 ```bash
-oc get clusteroperator
-
-
+oc get co
 ```
 After you complete the initial Operator configuration for the cluster, remove the bootstrap resources from Amazon Web Services (AWS):
 ```bash
 aws cloudformation delete-stack --stack-name ocp-bootstrap-$Publish
-
-
 ```
 Creating the Ingress DNS Records:
 ```bash
@@ -398,15 +334,11 @@ do
 aws route53 change-resource-record-sets --hosted-zone-id "$PrivateHostedZoneId" --change-batch '{ "Changes": [ { "Action": "CREATE", "ResourceRecordSet": { "Name": "'$route'.apps.'$ClusterName.$DomainName'", "Type": "A", "AliasTarget":{ "HostedZoneId": "'$CanonicalHostedZoneNameID'", "DNSName": "'$hostname'.", "EvaluateTargetHealth": false } } } ] }'
 test $Publish = External && aws route53 change-resource-record-sets --hosted-zone-id "$PublicHostedZoneId" --change-batch '{ "Changes": [ { "Action": "CREATE", "ResourceRecordSet": { "Name": "'$route'.apps.'$ClusterName.$DomainName'", "Type": "A", "AliasTarget":{ "HostedZoneId": "'$CanonicalHostedZoneNameID'", "DNSName": "'$hostname'.", "EvaluateTargetHealth": false } } } ] }'
 done
-
-
 ```
 Completing the AWS installation on user-provisioned infrastructure:
 ```bash
 openshift-install-$version wait-for install-complete --dir $dir --log-level debug
-cd $dir && git commit -am 'Completing the AWS installation on user-provisioned infrastructure'
-
-
+cd $dir
 ```
 Now you can optionally customize the default certificates:
 * [Customize certificates](certs.md)
