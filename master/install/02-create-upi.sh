@@ -42,10 +42,11 @@ sed --in-place s/AvailabilityZoneCount_Value/"$AvailabilityZoneCount"/ $dir/$fil
 sed --in-place s/SubnetBits_Value/"$SubnetBits"/ $dir/$file
 export file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 
 # Once the stack creation is completed you can get the following values:
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 export PrivateSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )"
 export PublicSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )"
 export VpcId="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )"
@@ -65,11 +66,12 @@ sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 test $Publish = External && sed --in-place s/PublicSubnets_Value/"$PublicSubnets"/ $dir/$file
 file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Once the stack creation is completed you can get the following values:
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 if test $Publish = External
 then
 export ExternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
@@ -93,11 +95,12 @@ sed --in-place s/VpcCidr_Value/"$( echo $VpcCidr | sed 's/\//\\\//g' )"/ $dir/$f
 sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Once the stack creation is completed you can get the following values:
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 export MasterInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )
 export MasterSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
 export WorkerInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[3].OutputValue --output text )
@@ -128,8 +131,9 @@ sed --in-place s/PublicSubnet_Value/"$PublicSubnet"/ $dir/$file
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Creating the control plane machines in AWS:
@@ -163,8 +167,9 @@ sed --in-place s/InternalServiceTargetGroupArn_Value/"$( echo $InternalServiceTa
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Once both stack creations are completed you can initialize the bootstrap node on AWS with user-provisioned infrastructure:
@@ -192,8 +197,9 @@ sed --in-place s/Subnet1_Value/"$Worker1Subnet"/ $dir/$file
 sed --in-place s/Subnet2_Value/"$Worker2Subnet"/ $dir/$file
 file=${file%.json}.yaml
 cp -v ${pwd}/${file} ${dir}
-aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
-aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
+export stack_name=$ClusterName-${file%.yaml}
+aws cloudformation create-stack --stack-name $stack_name --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
+aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Logging in to the cluster:
@@ -220,7 +226,7 @@ while true;do
 done
 
 # After you complete the initial Operator configuration for the cluster, remove the bootstrap resources from Amazon Web Services (AWS):
-aws cloudformation delete-stack --stack-name ocp-bootstrap-$Publish
+aws cloudformation delete-stack --stack-name $ClusterName-ocp-bootstrap-$Publish
 
 # Creating the Ingress DNS Records:
 export routes="$( oc get --all-namespaces -o jsonpath='{range .items[*]}{range .status.ingress[*]}{.host}{"\n"}{end}{end}' routes | cut --delimiter . --field 1 )"
