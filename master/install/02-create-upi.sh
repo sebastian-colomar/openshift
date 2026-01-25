@@ -111,7 +111,8 @@ export AllowedBootstrapSshCidr=0.0.0.0/0
 export AutoRegisterELB=yes
 export BootstrapIgnitionLocation=s3://$InfrastructureName/bootstrap.ign
 export PublicSubnet=$( echo $PublicSubnets | cut --delimiter , --field 1 )
-export RhcosAmi=$( openshift-install coreos print-stream-json | jq -r '.architectures.'$(arch)'.images.aws.regions["'$(aws configure get region)'"].image' )
+#export RhcosAmi=$( openshift-install coreos print-stream-json | jq -r '.architectures.'$(arch)'.images.aws.regions["'$(aws configure get region)'"].image' )
+export RhcosAmi=$([ "$arch" = "aarch64" ] && echo ami-0bc01c2ad16fef268 || echo ami-021b5ab76f755886f)
 export BootstrapInstanceType=${master_type}
 aws s3 mb s3://$InfrastructureName
 aws s3 cp $dir/bootstrap.ign $BootstrapIgnitionLocation
