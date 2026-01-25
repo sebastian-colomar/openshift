@@ -112,6 +112,7 @@ export AutoRegisterELB=yes
 export BootstrapIgnitionLocation=s3://$InfrastructureName/bootstrap.ign
 export PublicSubnet=$( echo $PublicSubnets | cut --delimiter , --field 1 )
 export RhcosAmi=$( openshift-install coreos print-stream-json | jq -r '.architectures.'$(arch)'.images.aws.regions["'$(aws configure get region)'"].image' )
+export BootstrapInstanceType=${master_type}
 aws s3 mb s3://$InfrastructureName
 aws s3 cp $dir/bootstrap.ign $BootstrapIgnitionLocation
 aws s3 ls s3://$InfrastructureName/
@@ -123,6 +124,7 @@ sed --in-place s/AllowedBootstrapSshCidr_Value/"$( echo $AllowedBootstrapSshCidr
 sed --in-place s/MasterSecurityGroupId_Value/"$MasterSecurityGroupId"/ $dir/$file
 sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 sed --in-place s/BootstrapIgnitionLocation_Value/"$( echo $BootstrapIgnitionLocation | sed 's/\//\\\//g' )"/ $dir/$file
+sed --in-place s/BootstrapInstanceType_Value/"$BootstrapInstanceType"/ $dir/$file
 sed --in-place s/AutoRegisterELB_Value/"$AutoRegisterELB"/ $dir/$file
 sed --in-place s/RegisterNlbIpTargetsLambdaArn_Value/"$( echo $RegisterNlbIpTargetsLambdaArn | sed 's/\//\\\//g' )"/ $dir/$file
 sed --in-place s/InternalApiTargetGroupArn_Value/"$( echo $InternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
