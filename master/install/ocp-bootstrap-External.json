@@ -28,6 +28,10 @@
     "ParameterValue": "BootstrapIgnitionLocation_Value" 
   },
   {
+    "ParameterKey": "BootstrapInstanceType", 
+    "ParameterValue": "BootstrapInstanceType_Value" 
+  },  
+  {
     "ParameterKey": "AutoRegisterELB", 
     "ParameterValue": "AutoRegisterELB_Value" 
   },
