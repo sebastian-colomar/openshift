@@ -5,11 +5,7 @@ ssh-add ${HOME}/.ssh/id_rsa
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
 test -d ${dir} || mkdir -p ${dir} 
 
-cd ${dir} && git init
-git config --global user.name 'Your Name'
-git config --global user.email you@example.com
-git add .
-git commit -m Initial 
+cd ${dir}
 
 if ! test -f /usr/local/bin/openshift-install-${version}
 then
@@ -37,8 +33,5 @@ fi
 
 openshift-install-${version} create install-config --dir ${dir} --log-level debug
 
-wget https://raw.githubusercontent.com/sebastian-colomar/openshift/master/master/install/fix-config.sh
+cp -v ${pwd}/fix-config.sh ${dir}
 chmod +x fix-config.sh && ./fix-config.sh && rm -f fix-config.sh
-git commit -am 'Set EC2 instance type' 
-
-
