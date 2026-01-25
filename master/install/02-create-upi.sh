@@ -36,12 +36,12 @@ export AvailabilityZoneCount=3
 export SubnetBits=$((32 - hostPrefix))
 export VpcCidr=${MachineNetworkCIDR}
 export file=ocp-vpc.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/VpcCidr_Value/"$( echo $VpcCidr | sed 's/\//\\\//g' )"/ $dir/$file
 sed --in-place s/AvailabilityZoneCount_Value/"$AvailabilityZoneCount"/ $dir/$file
 sed --in-place s/SubnetBits_Value/"$SubnetBits"/ $dir/$file
 export file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 
 # Once the stack creation is completed you can get the following values:
@@ -54,7 +54,7 @@ export InfrastructureName="$( jq --raw-output .infraID $dir/metadata.json )"
 
 # Creating networking and load balancing components in AWS:
 file=ocp-route53-$Publish.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/ClusterName_Value/"$ClusterName"/ $dir/$file
 sed --in-place s/HostedZoneId_Value/"$HostedZoneId"/ $dir/$file
 sed --in-place s/HostedZoneName_Value/"$DomainName"/ $dir/$file
@@ -64,7 +64,7 @@ sed --in-place s/PrivateSubnets_Value/"$PrivateSubnets"/ $dir/$file
 sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 test $Publish = External && sed --in-place s/PublicSubnets_Value/"$PublicSubnets"/ $dir/$file
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 cd $dir
 
@@ -86,13 +86,13 @@ fi
 
 # Creating security group and roles in AWS:
 file=ocp-roles.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/PrivateSubnets_Value/"$PrivateSubnets"/ $dir/$file
 sed --in-place s/VpcCidr_Value/"$( echo $VpcCidr | sed 's/\//\\\//g' )"/ $dir/$file
 sed --in-place s/VpcId_Value/"$VpcId"/ $dir/$file
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 cd $dir
 
@@ -113,7 +113,7 @@ aws s3 mb s3://$InfrastructureName
 aws s3 cp $dir/bootstrap.ign $BootstrapIgnitionLocation
 aws s3 ls s3://$InfrastructureName/
 file=ocp-bootstrap-$Publish.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/AllowedBootstrapSshCidr_Value/"$( echo $AllowedBootstrapSshCidr | sed 's/\//\\\//g' )"/ $dir/$file
@@ -127,7 +127,7 @@ sed --in-place s/InternalServiceTargetGroupArn_Value/"$( echo $InternalServiceTa
 sed --in-place s/PublicSubnet_Value/"$PublicSubnet"/ $dir/$file
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json --capabilities CAPABILITY_NAMED_IAM
 aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 cd $dir
@@ -142,7 +142,7 @@ export IgnitionLocation=https://api-int.$PrivateHostedZoneName:22623/config/mast
 export CertificateAuthorities=$( jq .ignition.security.tls.certificateAuthorities[0].source --raw-output $dir/master.ign )
 export MasterInstanceType=${master_type}
 file=ocp-master-$Publish.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/AutoRegisterDNS_Value/"$AutoRegisterDNS"/ $dir/$file
@@ -162,7 +162,7 @@ sed --in-place s/InternalApiTargetGroupArn_Value/"$( echo $InternalApiTargetGrou
 sed --in-place s/InternalServiceTargetGroupArn_Value/"$( echo $InternalServiceTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 test $Publish = External && sed --in-place s/ExternalApiTargetGroupArn_Value/"$( echo $ExternalApiTargetGroupArn | sed 's/\//\\\//g' )"/ $dir/$file
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 cd $dir
@@ -179,7 +179,7 @@ export Worker0Subnet=$( echo $PrivateSubnets | cut --delimiter , --field 1 )
 export Worker1Subnet=$( echo $PrivateSubnets | cut --delimiter , --field 2 )
 export Worker2Subnet=$( echo $PrivateSubnets | cut --delimiter , --field 3 )
 file=ocp-worker.json
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 sed --in-place s/InfrastructureName_Value/"$InfrastructureName"/ $dir/$file
 sed --in-place s/RhcosAmi_Value/"$RhcosAmi"/ $dir/$file
 sed --in-place s/WorkerSecurityGroupId_Value/"$WorkerSecurityGroupId"/ $dir/$file
@@ -191,7 +191,7 @@ sed --in-place s/Subnet0_Value/"$Worker0Subnet"/ $dir/$file
 sed --in-place s/Subnet1_Value/"$Worker1Subnet"/ $dir/$file
 sed --in-place s/Subnet2_Value/"$Worker2Subnet"/ $dir/$file
 file=${file%.json}.yaml
-wget https://raw.githubusercontent.com/${github_username}/${github_reponame}/${github_branch}/install/$file --directory-prefix $dir
+cp -v ${pwd}/${file} ${dir}
 aws cloudformation create-stack --stack-name ${file%.yaml} --template-body file://$dir/$file --parameters file://$dir/${file%.yaml}.json
 aws cloudformation wait stack-create-complete --stack-name ${file%.yaml}
 cd $dir
