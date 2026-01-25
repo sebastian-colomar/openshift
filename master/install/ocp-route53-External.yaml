@@ -292,7 +292,7 @@ Resources:
               elb.register_targets(TargetGroupArn=event['ResourceProperties']['TargetArn'],Targets=[{'Id': event['ResourceProperties']['TargetIp']}])
             responseData = {}
             cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, event['ResourceProperties']['TargetArn']+event['ResourceProperties']['TargetIp'])
-      Runtime: "python3.7"
+      Runtime: "python3.11"
       Timeout: 120
 
   RegisterSubnetTagsLambdaIamRole:
