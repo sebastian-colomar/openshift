@@ -227,6 +227,9 @@ while true;do
   sleep 10;
 done
 
+echo sleep infinity
+sleep infinity
+
 # After you complete the initial Operator configuration for the cluster, remove the bootstrap resources from Amazon Web Services (AWS):
 aws cloudformation delete-stack --stack-name $ClusterName-ocp-bootstrap-$Publish
 
