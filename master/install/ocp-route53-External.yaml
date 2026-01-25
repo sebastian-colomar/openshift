@@ -328,7 +328,7 @@ Resources:
                 "ec2:DescribeTags"
               ]
             Resource: "*"
-
+      
   RegisterSubnetTags:
     Type: "AWS::Lambda::Function"
     Properties:
@@ -352,7 +352,7 @@ Resources:
                 ec2_client.create_tags(Resources=[subnet_id], Tags=[{'Key': 'kubernetes.io/cluster/' + event['ResourceProperties']['InfrastructureName'], 'Value': 'shared'}]);
             responseData = {}
             cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData, event['ResourceProperties']['InfrastructureName']+event['ResourceProperties']['Subnets'][0])
-      Runtime: "python3.7"
+      Runtime: "python3.11"
       Timeout: 120
 
   RegisterPublicSubnetTags:
