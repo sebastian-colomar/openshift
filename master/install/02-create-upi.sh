@@ -47,9 +47,9 @@ aws cloudformation create-stack --stack-name $stack_name --template-body file://
 aws cloudformation wait stack-create-complete --stack-name $stack_name
 
 # Once the stack creation is completed you can get the following values:
-export PrivateSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )"
-export PublicSubnets="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )"
-export VpcId="$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )"
+export PrivateSubnets="$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[0].OutputValue --output text )"
+export PublicSubnets="$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[1].OutputValue --output text )"
+export VpcId="$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[2].OutputValue --output text )"
 export HostedZoneId="$( aws route53 list-hosted-zones-by-name | jq --arg name "$DomainName." --raw-output '.HostedZones | .[] | select(.Name=="\($name)") | .Id' | cut --delimiter / --field 3 )"
 export InfrastructureName="$( jq --raw-output .infraID $dir/metadata.json )"
 
@@ -74,16 +74,16 @@ cd $dir
 # Once the stack creation is completed you can get the following values:
 if test $Publish = External
 then
-export ExternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
-export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )
-export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[3].OutputValue --output text )
-export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[5].OutputValue --output text )
-export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[6].OutputValue --output text )
+export ExternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name} --query Stacks[].Outputs[0].OutputValue --output text )
+export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name} --query Stacks[].Outputs[1].OutputValue --output text )
+export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[3].OutputValue --output text )
+export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[5].OutputValue --output text )
+export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[6].OutputValue --output text )
 else
-export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
-export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )
-export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[4].OutputValue --output text )
-export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[5].OutputValue --output text )
+export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[0].OutputValue --output text )
+export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[2].OutputValue --output text )
+export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[4].OutputValue --output text )
+export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[5].OutputValue --output text )
 fi
 
 # Creating security group and roles in AWS:
@@ -101,10 +101,10 @@ aws cloudformation wait stack-create-complete --stack-name $stack_name
 cd $dir
 
 # Once the stack creation is completed you can get the following values:
-export MasterInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[1].OutputValue --output text )
-export MasterSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[0].OutputValue --output text )
-export WorkerInstanceProfileName=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[3].OutputValue --output text )
-export WorkerSecurityGroupId=$( aws cloudformation describe-stacks --stack-name ${file%.yaml} --query Stacks[].Outputs[2].OutputValue --output text )
+export MasterInstanceProfileName=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[1].OutputValue --output text )
+export MasterSecurityGroupId=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[0].OutputValue --output text )
+export WorkerInstanceProfileName=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[3].OutputValue --output text )
+export WorkerSecurityGroupId=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[2].OutputValue --output text )
 
 # Creating the bootstrap node in AWS:
 export AllowedBootstrapSshCidr=0.0.0.0/0
