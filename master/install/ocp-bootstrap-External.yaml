@@ -31,6 +31,9 @@ Parameters:
     Default: s3://my-s3-bucket/bootstrap.ign
     Description: Ignition config file location.
     Type: String
+  BootstrapInstanceType:
+    Default: t3a.xlarge
+    Type: String    
   AutoRegisterELB:
     Default: "yes"
     AllowedValues:
@@ -61,6 +64,7 @@ Metadata:
     - Label:
         default: "Host Information"
       Parameters:
+      - BootstrapInstanceType      
       - RhcosAmi
       - BootstrapIgnitionLocation
       - MasterSecurityGroupId
@@ -87,6 +91,8 @@ Metadata:
         default: "Allowed SSH Source"
       PublicSubnet:
         default: "Public Subnet"
+      BootstrapInstanceType:
+        default: "Bootstrap Instance Type"        
       RhcosAmi:
         default: "Red Hat Enterprise Linux CoreOS AMI ID"
       BootstrapIgnitionLocation:
@@ -158,7 +164,7 @@ Resources:
     Properties:
       ImageId: !Ref RhcosAmi
       IamInstanceProfile: !Ref BootstrapInstanceProfile
-      InstanceType: "i3.large"
+      InstanceType: !Ref BootstrapInstanceType
       NetworkInterfaces:
       - AssociatePublicIpAddress: "true"
         DeviceIndex: "0"
