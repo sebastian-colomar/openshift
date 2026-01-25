@@ -74,8 +74,8 @@ cd $dir
 # Once the stack creation is completed you can get the following values:
 if test $Publish = External
 then
-export ExternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name} --query Stacks[].Outputs[0].OutputValue --output text )
-export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name} --query Stacks[].Outputs[1].OutputValue --output text )
+export ExternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[0].OutputValue --output text )
+export InternalApiTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[1].OutputValue --output text )
 export PrivateHostedZoneId=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[3].OutputValue --output text )
 export RegisterNlbIpTargetsLambdaArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[5].OutputValue --output text )
 export InternalServiceTargetGroupArn=$( aws cloudformation describe-stacks --stack-name $stack_name --query Stacks[].Outputs[6].OutputValue --output text )
