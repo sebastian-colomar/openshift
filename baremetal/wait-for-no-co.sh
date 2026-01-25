@@ -10,19 +10,19 @@ while true;do
 done;
 
 while true;do
-  oc get co --no-headers|awk '{print $3}'|grep True  -q&&oc get co|awk '{print $3}'|grep -vE "AVAILABLE|True"||break;
+  oc get co --no-headers|awk '{print $3}'|grep True  -q&&oc get co --no-headers|awk '{print $3}'|grep -vE "AVAILABLE|True"||break;
   oc get co;
   sleep 10;
 done;
 
 while true;do
-  oc get co --no-headers|awk '{print $4}'|grep False -q&&oc get co|awk '{print $4}'|grep -vE "PROGRESSING|False"||break;
+  oc get co --no-headers|awk '{print $4}'|grep False -q&&oc get co --no-headers|awk '{print $4}'|grep -vE "PROGRESSING|False"||break;
   oc get co;
   sleep 10;
 done;
 
 while true;do
-  oc get co --no-headers|awk '{print $5}'|grep False -q&&oc get co|awk '{print $5}'|grep -vE "DEGRADED|False"||break;
+  oc get co --no-headers|awk '{print $5}'|grep False -q&&oc get co --no-headers|awk '{print $5}'|grep -vE "DEGRADED|False"||break;
   oc get co;
   sleep 10;
 done
