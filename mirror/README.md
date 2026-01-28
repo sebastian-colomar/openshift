@@ -1,11 +1,11 @@
-https://console-openshift-console.apps.openshift.sebastian-colomar.es/k8s/ns/openshift-config/secrets/pull-secret
+- https://console-openshift-console.apps.openshift.sebastian-colomar.es/k8s/ns/openshift-config/secrets/pull-secret
 
 ```
-touch $HOME/.docker/config.json
+cat $HOME/.docker/config.json
 
 docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
 
-touch $HOME/.docker/config.json
+cat $HOME/.docker/config.json
 ```
 ```
 wget https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
