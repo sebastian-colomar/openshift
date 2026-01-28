@@ -1,0 +1,40 @@
+https://console-openshift-console.apps.openshift.sebastian-colomar.es/k8s/ns/openshift-config/secrets/pull-secret
+
+```
+touch $HOME/.docker/config.json
+
+docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
+
+touch $HOME/.docker/config.json
+```
+```
+wget https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
+
+gunzip oc-mirror.rhel9.tar.gz
+
+tar xf oc-mirror.rhel9.tar
+
+chmod +x oc-mirror
+
+sudo mv oc-mirror /usr/local/bin/
+
+oc mirror --v2 version
+```
+```
+apiVersion: mirror.openshift.io/v2alpha1
+kind: ImageSetConfiguration
+mirror:
+  platform:
+    channels:
+    -
+      maxVersion: 4.20.10
+      minVersion: 4.20.10
+      name: stable-4.20
+      type: ocp
+    graph: true
+```
+
+```
+oc mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
+
+oc mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp/openshift4
