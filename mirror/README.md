@@ -61,7 +61,7 @@ chmod +x oc-mirror
 
 alias oc-mirror='./oc-mirror'
 
-oc-mirror --v2 --short
+oc-mirror --v2 --version
 ```
 ```
 apiVersion: mirror.openshift.io/v2alpha1
