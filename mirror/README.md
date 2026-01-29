@@ -85,13 +85,8 @@ mirror:
     graph: true
 ```
 ```
-mkdir -p /etc/containers/registries.conf.d
-
-tee /etc/containers/registries.conf.d/mirror-insecure.conf <<'EOF'
-[[registry]]
-location = "nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es"
-insecure = true
-EOF
+mkdir -p $HOME/.docker
+cp $MIRROR/.dockerconfigjson $HOME/.docker/config.json
 ```
 
 ```
