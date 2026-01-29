@@ -51,17 +51,21 @@ spec:
         volumeMode: Filesystem
 ```
 ```
-curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
+MIRROR=/mirror
+mkdir -p /mirror/ocp
+```
+```
+curl -O --output-dir $MIRROR https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
-gunzip oc-mirror.rhel9.tar.gz
+gunzip $MIRROR/oc-mirror.rhel9.tar.gz
 
-tar xf oc-mirror.rhel9.tar
+tar xf $MIRROR/oc-mirror.rhel9.tar
 
-chmod +x oc-mirror
+chmod +x $MIRROR/oc-mirror
 
-#sudo mv oc-mirror /usr/local/bin/
+#sudo mv $MIRROR/oc-mirror /usr/local/bin/
 
-alias oc-mirror='./oc-mirror'
+alias oc-mirror="$MIRROR/oc-mirror"
 
 oc-mirror --v2 --version
 ```
@@ -79,10 +83,7 @@ mirror:
     graph: true
 ```
 
-```
-MIRROR=/mirror
-mkdir -p /mirror/ocp
-```
+
 ```
 oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
 
