@@ -8,7 +8,7 @@ docker login https://example-registry-quay-openshift-operators.apps.openshift.se
 cat $HOME/.docker/config.json
 ```
 ```
-wget https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
+curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
 gunzip oc-mirror.rhel9.tar.gz
 
