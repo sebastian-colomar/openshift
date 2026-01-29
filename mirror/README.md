@@ -53,10 +53,9 @@ spec:
 ```
 MIRROR=/mirror
 mkdir -p /mirror/ocp
-```
-```
 cd $MIRROR
-
+```
+```
 curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
 gunzip oc-mirror.rhel9.tar.gz
@@ -66,7 +65,8 @@ tar xf oc-mirror.rhel9.tar
 chmod +x ./oc-mirror
 
 #sudo mv ./oc-mirror /usr/local/bin/
-
+```
+```
 alias oc-mirror="./oc-mirror"
 
 oc-mirror --v2 --version
