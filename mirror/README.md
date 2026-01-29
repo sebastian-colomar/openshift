@@ -8,6 +8,47 @@ docker login https://example-registry-quay-openshift-operators.apps.openshift.se
 cat $HOME/.docker/config.json
 ```
 ```
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: oc-mirror
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oc-mirror
+  template:
+    metadata:
+      labels:
+        app: oc-mirror
+    spec:
+      containers:
+        - command:
+            - sleep
+            - infinity
+          image: 'registry.access.redhat.com/ubi9/ubi:latest'
+          name: oc-mirror
+          volumeMounts:
+            - mountPath: /mirror
+              name: mirror
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: mirror
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1000Gi
+        storageClassName: ocs-storagecluster-ceph-rbd
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+```
+```
 curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
 gunzip oc-mirror.rhel9.tar.gz
@@ -16,9 +57,11 @@ tar xf oc-mirror.rhel9.tar
 
 chmod +x oc-mirror
 
-sudo mv oc-mirror /usr/local/bin/
+#sudo mv oc-mirror /usr/local/bin/
 
-oc mirror --v2 version
+alias oc-mirror='./oc-mirror'
+
+oc-mirror --v2 --short
 ```
 ```
 apiVersion: mirror.openshift.io/v2alpha1
@@ -35,9 +78,13 @@ mirror:
 ```
 
 ```
-oc mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
+MIRROR=/mirror
+mkdir -p /mirror/ocp
+```
+```
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
 
-oc mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
 ```
 
 ```
