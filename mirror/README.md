@@ -24,14 +24,19 @@ spec:
         app: oc-mirror
     spec:
       containers:
-        - command:
-            - sleep
-            - infinity
-          image: 'registry.access.redhat.com/ubi9/ubi:latest'
-          name: oc-mirror
+        - name: oc-mirror
+          image: registry.access.redhat.com/ubi9/ubi:latest
+          command: ["sleep", "infinity"]
           volumeMounts:
-            - mountPath: /mirror
-              name: mirror
+            - name: mirror
+              mountPath: /mirror
+            - name: pull-secret-ro
+              mountPath: /secrets/pull-secret
+              readOnly: true
+      volumes:
+        - name: pull-secret-ro
+          secret:
+            secretName: pull-secret
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
@@ -45,8 +50,6 @@ spec:
             storage: 1000Gi
         storageClassName: ocs-storagecluster-ceph-rbd
         volumeMode: Filesystem
-      status:
-        phase: Pending
 ```
 ```
 curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
