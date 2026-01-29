@@ -84,7 +84,15 @@ mirror:
       type: ocp
     graph: true
 ```
+```
+mkdir -p /etc/containers/registries.conf.d
 
+tee /etc/containers/registries.conf.d/mirror-insecure.conf <<'EOF'
+[[registry]]
+location = "nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es"
+insecure = true
+EOF
+```
 
 ```
 oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
