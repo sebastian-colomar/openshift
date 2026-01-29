@@ -55,17 +55,19 @@ MIRROR=/mirror
 mkdir -p /mirror/ocp
 ```
 ```
-curl -O --output-dir $MIRROR https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
+cd $MIRROR
 
-gunzip $MIRROR/oc-mirror.rhel9.tar.gz
+curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
-tar xf $MIRROR/oc-mirror.rhel9.tar
+gunzip oc-mirror.rhel9.tar.gz
 
-chmod +x $MIRROR/oc-mirror
+tar xf oc-mirror.rhel9.tar
 
-#sudo mv $MIRROR/oc-mirror /usr/local/bin/
+chmod +x ./oc-mirror
 
-alias oc-mirror="$MIRROR/oc-mirror"
+#sudo mv ./oc-mirror /usr/local/bin/
+
+alias oc-mirror="./oc-mirror"
 
 oc-mirror --v2 --version
 ```
