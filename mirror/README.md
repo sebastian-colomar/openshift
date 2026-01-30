@@ -25,9 +25,19 @@ spec:
         app: oc-mirror
     spec:
       containers:
-        - name: oc-mirror
+        - 
+          args:
+            - -c
+            - |
+              echo 'alias oc="./oc"' >> ~/.bashrc
+              echo '[[ $- == *i* ]] || source ~/.bashrc' >> ~/.bashrc
+              exec sleep infinity
+          command: ["/bin/bash"]
+          env:
+          - name: MIRROR
+            value: /mirror
           image: registry.access.redhat.com/ubi9/ubi:latest
-          command: ["sleep", "infinity"]
+          name: oc-mirror
           volumeMounts:
             - name: mirror
               mountPath: /mirror
@@ -132,7 +142,7 @@ spec:
       targetPort: 8443
 ```
 ```
-#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 30m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
 
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 30m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
 ```
