@@ -56,7 +56,7 @@ spec:
           echo "From source to file:"
           echo "oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp"
           echo "From file to mirror"
-          echo "oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://$REGISTRY/ocp
+          echo "oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://$REGISTRY/ocp"
           exec sleep infinity
         command: ["/bin/bash", "-c"]
         env:
