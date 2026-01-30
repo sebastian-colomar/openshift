@@ -13,7 +13,7 @@ cat $MIRROR/.dockerconfigjson-mirror
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: image-set-configuration
+  name: isc
 data:
   ImageSetConfiguration: |-
     apiVersion: mirror.openshift.io/v2alpha1
