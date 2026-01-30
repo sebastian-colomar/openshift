@@ -117,11 +117,12 @@ metadata:
   name: internal
   namespace: openshift-ingress-operator
 spec:
-  replicas: 2
+  domain: apps-int.openshift.sebastian-colomar.es
   endpointPublishingStrategy:
-    type: LoadBalancerService
     loadBalancer:
       scope: Internal
+    type: LoadBalancerService
+  replicas: 2
   routeSelector:
     matchLabels:
       ingress-type: internal
