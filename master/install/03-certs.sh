@@ -44,6 +44,9 @@ spec:
       scope: Internal
     type: LoadBalancerService
   replicas: 2
+  routeSelector:
+    matchLabels:
+      ingress-type: internal
 EOF
 
 export EmailAddress=sebastian.colomar@gmail.com
