@@ -110,6 +110,22 @@ vi $MIRROR/.dockerconfigjson-mirror
 #docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
 cp $MIRROR/.dockerconfigjson-mirror $HOME/.docker/config.json
 ```
+```
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: internal
+  namespace: openshift-ingress-operator
+spec:
+  replicas: 2
+  endpointPublishingStrategy:
+    type: LoadBalancerService
+    loadBalancer:
+      scope: Internal
+  routeSelector:
+    matchLabels:
+      ingress-type: internal
+```
 
 ```
 apiVersion: v1
