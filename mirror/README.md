@@ -124,7 +124,27 @@ spec:
     type: LoadBalancerService
   replicas: 2
 ```
-
+```
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: example-registry-quay-int
+  namespace: openshift-operators
+  labels:
+    ingress-type: internal
+  annotations:
+    haproxy.router.openshift.io/timeout: 30m
+spec:
+  host: example-registry-quay-openshift-operators.apps-int.openshift.sebastian-colomar.com
+  to:
+    kind: Service
+    name: example-registry-quay-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+```
 ```
 apiVersion: v1
 kind: Service
