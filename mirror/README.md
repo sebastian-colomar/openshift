@@ -63,11 +63,6 @@ spec:
         volumeMode: Filesystem
 ```
 ```
-MIRROR=/mirror
-mkdir -p /mirror/ocp
-cd $MIRROR
-```
-```
 curl -O https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.rhel9.tar.gz
 
 gunzip oc-mirror.rhel9.tar.gz
@@ -142,7 +137,7 @@ spec:
       targetPort: 8443
 ```
 ```
-#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 30m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --retry-times 20 --parallel-layers 1 --parallel-images 1 --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
 
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 30m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --retry-times 20 --parallel-layers 1 --parallel-images 1 --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
 ```
