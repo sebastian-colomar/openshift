@@ -54,12 +54,8 @@ metadata:
   name: oc-mirror-mirror2disk
 spec:
   template:
-    metadata:
-      labels:
-        app: oc-mirror-mirror2disk
     spec:
       restartPolicy: Never
-      backoffLimit: 3
       initContainers:
       - name: download-oc-mirror
         image: registry.access.redhat.com/ubi9/ubi:latest
@@ -106,6 +102,7 @@ spec:
           mkdir -p $HOME/.docker
           cp .dockerconfigjson $HOME/.docker/config.json
 
+          cp $BINARY /usr/local/bin/$BINARY
           echo "$BINARY ready. Version:"
           $BINARY --v2 --version
           echo ""
