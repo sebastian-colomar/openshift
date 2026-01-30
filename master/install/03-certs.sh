@@ -21,6 +21,32 @@ oc create secret tls certificate --cert=${dir}/tls/apps/fullchain.pem --key=${di
 oc patch ingresscontroller.operator default --namespace openshift-ingress-operator --patch '{"spec":{"defaultCertificate": {"name": "certificate"}}}' --type=merge
 
 export EmailAddress=sebastian.colomar@gmail.com
+sudo docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps-int.${ClusterName}.${DomainName}
+
+sudo chown $( id -un ):$( id -gn ) -R ${dir}/certs/
+mkdir --parents ${dir}/tls/apps-int/
+cp -f ${dir}/certs/live/apps-int.${ClusterName}.${DomainName}/*.pem ${dir}/tls/apps-int/
+
+oc create secret tls certificate-internal --cert=${dir}/tls/apps/fullchain.pem --key=${dir}/tls/apps/privkey.pem --namespace openshift-ingress
+
+oc apply -f - <<EOF
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: internal
+  namespace: openshift-ingress-operator
+spec:
+  defaultCertificate:
+    name: certificate-internal
+  domain: apps-int.${ClusterName}.${DomainName}
+  endpointPublishingStrategy:
+    loadBalancer:
+      scope: Internal
+    type: LoadBalancerService
+  replicas: 2
+EOF
+
+export EmailAddress=sebastian.colomar@gmail.com
 sudo docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}
 
 sudo chown $( id -un ):$( id -gn ) -R ${dir}/certs/
