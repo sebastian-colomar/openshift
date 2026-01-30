@@ -101,7 +101,7 @@ oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from 
 apiVersion: v1
 kind: Service
 metadata:
-  name: example-registry-quay-nlb
+  name: nlb-example-registry-quay
   namespace: openshift-operators
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
