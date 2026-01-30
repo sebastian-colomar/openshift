@@ -1,15 +1,16 @@
 - https://console-openshift-console.apps.openshift.sebastian-colomar.es/k8s/ns/openshift-config/secrets/pull-secret
-
 ```
-cat $HOME/.docker/config.json
-
-#docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
-
-echo -n "$QUAY_USERNAME:$QUAY_PASSWORD" | base64 -w0
-
-cat $MIRROR/.dockerconfigjson-mirror
-```
-```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mirror-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 300Gi
+---
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -21,32 +22,135 @@ data:
     mirror:
       platform:
         channels:
-        -
-          maxVersion: 4.20.10
+        - name: stable-4.20
           minVersion: 4.20.10
-          name: stable-4.20
-        graph: true
+          maxVersion: 4.20.10
+          graph: true
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: example-registry-quay-int
+  name: quay-int
   namespace: openshift-operators
   labels:
     ingress-type: internal
   annotations:
-    haproxy.router.openshift.io/timeout: 30m
+    haproxy.router.openshift.io/timeout: 60m
 spec:
   host: quay.apps-int.openshift.sebastian-colomar.es
   to:
     kind: Service
-    name: example-registry-quay-app
+    name: quay-app
   port:
     targetPort: http
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
+```
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: oc-mirror-mirror2disk
+spec:
+  template:
+    metadata:
+      labels:
+        app: oc-mirror-mirror2disk
+    spec:
+      restartPolicy: Never
+      backoffLimit: 3
+      initContainers:
+      - name: download-oc-mirror
+        image: registry.access.redhat.com/ubi9/ubi:latest
+        env:
+        - name: BINARY
+          value: oc-mirror
+        - name: RELEASE
+          value: 4.20.10
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+
+          BINARY="oc-mirror"
+
+          if [ -f "$BINARY" ] && [ -x "$BINARY" ]; then
+            echo "$BINARY binary already exists - skipping download."
+            exit 0
+          fi
+
+          echo "No valid $BINARY binary found - downloading..."
+          curl -L -o $BINARY.tgz https://mirror.openshift.com/pub/openshift-v4/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
+
+          tar fxz $BINARY.tgz
+          chmod +x $BINARY
+          echo "$BINARY binary downloaded and persisted"
+        volumeMounts:
+        - mountPath: /mirror
+          name: mirror
+        workingDir: /mirror
+      containers:
+      - name: oc-mirror
+        image: registry.access.redhat.com/ubi9/ubi:latest
+        env:
+        - name: BINARY
+          value: oc-mirror
+        - name: REGISTRY
+          value: quay.apps-int.openshift.sebastian-colomar.es
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+
+          mkdir -p $HOME/.docker
+          cp .dockerconfigjson $HOME/.docker/config.json
+
+          echo "$BINARY ready. Version:"
+          $BINARY --v2 --version
+          echo ""
+
+          echo "Ready for mirroring. Examples (run manually if needed):"
+          echo "  Phase 1 - Mirror to disk:"
+          echo "    $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp"
+          echo ""
+          echo "  Phase 2 - Mirror from disk to registry:"
+          echo "    $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . --from file://ocp docker://$REGISTRY/ocp"
+          echo ""
+
+          $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp
+
+          echo "Job complete."
+        volumeMounts:
+        - mountPath: /mirror/ImageSetConfiguration.yaml
+          name: isc
+          subPath: ImageSetConfiguration.yaml
+        - mountPath: /mirror
+          name: mirror
+        - mountPath: /mirror/.dockerconfigjson
+          name: pull-secret
+          subPath: .dockerconfigjson
+        workingDir: /mirror
+      volumes:
+      - name: pull-secret
+        secret:
+          secretName: pull-secret
+          items:
+          - key: .dockerconfigjson
+            path: .dockerconfigjson
+      - name: isc
+        configMap:
+          name: isc
+          items:
+          - key: ImageSetConfiguration
+            path: ImageSetConfiguration.yaml
+      - name: mirror
+        persistentVolumeClaim:
+          claimName: mirror-pvc
 ---
+
+
+```
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -144,32 +248,6 @@ spec:
           storage: 300Gi
       volumeMode: Filesystem
 ```
-```
-alias oc-mirror="./oc-mirror"
-
-oc-mirror --v2 --version
-```
-```
-apiVersion: mirror.openshift.io/v2alpha1
-kind: ImageSetConfiguration
-mirror:
-  platform:
-    channels:
-    -
-      maxVersion: 4.20.10
-      minVersion: 4.20.10
-      name: stable-4.20
-      type: ocp
-    graph: true
-```
-```
-mkdir -p $HOME/.docker
-cp $MIRROR/.dockerconfigjson $HOME/.docker/config.json
-```
-```
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
-```
-
 
 ```
 echo -n "$QUAY_USERNAME:$QUAY_PASSWORD" | base64 -w0
@@ -197,9 +275,6 @@ spec:
   routeSelector:
     matchLabels:
       ingress-type: internal
-```
-```
-
 ```
 
 ```
