@@ -59,7 +59,6 @@ spec:
         resources:
           requests:
             storage: 1000Gi
-        storageClassName: ocs-storagecluster-ceph-rbd
         volumeMode: Filesystem
 ```
 ```
