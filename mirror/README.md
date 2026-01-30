@@ -27,6 +27,26 @@ data:
           name: stable-4.20
         graph: true
 ---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: example-registry-quay-int
+  namespace: openshift-operators
+  labels:
+    ingress-type: internal
+  annotations:
+    haproxy.router.openshift.io/timeout: 30m
+spec:
+  host: quay.apps-int.openshift.sebastian-colomar.es
+  to:
+    kind: Service
+    name: example-registry-quay-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -181,25 +201,7 @@ spec:
       ingress-type: internal
 ```
 ```
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: example-registry-quay-int
-  namespace: openshift-operators
-  labels:
-    ingress-type: internal
-  annotations:
-    haproxy.router.openshift.io/timeout: 30m
-spec:
-  host: quay.apps-int.openshift.sebastian-colomar.es
-  to:
-    kind: Service
-    name: example-registry-quay-app
-  port:
-    targetPort: http
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
+
 ```
 
 ```
