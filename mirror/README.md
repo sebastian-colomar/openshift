@@ -68,20 +68,18 @@ spec:
         - |
           set -e
           mkdir $HOME/.docker
-          cp $MIRROR/.dockerconfigjson $HOME/.docker/config.json
+          cp .dockerconfigjson $HOME/.docker/config.json
           cp oc-mirror /usr/local/bin/oc-mirror
           echo "oc-mirror installed. Version:"
           oc-mirror --v2 --version
           echo "Ready for mirroring."
           echo "From source to file:"
-          echo "oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp"
+          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . file://./ocp"
           echo "From file to mirror"
-          echo "oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://$REGISTRY/ocp"
+          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . --from file://./ocp docker://$REGISTRY/ocp"
           exec sleep infinity
         command: ["/bin/bash", "-c"]
         env:
-        - name: MIRROR
-          value: /mirror
         - name: REGISTRY
           value: quay.apps-int.openshift.sebastian-colomar.es
         image: registry.access.redhat.com/ubi9/ubi:latest
