@@ -123,9 +123,6 @@ spec:
       scope: Internal
     type: LoadBalancerService
   replicas: 2
-  routeSelector:
-    matchLabels:
-      ingress-type: internal
 ```
 
 ```
