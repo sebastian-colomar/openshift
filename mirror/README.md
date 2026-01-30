@@ -3,9 +3,11 @@
 ```
 cat $HOME/.docker/config.json
 
-docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
+#docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
 
-cat $HOME/.docker/config.json
+echo -n "$QUAY_USERNAME:$QUAY_PASSWORD" | base64 -w0
+
+cat $MIRROR/.dockerconfigjson-mirror
 ```
 ```
 apiVersion: apps/v1
@@ -88,20 +90,20 @@ mirror:
 mkdir -p $HOME/.docker
 cp $MIRROR/.dockerconfigjson $HOME/.docker/config.json
 ```
-
 ```
 oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR file://$MIRROR/ocp
 ```
 
-```
-cp $MIRROR/.dockerconfigjson $HOME/.docker/config.json
-```
 
 ```
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+echo -n "$QUAY_USERNAME:$QUAY_PASSWORD" | base64 -w0
 ```
 ```
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+vi $MIRROR/.dockerconfigjson-mirror
+```
+```
+#docker login https://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ --username $QUAY_USERNAME --password $QUAY_PASSWORD
+cp $MIRROR/.dockerconfigjson-mirror $HOME/.docker/config.json
 ```
 
 ```
@@ -128,4 +130,9 @@ spec:
       protocol: TCP
       port: 443
       targetPort: 8443
+```
+```
+#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
+
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/quay
 ```
