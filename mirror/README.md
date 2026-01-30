@@ -123,6 +123,9 @@ spec:
       scope: Internal
     type: LoadBalancerService
   replicas: 2
+  routeSelector:
+    matchLabels:
+      ingress-type: internal
 ```
 ```
 kind: Route
@@ -145,33 +148,9 @@ spec:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
 ```
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: nlb-example-registry-quay
-  namespace: openshift-operators
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
-  selector:
-    app: quay
-    quay-component: quay-app
-    quay-operator/quayregistry: example-registry
-  ports:
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 8443
-```
-```
-#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --retry-times 20 --parallel-layers 1 --parallel-images 1 --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
 
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --retry-times 20 --parallel-layers 1 --parallel-images 1 --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://nlb-example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
+```
+#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
+
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps-int.openshift.sebastian-colomar.es/ocp
 ```
