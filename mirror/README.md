@@ -34,8 +34,6 @@ metadata:
   namespace: openshift-operators
   labels:
     ingress-type: internal
-  annotations:
-    haproxy.router.openshift.io/timeout: 60m
 spec:
   host: quay.apps-int.openshift.sebastian-colomar.es
   to:
@@ -51,7 +49,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: oc-mirror-mirror2disk
+  name: oc-mirror2disk
 spec:
   template:
     spec:
@@ -174,9 +172,9 @@ spec:
           oc-mirror --v2 --version
           echo "Ready for mirroring."
           echo "From source to file:"
-          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . file://./ocp"
+          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . file://mirror"
           echo "From file to mirror"
-          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . --from file://./ocp docker://$REGISTRY/ocp"
+          echo "oc-mirror --v2 -c ImageSetConfiguration.yaml --cache-dir . --from file://mirror docker://$REGISTRY/mirror"
           exec sleep infinity
         command: ["/bin/bash", "-c"]
         env:
@@ -274,7 +272,7 @@ spec:
 ```
 
 ```
-#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps.openshift.sebastian-colomar.es/ocp
+#oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://mirror.apps.openshift.sebastian-colomar.es/ocp
 
-oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://example-registry-quay-openshift-operators.apps-int.openshift.sebastian-colomar.es/ocp
+oc-mirror --v2 -c $MIRROR/ImageSetConfiguration.yaml --image-timeout 60m --cache-dir $MIRROR --from file://$MIRROR/ocp docker://mirror.apps-int.openshift.sebastian-colomar.es/ocp
 ```
