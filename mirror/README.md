@@ -44,6 +44,7 @@ spec:
             - name: pull-secret-ro
               mountPath: /secrets/pull-secret
               readOnly: true
+          workingDir: /mirror
       volumes:
         - name: pull-secret-ro
           secret:
