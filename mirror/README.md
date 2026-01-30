@@ -144,8 +144,7 @@ spec:
       - name: mirror
         persistentVolumeClaim:
           claimName: mirror-pvc
----
-
+```
 
 ```
 apiVersion: apps/v1
