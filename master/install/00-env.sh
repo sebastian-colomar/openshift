@@ -14,3 +14,5 @@ export version=4.20.10
 export worker_type=t3a.large # 2CPU, 8GB, $0.04930 (in Mumbai)
 #export worker_type=c6a.large # 2CPU, 4GB, $0.04675 (in Mumbai)
 #export worker_type=c6a.4xlarge # FOR HEAVY DUTIES: 16vCPU, 32GB, $0.3740 (in Mumbai)
+#export worker_type=m6a.4xlarge # FOR HEAVY DUTIES: 16vCPU, 64GB, $0.4444 (in Mumbai)
+#export worker_type=r6a.4xlarge # FOR HEAVY DUTIES: 16vCPU, 128GB, $0.572 (in Mumbai)
