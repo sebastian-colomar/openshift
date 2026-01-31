@@ -2,6 +2,7 @@ test -f ${HOME}/.ssh/id_rsa || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
 
+unalias rm cp mv
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
 test -d ${dir} || mkdir -p ${dir} 
 
