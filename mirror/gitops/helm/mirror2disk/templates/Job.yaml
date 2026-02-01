@@ -35,7 +35,7 @@ spec:
           echo "$BINARY binary downloaded and persisted"
         volumeMounts:
         - mountPath: /mirror
-          name: mirror
+          name: {{ .Values.persistentVolumeClaim.name }}
         workingDir: /mirror
       containers:
       - name: oc-mirror
