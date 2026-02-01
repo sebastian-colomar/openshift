@@ -17,7 +17,7 @@ namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
 release: 4.20.10
-storage: 500Gi
+storage: 1000Gi
 storageClassName: ocs-storagecluster-ceph-rbd
 volumeMode: Filesystem
 workingDir: /mirror
