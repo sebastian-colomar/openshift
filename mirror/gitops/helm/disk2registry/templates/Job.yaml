@@ -26,6 +26,7 @@ spec:
             tar fxz $BINARY.tgz
           fi
           ls -l $BINARY
+          df -h .
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
