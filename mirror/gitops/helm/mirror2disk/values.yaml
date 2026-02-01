@@ -6,7 +6,7 @@ configMap:
   name: isc
 image: registry.access.redhat.com/ubi9/ubi:latest
 job:
-  name: mirro2disk
+  name: mirror2disk
 mirrorURL: https://mirror-quay.internal.apps.openshift.sebastian-colomar.es/mirror
 namespace: default
 persistentVolumeClaim:
