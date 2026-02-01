@@ -23,17 +23,13 @@ spec:
         args:
         - |
           set -e
-
-          if [ -f "$BINARY" ] && [ -x "$BINARY" ]; then
+          if [ -f "$BINARY" ]; then
             echo "$BINARY binary already exists - skipping download."
             exit 0
           fi
-
           echo "No valid $BINARY binary found - downloading..."
           curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
-
           tar fxz $BINARY.tgz
-          chmod +x $BINARY
           echo "$BINARY binary downloaded and persisted"
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}
@@ -51,19 +47,14 @@ spec:
         args:
         - |
           set -e
-
-          #mkdir -p $HOME/.docker
-          #cp .dockerconfigjson $HOME/.docker/config.json
-
+          mkdir -p $HOME/.docker
+          cp .dockerconfigjson $HOME/.docker/config.json
+          chmod +x $BINARY
           cp $BINARY /usr/local/bin/$BINARY
           echo "$BINARY ready. Version:"
           $BINARY --v2 --version
           echo ""
-
           echo $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
-          sleep infinity
-
-
           echo "Job complete."
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
