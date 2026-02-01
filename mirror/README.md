@@ -82,8 +82,6 @@ spec:
         env:
         - name: BINARY
           value: oc-mirror
-        - name: REGISTRY
-          value: quay.apps-int.openshift.sebastian-colomar.es
         command: ["/bin/bash", "-c"]
         args:
         - |
@@ -95,14 +93,6 @@ spec:
           cp $BINARY /usr/local/bin/$BINARY
           echo "$BINARY ready. Version:"
           $BINARY --v2 --version
-          echo ""
-
-          echo "Ready for mirroring. Examples (run manually if needed):"
-          echo "  Phase 1 - Mirror to disk:"
-          echo "    $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp"
-          echo ""
-          echo "  Phase 2 - Mirror from disk to registry:"
-          echo "    $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . --from file://ocp docker://$REGISTRY/ocp"
           echo ""
 
           $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp
