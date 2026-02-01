@@ -1,0 +1,17 @@
+accessModes: ReadWriteMany
+baseURL: https://mirror.openshift.com/pub/openshift-v4
+binary: oc-mirror
+configMap:
+  key: ImageSetConfiguration
+  name: isc
+image: registry.access.redhat.com/ubi9/ubi:latest
+job:
+  name: mirro2disk
+namespace: default
+persistentVolumeClaim:
+  name: mirror-pvc
+release: 4.20.10
+storage: 1000Gi
+storageClassName: ocs-storagecluster-cephfs
+volumeMode: Filesystem
+workingDir: /mirror
