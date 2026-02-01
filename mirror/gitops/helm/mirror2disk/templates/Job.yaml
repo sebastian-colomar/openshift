@@ -8,7 +8,7 @@ spec:
     spec:
       restartPolicy: Never
       imagePullSecrets:
-      - pull-secret
+      - name: pull-secret
       initContainers:
       - name: download-{{ .Values.binary }}
         image: {{ .Values.image }}
