@@ -21,7 +21,6 @@ spec:
         args:
         - |
           set -e
-          echo "No valid $BINARY binary found - downloading..."
           curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
           tar fxz $BINARY.tgz
           echo "$BINARY binary downloaded and persisted"
