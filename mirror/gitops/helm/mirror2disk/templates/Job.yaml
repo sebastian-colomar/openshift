@@ -15,8 +15,6 @@ spec:
           value: {{ .Values.baseURL }}
         - name: BINARY
           value: {{ .Values.binary }}
-        - name: ISC
-          value: {{ .Values.configMap.key }}
         - name: RELEASE
           value: {{ .Values.release }}
         command: ["/bin/bash", "-c"]
@@ -45,6 +43,8 @@ spec:
         env:
         - name: BINARY
           value: {{ .Values.binary }}
+        - name: ISC
+          value: {{ .Values.configMap.key }}
         command: ["/bin/bash", "-c"]
         args:
         - |
