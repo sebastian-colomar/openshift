@@ -34,7 +34,7 @@ data:
         - name: stable-4.20
           minVersion: 4.20.10
           maxVersion: 4.20.10
-          graph: true
+      graph: true
 ```
 ```
 apiVersion: batch/v1
