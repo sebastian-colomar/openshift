@@ -1,10 +1,13 @@
 - https://console-openshift-console.apps.openshift.sebastian-colomar.es/k8s/ns/openshift-config/secrets/pull-secret
 ```
-oc create secret docker-registry pull-secret --docker-username user --docker-password password --docker-email sebastian.colomar@gmail.com --namespace default
+oc project default
+```
+```
+oc create secret docker-registry pull-secret --docker-username user --docker-password password --docker-email sebastian.colomar@gmail.com
 oc patch secret pull-secret --namespace default --patch='{"data":{".dockerconfigjson":"'$(oc get secret pull-secret --namespace openshift-config -o json | jq -r '.data[".dockerconfigjson"]')'"}}'
 ```
 ```
-oc create secret docker-registry pull-secret-mirror-quay --docker-username user --docker-password password --docker-email sebastian.colomar@gmail.com --namespace default
+oc create secret docker-registry pull-secret-mirror-quay --docker-username user --docker-password password --docker-email sebastian.colomar@gmail.com
 oc patch secret pull-secret-mirror-quay --namespace default --patch='{"data":{".dockerconfigjson":"'$(oc get secret pull-secret-mirror-quay --namespace openshift-config -o json | jq -r '.data[".dockerconfigjson"]')'"}}'
 ```
 ```
