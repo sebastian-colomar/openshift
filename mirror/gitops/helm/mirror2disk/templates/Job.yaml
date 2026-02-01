@@ -1,0 +1,87 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: oc-mirror2disk
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: download-oc-mirror
+        image: registry.access.redhat.com/ubi9/ubi:latest
+        env:
+        - name: BINARY
+          value: oc-mirror
+        - name: RELEASE
+          value: 4.20.10
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+
+          BINARY="oc-mirror"
+
+          if [ -f "$BINARY" ] && [ -x "$BINARY" ]; then
+            echo "$BINARY binary already exists - skipping download."
+            exit 0
+          fi
+
+          echo "No valid $BINARY binary found - downloading..."
+          curl -L -o $BINARY.tgz https://mirror.openshift.com/pub/openshift-v4/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
+
+          tar fxz $BINARY.tgz
+          chmod +x $BINARY
+          echo "$BINARY binary downloaded and persisted"
+        volumeMounts:
+        - mountPath: /mirror
+          name: mirror
+        workingDir: /mirror
+      containers:
+      - name: oc-mirror
+        image: registry.access.redhat.com/ubi9/ubi:latest
+        env:
+        - name: BINARY
+          value: oc-mirror
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+
+          mkdir -p $HOME/.docker
+          cp .dockerconfigjson $HOME/.docker/config.json
+
+          cp $BINARY /usr/local/bin/$BINARY
+          echo "$BINARY ready. Version:"
+          $BINARY --v2 --version
+          echo ""
+
+          $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp
+
+          echo "Job complete."
+        volumeMounts:
+        - mountPath: /mirror/ImageSetConfiguration.yaml
+          name: {{ .Values.configMap.name }}
+          subPath: ImageSetConfiguration.yaml
+        - mountPath: /mirror
+          name: {{ .Values.persistentVolumeClaim.name }}
+        - mountPath: /mirror/.dockerconfigjson
+          name: pull-secret
+          subPath: .dockerconfigjson
+        workingDir: /mirror
+      volumes:
+      - name: pull-secret
+        secret:
+          secretName: pull-secret
+          items:
+          - key: .dockerconfigjson
+            path: .dockerconfigjson
+      - name: {{ .Values.configMap.name }}
+        configMap:
+          name: {{ .Values.configMap.name }}
+          items:
+          - key: ImageSetConfiguration
+            path: ImageSetConfiguration.yaml
+      - name: {{ .Values.persistentVolumeClaim.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}
