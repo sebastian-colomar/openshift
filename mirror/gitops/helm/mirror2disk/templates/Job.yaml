@@ -7,8 +7,6 @@ spec:
   template:
     spec:
       restartPolicy: Never
-      imagePullSecrets:
-      - name: pull-secret
       initContainers:
       - name: download-{{ .Values.binary }}
         image: {{ .Values.image }}
@@ -63,7 +61,7 @@ spec:
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
         - mountPath: {{ .Values.workingDir }}/.dockerconfigjson
-          name: pull-secret
+          name: {{ .Values.imagePullSecret.redhat }}
           subPath: .dockerconfigjson
         workingDir: {{ .Values.workingDir }}
       volumes:
@@ -76,9 +74,10 @@ spec:
       - name: {{ .Values.persistentVolumeClaim.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistentVolumeClaim.name }}
-      - name: pull-secret
+      - name: {{ .Values.imagePullSecret.redhat }}
         secret:
-          secretName: pull-secret
+          secretName: {{ .Values.imagePullSecret.redhat }}
           items:
           - key: .dockerconfigjson
             path: .dockerconfigjson
+
