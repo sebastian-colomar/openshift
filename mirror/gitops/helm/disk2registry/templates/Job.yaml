@@ -1,0 +1,122 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: download-{{ .Values.binary }}
+        image: {{ .Values.image }}
+        env:
+        - name: BASE_URL
+          value: {{ .Values.baseURL }}
+        - name: BINARY
+          value: {{ .Values.binary }}
+        - name: RELEASE
+          value: {{ .Values.release }}
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+          if [ -f "$BINARY" ]; then
+            echo "$BINARY binary already exists - skipping download."
+            exit 0
+          fi
+          echo "No valid $BINARY binary found - downloading..."
+          curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
+          tar fxz $BINARY.tgz
+          echo "$BINARY binary downloaded and persisted"
+        volumeMounts:
+        - mountPath: {{ .Values.workingDir }}
+          name: {{ .Values.persistentVolumeClaim.name }}
+        workingDir: {{ .Values.workingDir }}
+      - name: update-pull-secret
+        image: {{ .Values.image }}
+        env:
+        - name: BASE_URL
+          value: {{ .Values.baseURL }}
+        - name: BINARY
+          value: {{ .Values.binary }}
+        - name: RELEASE
+          value: {{ .Values.release }}
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+          mkdir -p $HOME/.docker
+          cp .dockerconfigjson $HOME/.docker/config.json
+          echo READY
+          sleep infinity
+        volumeMounts:
+        - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
+          name: {{ .Values.configMap.name }}
+          subPath: {{ .Values.configMap.key }}.yaml
+        - mountPath: {{ .Values.workingDir }}
+          name: {{ .Values.persistentVolumeClaim.name }}
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+          name: {{ .Values.imagePullSecret.mirror }}
+          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+          name: {{ .Values.imagePullSecret.redhat }}
+          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+        workingDir: {{ .Values.workingDir }}
+      containers:
+      - name: {{ .Values.binary }}
+        image: {{ .Values.image }}
+        env:
+        - name: BINARY
+          value: {{ .Values.binary }}
+        - name: ISC
+          value: {{ .Values.configMap.key }}
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          set -e
+          mkdir -p $HOME/.docker
+          cp .dockerconfigjson $HOME/.docker/config.json
+          chmod +x $BINARY
+          cp $BINARY /usr/local/bin/$BINARY
+          echo "$BINARY ready. Version:"
+          $BINARY --v2 --version
+          echo ""
+          $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
+          echo "Job complete."
+        volumeMounts:
+        - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
+          name: {{ .Values.configMap.name }}
+          subPath: {{ .Values.configMap.key }}.yaml
+        - mountPath: {{ .Values.workingDir }}
+          name: {{ .Values.persistentVolumeClaim.name }}
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+          name: {{ .Values.imagePullSecret.mirror }}
+          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+          name: {{ .Values.imagePullSecret.redhat }}
+          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+        workingDir: {{ .Values.workingDir }}
+      volumes:
+      - name: {{ .Values.configMap.name }}
+        configMap:
+          name: {{ .Values.configMap.name }}
+          items:
+          - key: {{ .Values.configMap.key }}
+            path: {{ .Values.configMap.key }}.yaml
+      - name: {{ .Values.persistentVolumeClaim.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}
+      - name: {{ .Values.imagePullSecret.redhat }}
+        secret:
+          secretName: {{ .Values.imagePullSecret.redhat }}
+          items:
+          - key: .dockerconfigjson
+            path: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+      - name: {{ .Values.imagePullSecret.mirror }}
+        secret:
+          secretName: {{ .Values.imagePullSecret.mirror }}
+          items:
+          - key: .dockerconfigjson
+            path: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+
