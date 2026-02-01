@@ -4,17 +4,22 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mirror-pvc
+  namespace: default
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 300Gi
----
+      storage: 1000Gi
+  storageClassName: ocs-storagecluster-cephfs
+  volumeMode: Filesystem
+```
+```
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: isc
+  namespace: default
 data:
   ImageSetConfiguration: |-
     apiVersion: mirror.openshift.io/v2alpha1
@@ -26,30 +31,13 @@ data:
           minVersion: 4.20.10
           maxVersion: 4.20.10
           graph: true
----
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: quay-int
-  namespace: openshift-operators
-  labels:
-    ingress-type: internal
-spec:
-  host: quay.apps-int.openshift.sebastian-colomar.es
-  to:
-    kind: Service
-    name: quay-app
-  port:
-    targetPort: http
-  tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
 ```
 ```
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: oc-mirror2disk
+  namespace: default
 spec:
   template:
     spec:
