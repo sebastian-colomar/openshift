@@ -6,7 +6,7 @@ metadata:
   name: mirror-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 300Gi
