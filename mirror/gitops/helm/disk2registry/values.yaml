@@ -9,7 +9,7 @@ imagePullSecret:
   redhat: pull-secret
   mirror: pull-secret-mirror-quay
 job:
-  name: mirro2disk
+  name: mirror2disk
 namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
