@@ -5,14 +5,14 @@ metadata:
     argocd.argoproj.io/skip-reconcile: "false"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "20"
-  name: disk2registry
+  name: disk2mirror
 spec:
   destination:
     namespace: openshift-gitops
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: mirror/gitops/helm/disk2registry
+    path: mirror/gitops/helm/disk2mirror
     repoURL: https://github.com/sebastian-colomar/openshift
     targetRevision: HEAD
   syncPolicy:
