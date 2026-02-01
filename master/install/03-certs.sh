@@ -41,6 +41,17 @@ spec:
 EOF
 
 export EmailAddress=sebastian.colomar@gmail.com
+sudo docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.internal.apps.${ClusterName}.${DomainName}
+
+sudo chown $( id -un ):$( id -gn ) -R ${dir}/certs/
+mkdir --parents ${dir}/tls/internal.apps/
+cp -f ${dir}/certs/live/internal.apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/internal.apps/
+
+oc create secret tls certificate-internal --cert=${dir}/tls/internal.apps/fullchain.pem --key=${dir}/tls/internal.apps/privkey.pem --namespace openshift-ingress
+
+oc patch ingresscontroller.operator internal --namespace openshift-ingress-operator --patch '{"spec":{"defaultCertificate": {"name": "certificate-internal"}}}' --type=merge
+
+export EmailAddress=sebastian.colomar@gmail.com
 sudo docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}
 
 sudo chown $( id -un ):$( id -gn ) -R ${dir}/certs/
