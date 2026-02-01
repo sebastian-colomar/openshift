@@ -9,7 +9,6 @@ spec:
       restartPolicy: Never
       imagePullSecrets:
       - pull-secret
-      #- pull-secret-mirror-quay
       initContainers:
       - name: download-{{ .Values.binary }}
         image: {{ .Values.image }}
