@@ -35,33 +35,21 @@ spec:
         workingDir: {{ .Values.workingDir }}
       - name: update-pull-secret
         image: {{ .Values.image }}
-        env:
-        - name: BASE_URL
-          value: {{ .Values.baseURL }}
-        - name: BINARY
-          value: {{ .Values.binary }}
-        - name: RELEASE
-          value: {{ .Values.release }}
         command: ["/bin/bash", "-c"]
         args:
         - |
           set -e
-          mkdir -p $HOME/.docker
-          cp .dockerconfigjson $HOME/.docker/config.json
-          echo READY
-          sleep infinity
+          jq -s '.[0] * .[1]' .dockerconfigjson-redhat .dockerconfigjson-mirror > .dockerconfigjson-merged
+          echo "Image Pull Secrets successfully merged."
         volumeMounts:
-        - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
-          name: {{ .Values.configMap.name }}
-          subPath: {{ .Values.configMap.key }}.yaml
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
-        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-mirror
           name: {{ .Values.imagePullSecret.mirror }}
-          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
-        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+          subPath: .dockerconfigjson-mirror
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-redhat
           name: {{ .Values.imagePullSecret.redhat }}
-          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+          subPath: .dockerconfigjson-redhat
         workingDir: {{ .Values.workingDir }}
       containers:
       - name: {{ .Values.binary }}
@@ -69,33 +57,32 @@ spec:
         env:
         - name: BINARY
           value: {{ .Values.binary }}
+        - name: CACHE
+          value: {{ .Values.cache }}
+        - name: FILE
+          value: {{ .Values.file }}
         - name: ISC
           value: {{ .Values.configMap.key }}
+        - name: MIRROR
+          value: {{ .Values.mirrorURL }}
         command: ["/bin/bash", "-c"]
         args:
         - |
           set -e
           mkdir -p $HOME/.docker
-          cp .dockerconfigjson $HOME/.docker/config.json
+          cp .dockerconfigjson-merged $HOME/.docker/config.json
           chmod +x $BINARY
           cp $BINARY /usr/local/bin/$BINARY
           echo "$BINARY ready. Version:"
           $BINARY --v2 --version
           echo ""
-          $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
-          echo "Job complete."
+          $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE --from file://$FILE docker://$MIRROR
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
           name: {{ .Values.configMap.name }}
           subPath: {{ .Values.configMap.key }}.yaml
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
-        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
-          name: {{ .Values.imagePullSecret.mirror }}
-          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
-        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
-          name: {{ .Values.imagePullSecret.redhat }}
-          subPath: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
         workingDir: {{ .Values.workingDir }}
       volumes:
       - name: {{ .Values.configMap.name }}
@@ -112,11 +99,11 @@ spec:
           secretName: {{ .Values.imagePullSecret.redhat }}
           items:
           - key: .dockerconfigjson
-            path: .dockerconfigjson-{{ .Values.imagePullSecret.redhat }}
+            path: .dockerconfigjson-redhat
       - name: {{ .Values.imagePullSecret.mirror }}
         secret:
           secretName: {{ .Values.imagePullSecret.mirror }}
           items:
           - key: .dockerconfigjson
-            path: .dockerconfigjson-{{ .Values.imagePullSecret.mirror }}
+            path: .dockerconfigjson-mirror
 
