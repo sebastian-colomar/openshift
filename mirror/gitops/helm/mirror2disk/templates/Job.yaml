@@ -60,7 +60,9 @@ spec:
           $BINARY --v2 --version
           echo ""
 
-          $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
+          echo $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
+          sleep infinity
+
 
           echo "Job complete."
         volumeMounts:
