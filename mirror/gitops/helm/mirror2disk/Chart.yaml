@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mirror2disk
+description: Mirror To Disk
+type: application
+version: 0.0.1
+appVersion: "v1.0"
