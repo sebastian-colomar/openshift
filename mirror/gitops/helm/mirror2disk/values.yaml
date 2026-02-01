@@ -5,6 +5,9 @@ configMap:
   key: ImageSetConfiguration
   name: isc
 image: registry.access.redhat.com/ubi9/ubi:latest
+imagePullSecret:
+  redhat: pull-secret
+  mirror: pull-secret-mirror-quay
 job:
   name: mirror2disk
 mirrorURL: https://mirror-quay.internal.apps.openshift.sebastian-colomar.es/mirror
