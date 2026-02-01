@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap-hub-apps
+  name: bootstrap-mirror-apps
   namespace: openshift-gitops
 spec:
   destination:
@@ -11,8 +11,8 @@ spec:
   source:
     directory:
       recurse: true
-    path: provider-aws/apps/01a-hub-apps/deploy
-    repoURL: https://github.com/sebastian-colomar/hive-through-gitops
+    path: mirror/gitops/deploy
+    repoURL: https://github.com/sebastian-colomar/openshift
     targetRevision: HEAD
   syncPolicy:
     automated:
