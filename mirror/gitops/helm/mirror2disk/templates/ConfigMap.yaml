@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.configMap.name }}
   namespace: {{ .Values.namespace }}
 data:
-  ImageSetConfiguration: |-
+  {{ .Values.configMap.key }}: |-
     apiVersion: mirror.openshift.io/v2alpha1
     kind: ImageSetConfiguration
     mirror:
