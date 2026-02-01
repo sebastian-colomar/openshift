@@ -1,9 +1,11 @@
 accessModes: ReadWriteMany
 baseURL: https://mirror.openshift.com/pub/openshift-v4
 binary: oc-mirror
+cache: /mirror
 configMap:
   key: ImageSetConfiguration
   name: isc
+file: ocp
 image: registry.access.redhat.com/ubi9/ubi:latest
 imagePullSecret:
   redhat: pull-secret
