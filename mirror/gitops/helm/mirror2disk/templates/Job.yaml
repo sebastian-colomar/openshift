@@ -7,6 +7,9 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      imagePullSecrets:
+      - pull-secret
+      #- pull-secret-mirror-quay
       initContainers:
       - name: download-{{ .Values.binary }}
         image: {{ .Values.image }}
@@ -50,8 +53,8 @@ spec:
         - |
           set -e
 
-          mkdir -p $HOME/.docker
-          cp .dockerconfigjson $HOME/.docker/config.json
+          #mkdir -p $HOME/.docker
+          #cp .dockerconfigjson $HOME/.docker/config.json
 
           cp $BINARY /usr/local/bin/$BINARY
           echo "$BINARY ready. Version:"
