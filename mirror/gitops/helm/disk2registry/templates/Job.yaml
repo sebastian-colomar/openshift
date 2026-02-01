@@ -21,10 +21,11 @@ spec:
         args:
         - |
           set -e
-          echo "No valid $BINARY binary found - downloading..."
-          curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
-          tar fxz $BINARY.tgz
-          echo "$BINARY binary downloaded and persisted"
+          if test ! -f $BINARY; then
+            curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz
+            tar fxz $BINARY.tgz
+          fi
+          ls -l $BINARY
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
@@ -35,9 +36,11 @@ spec:
         args:
         - |
           set -e
-          yum install -y jq
-          jq -s '.[0] * .[1]' .dockerconfigjson-redhat .dockerconfigjson-mirror > .dockerconfigjson-merged
-          echo "Image Pull Secrets successfully merged."
+          if test ! -f .dockerconfigjson-merged; then
+            yum install -y jq
+            jq -s '.[0] * .[1]' .dockerconfigjson-redhat .dockerconfigjson-mirror > .dockerconfigjson-merged
+          fi
+          ls -l .dockerconfigjson-merged
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
@@ -70,9 +73,7 @@ spec:
           cp .dockerconfigjson-merged $HOME/.docker/config.json
           chmod +x $BINARY
           cp $BINARY /usr/local/bin/$BINARY
-          echo "$BINARY ready. Version:"
           $BINARY --v2 --version
-          echo ""
           $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE --from file://$FILE docker://$MIRROR
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
