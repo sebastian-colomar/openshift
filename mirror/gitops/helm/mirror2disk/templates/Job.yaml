@@ -21,9 +21,11 @@ spec:
         args:
         - |
           set -e
-          curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
-          tar fxz $BINARY.tgz
-          echo "$BINARY binary downloaded and persisted"
+          if test ! -f $BINARY; then
+            curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz
+            tar fxz $BINARY.tgz
+          fi
+          ls -l $BINARY
           df -h .
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}
@@ -49,11 +51,8 @@ spec:
           cp .dockerconfigjson $HOME/.docker/config.json
           chmod +x $BINARY
           cp $BINARY /usr/local/bin/$BINARY
-          echo "$BINARY ready. Version:"
           $BINARY --v2 --version
-          echo ""
           $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE file://$FILE
-          echo "Job complete."
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
           name: {{ .Values.configMap.name }}
