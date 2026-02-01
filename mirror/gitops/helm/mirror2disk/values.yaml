@@ -1,6 +1,7 @@
 accessModes: ReadWriteMany
 configMap:
   name: isc
+image: registry.access.redhat.com/ubi9/ubi:latest
 namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
