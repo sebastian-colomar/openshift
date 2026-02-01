@@ -1,4 +1,4 @@
-accessModes: ReadWriteMany
+accessModes: ReadWriteOnce
 baseURL: https://mirror.openshift.com/pub/openshift-v4
 binary: oc-mirror
 cache: /mirror
@@ -17,7 +17,7 @@ namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
 release: 4.20.10
-storage: 1000Gi
-storageClassName: ocs-storagecluster-cephfs
+storage: 500Gi
+storageClassName: ocs-storagecluster-ceph-rbd
 volumeMode: Filesystem
 workingDir: /mirror
