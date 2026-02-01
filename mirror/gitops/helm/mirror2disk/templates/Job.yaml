@@ -1,26 +1,28 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: oc-mirror2disk
+  name: {{ .Values.job.name }}
   namespace: {{ .Values.namespace }}
 spec:
   template:
     spec:
       restartPolicy: Never
       initContainers:
-      - name: download-oc-mirror
-        image: registry.access.redhat.com/ubi9/ubi:latest
+      - name: download-{{ .Values.binary }}
+        image: {{ .Values.image }}
         env:
+        - name: BASE_URL
+          value: {{ .Values.baseURL }}
         - name: BINARY
-          value: oc-mirror
+          value: {{ .Values.binary }}
+        - name: ISC
+          value: {{ .Values.configMap.key }}
         - name: RELEASE
-          value: 4.20.10
+          value: {{ .Values.release }}
         command: ["/bin/bash", "-c"]
         args:
         - |
           set -e
-
-          BINARY="oc-mirror"
 
           if [ -f "$BINARY" ] && [ -x "$BINARY" ]; then
             echo "$BINARY binary already exists - skipping download."
@@ -28,21 +30,21 @@ spec:
           fi
 
           echo "No valid $BINARY binary found - downloading..."
-          curl -L -o $BINARY.tgz https://mirror.openshift.com/pub/openshift-v4/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
+          curl -L -o $BINARY.tgz $BASE_URL/$(arch)/clients/ocp/$RELEASE/$BINARY.rhel9.tar.gz || { echo "Download failed - check URL or network"; exit 1; }
 
           tar fxz $BINARY.tgz
           chmod +x $BINARY
           echo "$BINARY binary downloaded and persisted"
         volumeMounts:
-        - mountPath: /mirror
+        - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
-        workingDir: /mirror
+        workingDir: {{ .Values.workingDir }}
       containers:
-      - name: oc-mirror
-        image: registry.access.redhat.com/ubi9/ubi:latest
+      - name: {{ .Values.binary }}
+        image: {{ .Values.image }}
         env:
         - name: BINARY
-          value: oc-mirror
+          value: {{ .Values.binary }}
         command: ["/bin/bash", "-c"]
         args:
         - |
@@ -56,32 +58,32 @@ spec:
           $BINARY --v2 --version
           echo ""
 
-          $BINARY --v2 --config ImageSetConfiguration.yaml --cache-dir . file://ocp
+          $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
 
           echo "Job complete."
         volumeMounts:
-        - mountPath: /mirror/ImageSetConfiguration.yaml
+        - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
           name: {{ .Values.configMap.name }}
-          subPath: ImageSetConfiguration.yaml
-        - mountPath: /mirror
+          subPath: {{ .Values.configMap.key }}.yaml
+        - mountPath: {{ .Values.workingDir }}
           name: {{ .Values.persistentVolumeClaim.name }}
-        - mountPath: /mirror/.dockerconfigjson
+        - mountPath: {{ .Values.workingDir }}/.dockerconfigjson
           name: pull-secret
           subPath: .dockerconfigjson
-        workingDir: /mirror
+        workingDir: {{ .Values.workingDir }}
       volumes:
+      - name: {{ .Values.configMap.name }}
+        configMap:
+          name: {{ .Values.configMap.name }}
+          items:
+          - key: {{ .Values.configMap.key }}
+            path: {{ .Values.configMap.key }}.yaml
+      - name: {{ .Values.persistentVolumeClaim.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistentVolumeClaim.name }}
       - name: pull-secret
         secret:
           secretName: pull-secret
           items:
           - key: .dockerconfigjson
             path: .dockerconfigjson
-      - name: {{ .Values.configMap.name }}
-        configMap:
-          name: {{ .Values.configMap.name }}
-          items:
-          - key: ImageSetConfiguration
-            path: ImageSetConfiguration.yaml
-      - name: {{ .Values.persistentVolumeClaim.name }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistentVolumeClaim.name }}
