@@ -10,4 +10,6 @@ oc patch secret pull-secret --patch='{"data":{".dockerconfigjson":"'$(oc get sec
 oc create secret docker-registry pull-secret-mirror-quay --docker-username user --docker-password password --docker-email sebastian.colomar@gmail.com
 oc patch secret pull-secret-mirror-quay --patch='{"data":{".dockerconfigjson":"'$(oc get secret pull-secret-mirror-quay --namespace openshift-config -o json | jq -r '.data[".dockerconfigjson"]')'"}}'
 ```
-
+```
+oc apply -Rf ./gitops/bootstrap
+```
