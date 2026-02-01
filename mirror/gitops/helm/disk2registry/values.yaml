@@ -11,7 +11,7 @@ imagePullSecret:
   redhat: pull-secret
   mirror: pull-secret-mirror-quay
 job:
-  name: disk2registry
+  name: disk2mirror
 mirrorURL: mirror-quay.internal.apps.openshift.sebastian-colomar.es/mirror
 namespace: default
 persistentVolumeClaim:
