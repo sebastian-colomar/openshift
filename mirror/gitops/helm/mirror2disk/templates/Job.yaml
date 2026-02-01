@@ -52,7 +52,7 @@ spec:
           echo "$BINARY ready. Version:"
           $BINARY --v2 --version
           echo ""
-          echo $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
+          $BINARY --v2 --config $ISC.yaml --cache-dir . file://ocp
           echo "Job complete."
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
