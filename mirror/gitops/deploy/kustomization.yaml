@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   #- ACM/Role.yaml
   #- ACM/RoleBinding.yaml
+  - apps/storage4mirror2disk.yaml
   - apps/mirror2disk.yaml
   #- apps/disk2mirror.yaml
