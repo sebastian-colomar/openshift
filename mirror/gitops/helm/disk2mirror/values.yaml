@@ -12,6 +12,7 @@ imagePullSecret:
   mirror: pull-secret-mirror-quay
 job:
   name: disk2mirror
+mirrorOptions: '--image-timeout 30m --parallel-layers 1 --parallel-images 1'
 mirrorURL: mirror-quay.internal.apps.hub.sebastian-colomar.com/mirror
 namespace: default
 persistentVolumeClaim:
