@@ -1,0 +1,10 @@
+- https://mirror-quay.apps.hub.sebastian-colomar.com/createaccount
+  - mirror
+  - password
+  - email
+- https://console-openshift-console.apps.hub.sebastian-colomar.com/k8s/ns/openshift-config/secrets/~new/image
+  - pull-secret-mirror-quay
+  - mirror-quay.internal.apps.hub.sebastian-colomar.com
+  - mirror
+  - password
+  - email
