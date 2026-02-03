@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   accessModes:
-    - {{ .Values.accessMode }}
+    - {{ .Values.accessModes }}
   resources:
     requests:
       storage: {{ .Values.storage }}
