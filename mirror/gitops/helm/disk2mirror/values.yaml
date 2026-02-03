@@ -12,7 +12,7 @@ imagePullSecret:
   mirror: pull-secret-mirror-quay
 job:
   name: disk2mirror
-mirrorURL: mirror-quay.internal.apps.openshift.sebastian-colomar.com/mirror
+mirrorURL: mirror-quay.internal.apps.hub.sebastian-colomar.com/mirror
 namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
