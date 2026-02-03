@@ -66,6 +66,8 @@ spec:
           value: {{ .Values.configMap.key }}
         - name: MIRROR
           value: {{ .Values.mirrorURL }}
+        - name: OPS
+          value: "{{ .Values.mirrorOptions }}"
         command: ["/bin/bash", "-c"]
         args:
         - |
@@ -75,7 +77,8 @@ spec:
           chmod +x $BINARY
           cp $BINARY /usr/local/bin/$BINARY
           $BINARY --v2 --version
-          $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE --from file://$FILE docker://$MIRROR
+          echo $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE $OPS --from file://$FILE docker://$MIRROR
+          $BINARY --v2 --config $ISC.yaml --cache-dir $CACHE $OPS --from file://$FILE docker://$MIRROR
         volumeMounts:
         - mountPath: {{ .Values.workingDir }}/{{ .Values.configMap.key }}.yaml
           name: {{ .Values.configMap.name }}
