@@ -1,4 +1,4 @@
-accessModes: ReadWriteOnce
+accessMode: ReadWriteOnce
 namespace: default
 persistentVolumeClaim:
   name: mirror-pvc
