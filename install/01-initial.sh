@@ -18,7 +18,7 @@ for mode in ${modes}
     rm openshift-${mode}-linux-${version}.tar
   done
 
-mkdir -p ${BINARY_PATH}/bin
+mkdir -p ${BINARY_PATH}
 
 binaries='kubectl oc'
 for binary in ${binaries}
