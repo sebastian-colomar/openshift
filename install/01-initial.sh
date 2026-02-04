@@ -23,18 +23,18 @@ mkdir -p ${BINARY_PATH}
 binaries='kubectl oc'
 for binary in ${binaries}
   do
-    mv ${binary} ${BINARY_PATH}/bin
+    mv ${binary} ${BINARY_PATH}
   done
-mv openshift-install ${BINARY_PATH}/bin/openshift-install-${version}
+mv openshift-install ${BINARY_PATH}/openshift-install-${version}
 
 file=README.md 
 test -f ${file} && rm -f ${file}
 
-file=${BINARY_PATH}/bin/openshift-install
+file=${BINARY_PATH}/openshift-install
 test -f ${file} && rm -f ${file}
 
-ln -s ${BINARY_PATH}/bin/openshift-install-${version} ${BINARY_PATH}/bin/openshift-install
-rm ${BINARY_PATH}/bin/kubectl && ln -s ${BINARY_PATH}/bin/oc ${BINARY_PATH}/bin/kubectl    
+ln -s ${BINARY_PATH}/openshift-install-${version} ${BINARY_PATH}/openshift-install
+rm ${BINARY_PATH}/kubectl && ln -s ${BINARY_PATH}/oc ${BINARY_PATH}/kubectl    
 fi
 
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
