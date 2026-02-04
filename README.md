@@ -8,7 +8,7 @@ First customize your environment variables:
 ```
 github_branch=v4.8.33-live
 github_repository=openshift
-github_username=academiaonline-org
+github_username=sebastian-colomar
 github_location=${github_repository}-$( date +%s )
 ```
 Now you can clone the remote repository:
