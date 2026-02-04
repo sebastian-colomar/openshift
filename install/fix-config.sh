@@ -11,10 +11,12 @@ file=install-config.yaml						;
 sed --in-place 								\
 	/' 'platform/d 							\
 	${file}								;
+
+sed --in-place \
+  	/'name.*master/s/^.*$/  name: master\n  platform:\n    aws:\n      type: '${master_type}'\n      amiID: '${amiID}/ \
+	${file}
+
 sed --in-place 								\
-	/'name.*master/s/^.*$/  name: master\n  platform:\n    aws:\n      type: '${master_type}/ \
-	${file}								;
-sed --in-place 								\
-	/'name.*worker/s/^.*$/  name: worker\n  platform:\n    aws:\n      type: '${worker_type}/ \
+  	/'name.*master/s/^.*$/  name: master\n  platform:\n    aws:\n      type: '${worker_type}'\n      amiID: '${amiID}/ \
 	${file}								;
 #########################################################################
