@@ -17,6 +17,6 @@ sed --in-place \
 	${file}
 
 sed --in-place 								\
-  	/'name.*master/s/^.*$/  name: master\n  platform:\n    aws:\n      type: '${worker_type}'\n      amiID: '${amiID}/ \
+  	/'name.*worker/s/^.*$/  name: worker\n  platform:\n    aws:\n      type: '${worker_type}'\n      amiID: '${amiID}/ \
 	${file}								;
 #########################################################################
