@@ -2,7 +2,12 @@ test -f ${HOME}/.ssh/id_rsa.pub || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
 
-if ! test -f ${HOME}/bin/openshift-install-${version}
+export BINARY_PATH=${HOME}/bin
+grep -q ":${BINARY_PATH}:" ~/.bashrc || echo "export PATH=\"${BINARY_PATH}:\${PATH}\"" | tee -a ~/.bashrc
+source ~/.bashrc
+
+
+if ! test -f ${BINARY_PATH}/bin/openshift-install-${version}
 then
 modes='client install'
 for mode in ${modes}
@@ -13,23 +18,23 @@ for mode in ${modes}
     rm openshift-${mode}-linux-${version}.tar
   done
 
-mkdir -p ${HOME}/bin
+mkdir -p ${BINARY_PATH}/bin
 
 binaries='kubectl oc'
 for binary in ${binaries}
   do
-    mv ${binary} ${HOME}/bin
+    mv ${binary} ${BINARY_PATH}/bin
   done
-mv openshift-install ${HOME}/bin/openshift-install-${version}
+mv openshift-install ${BINARY_PATH}/bin/openshift-install-${version}
 
 file=README.md 
 test -f ${file} && rm -f ${file}
 
-file=${HOME}/bin/openshift-install
+file=${BINARY_PATH}/bin/openshift-install
 test -f ${file} && rm -f ${file}
 
-ln -s ${HOME}/bin/openshift-install-${version} ${HOME}/bin/openshift-install
-rm ${HOME}/bin/kubectl && ln -s ${HOME}/bin/oc ${HOME}/bin/kubectl    
+ln -s ${BINARY_PATH}/bin/openshift-install-${version} ${BINARY_PATH}/bin/openshift-install
+rm ${BINARY_PATH}/bin/kubectl && ln -s ${BINARY_PATH}/bin/oc ${BINARY_PATH}/bin/kubectl    
 fi
 
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
