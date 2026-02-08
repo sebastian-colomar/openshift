@@ -49,7 +49,7 @@ openshift-install-${version} create install-config --dir ${dir} --log-level debu
 
 cd ${dir}
 cp -v ${pwd}/fix-config.sh .
-chmod +x fix-config.sh && ./fix-config.sh && rm fix-config.sh
+chmod +x fix-config.sh && ./fix-config.sh && rm -fv fix-config.sh
 git commit -am 'Set EC2 instance type' 
 
 
