@@ -34,7 +34,8 @@ oc get no | grep -v -E "STATUS|Ready" || break
 done
 
 oc get ingresscontroller default -n openshift-ingress-operator -o yaml | tee ingresscontroller.yaml
-sed -i '/^spec:/s/$/\n  nodePlacement:\n    nodeSelector:\n      matchLabels:\n        node-role.kubernetes.io\/infra: ""\n    tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io\/infra\n      operator: Exists/' ingresscontroller.yaml
+#sed -i '/^spec:/s/$/\n  nodePlacement:\n    nodeSelector:\n      matchLabels:\n        node-role.kubernetes.io\/infra: ""\n    tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io\/infra\n      operator: Exists/' ingresscontroller.yaml
+sed -i '/^spec:/s/$/\n  nodePlacement:\n    nodeSelector:\n      matchLabels:\n        node-role.kubernetes.io\/infra: ""\n    tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io\/master\n      operator: Exists/' ingresscontroller.yaml
 oc apply -f ingresscontroller.yaml 
 
 cat 0<<EOF | oc apply -f -
@@ -42,22 +43,22 @@ apiVersion: v1
 data:
   config.yaml: "alertmanagerMain:\n  nodeSelector:\n
     \   node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule
-    \n      key: node-role.kubernetes.io/infra \n      operator: Exists        \nprometheusK8s:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \n      key: node-role.kubernetes.io/infra \n      operator: Exists        \nprometheusK8s:\n  nodeSelector:\n    node-role.kubernetes.io/master:
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\nprometheusOperator:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\ngrafana:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\nk8sPrometheusAdapter:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\nkubeStateMetrics:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\ntelemeterClient:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\nopenshiftStateMetrics:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\nthanosQuerier:\n  nodeSelector:\n    node-role.kubernetes.io/infra:
-    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/infra
+    \"\"\n  tolerations:\n    - effect: NoSchedule \n      key: node-role.kubernetes.io/master
     \n      operator: Exists\n"
 kind: ConfigMap
 metadata:
