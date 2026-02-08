@@ -1,7 +1,9 @@
 mkdir --parents ${dir}/certs/
+mkdir --parents ${dir}/.certbot/{work,logs}
 
 export EmailAddress=sebastian.colomar@gmail.com
-docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps.${ClusterName}.${DomainName}
+#docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps.${ClusterName}.${DomainName}
+podman run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials:Z --volume ${dir}/certs/:/etc/letsencrypt/:Z --volume ${dir}/.certbot/work/:/var/lib/letsencrypt/:Z --volume ${dir}/.certbot/logs/:/var/log/letsencrypt/:Z docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps.${ClusterName}.${DomainName}
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/apps/
@@ -16,7 +18,8 @@ oc create secret tls certificate --cert=${dir}/tls/apps/fullchain.pem --key=${di
 oc patch ingresscontroller.operator default --namespace openshift-ingress-operator --patch '{"spec":{"defaultCertificate": {"name": "certificate"}}}' --type=merge
 
 export EmailAddress=sebastian.colomar@gmail.com
-docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}
+#docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}
+podman run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials:Z --volume ${dir}/certs/:/etc/letsencrypt/:Z --volume ${dir}/.certbot/work/:/var/lib/letsencrypt/:Z --volume ${dir}/.certbot/logs/:/var/log/letsencrypt/:Z docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d api.${ClusterName}.${DomainName}
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/api/
