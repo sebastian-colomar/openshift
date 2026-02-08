@@ -7,7 +7,7 @@ podman run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/apps/
-cp ${dir}/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/apps/
+cp -fv ${dir}/certs/live/apps.${ClusterName}.${DomainName}/*.pem ${dir}/tls/apps/
 
 oc create configmap custom-ca --from-file=ca-bundle.crt=${dir}/tls/apps/fullchain.pem --namespace openshift-config
 
@@ -23,13 +23,13 @@ podman run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws
 
 sudo chown ${USER}. -R ${dir}/certs/
 mkdir --parents ${dir}/tls/api/
-cp ${dir}/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/tls/api/
+cp -fv ${dir}/certs/live/api.${ClusterName}.${DomainName}/*.pem ${dir}/tls/api/
 
 oc create secret tls certificate --cert=${dir}/tls/api/fullchain.pem --key=${dir}/tls/api/privkey.pem --namespace openshift-config
 
 oc patch apiserver cluster --patch '{"spec":{"servingCerts":{"namedCertificates":[{"names":["api.'${ClusterName}'.'${DomainName}'"],"servingCertificate":{"name":"certificate"}}]}}}' --type=merge
 
-cp ${dir}/tls/api/fullchain.pem ${dir}/auth
+cp -fv ${dir}/tls/api/fullchain.pem ${dir}/auth
 sed --in-place s/certificate-authority-data.*$/certificate-authority:' 'fullchain.pem/ ${dir}/auth/kubeconfig
 
 
