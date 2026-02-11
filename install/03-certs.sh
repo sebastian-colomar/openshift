@@ -1,6 +1,8 @@
 mkdir --parents ${dir}/certs/
 mkdir --parents ${dir}/.certbot/{work,logs}
 
+podman system prune -a -f
+
 export EmailAddress=sebastian.colomar@gmail.com
 #docker run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials --volume ${dir}/certs/:/etc/letsencrypt/ docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps.${ClusterName}.${DomainName}
 podman run --interactive --rm --tty --volume ${HOME}/.aws/credentials:/root/.aws/credentials:Z --volume ${dir}/certs/:/etc/letsencrypt/:Z --volume ${dir}/.certbot/work/:/var/lib/letsencrypt/:Z --volume ${dir}/.certbot/logs/:/var/log/letsencrypt/:Z docker.io/certbot/dns-route53:latest certonly -n --dns-route53 --agree-tos --email ${EmailAddress} -d *.apps.${ClusterName}.${DomainName}
