@@ -2,7 +2,6 @@ test -f ${HOME}/.ssh/id_rsa || ssh-keygen -f ${HOME}/.ssh/id_rsa -P ''
 eval "$( ssh-agent -s )"
 ssh-add ${HOME}/.ssh/id_rsa 
 
-unalias rm cp mv
 export dir="${HOME}/environment/${ClusterName}.${DomainName}"
 test -d ${dir} || mkdir -p ${dir} 
 
@@ -10,6 +9,7 @@ export BINARY_PATH=${HOME}/bin
 grep -q ":${BINARY_PATH}:" ~/.bashrc || echo "export PATH=\"${BINARY_PATH}:\${PATH}\"" | tee -a ~/.bashrc
 source ~/.bashrc
 
+unalias rm cp mv
 
 if ! test -f ${BINARY_PATH}/openshift-install-${version}
 then
